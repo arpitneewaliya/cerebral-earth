@@ -57,7 +57,7 @@ header {
 /* Country Details Panel */
 .country-details {
   background-color: white;
-  border-radius: 8px;
+  border-radius: 0px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;
   margin: 20px;

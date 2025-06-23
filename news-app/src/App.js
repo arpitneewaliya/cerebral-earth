@@ -11,7 +11,6 @@ const App = () => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [countryDetails, setCountryDetails] = useState(null);
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -41,20 +40,9 @@ const App = () => {
       <Header />
       <div style={{ display: 'flex', height: '100%' }}>
         <div className="map-container">
-          <Map setRegion={setRegion} pins={pins} setCountryDetails={setCountryDetails} />
+          <Map setRegion={setRegion} pins={pins} />
         </div>
         <div style={{ flex: 1, overflowY: 'scroll', padding: '20px' }}>
-          {countryDetails ? (
-            <div className="country-details">
-              <h2>Country Details</h2>
-              <p><strong>Population:</strong> {countryDetails.population}</p>
-              <p><strong>Capital:</strong> {countryDetails.capital}</p>
-              <p><strong>GDP:</strong> {countryDetails.gdp}</p>
-              <p><strong>Area:</strong> {countryDetails.area} km²</p>
-            </div>
-          ) : (
-            <p>Click on a country to view details.</p>
-          )}
           <div className="news-list">
             <NewsContainer region={region} />
           </div>

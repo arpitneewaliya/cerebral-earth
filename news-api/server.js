@@ -42,20 +42,6 @@ app.get('/api/news', async (req, res) => {
 
     console.log('News API response received');
 
-    // Generate summary for each article
-    // const summarizedArticles = await Promise.all(
-    //   newsResponse.data.articles.map(async (article) => {
-    //     const prompt = `${article.title}\n\n${article.description || article.content}`;
-    //     try {
-    //       const summarizedText = await gemini_summary(prompt);
-    //       return { ...article, summarizedText };
-    //     } catch (error) {
-    //       console.error(`Error summarizing article: ${article.title}`, error);
-    //       return { ...article, summarizedText: 'Error summarizing this article' };
-    //     }
-    //   })
-    // );
-
     res.json(newsResponse.data.articles);
   } catch (error) {
     console.error('Error fetching news:', error.message);
@@ -119,6 +105,35 @@ app.get('/api/major-news', async (req, res) => {
   }
 });
 
+// Updated country-info endpoint
+app.get('/api/country-info', async (req, res) => {
+  const { lat, lng } = req.query;
+
+  if (!lat || !lng) {
+    return res.status(400).json({ error: 'Latitude and longitude are required' });
+  }
+
+  try {
+    // Get country name from coordinates
+    const countryName = await reverseGeocode(lat, lng);
+
+    const REST_COUNTRIES_API_URL = `https://restcountries.com/v3.1/name/${countryName}?fullText=true`;
+    const response = await axios.get(REST_COUNTRIES_API_URL);
+
+    res.json(response.data);
+  } catch (error) {
+    console.error('Error fetching country info:', error.message);
+
+    if (error.response) {
+      res.status(error.response.status).json({
+        error: error.response.statusText,
+        details: error.response.data,
+      });
+    } else {
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

@@ -4,6 +4,11 @@ import L from 'leaflet';
 import technologyIcon from '../media/technology-icon.svg';
 import flame from '../media/flame.svg';
 import newsDefaultIcon from '../media/news-default.svg'
+import businessNews from '../media/business-news.svg';
+import healthNews from '../media/health-news.svg';
+import scienceNews from '../media/science-news.svg';
+import sportsNews from '../media/sports-news.svg';
+import entertainmentNews from '../media/entertainment.svg';
 
 const icons = {
   Technology: new L.Icon({
@@ -11,23 +16,23 @@ const icons = {
     iconSize: [25, 25],
   }),
   Business: new L.Icon({
-    iconUrl: 'path/to/business-icon.png',
+    iconUrl: businessNews,
     iconSize: [25, 25],
   }),
   Health: new L.Icon({
-    iconUrl: 'path/to/health-icon.png',
+    iconUrl: healthNews,
     iconSize: [25, 25],
   }),
   Science: new L.Icon({
-    iconUrl: 'path/to/science-icon.png',
+    iconUrl: scienceNews,
     iconSize: [25, 25],
   }),
   Sports: new L.Icon({
-    iconUrl: 'path/to/sports-icon.png',
+    iconUrl: sportsNews,
     iconSize: [25, 25],
   }),
   Entertainment: new L.Icon({
-    iconUrl: 'path/to/entertainment-icon.png',
+    iconUrl: entertainmentNews,
     iconSize: [25, 25],
   }),
   WildFire: new L.Icon({
