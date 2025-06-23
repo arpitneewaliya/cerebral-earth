@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
-const { reverseGeocode, forwardGeocoding } = require('./geocoding');
+const { reverseGeocode, forwardGeocoding, reverseGeocodeCountry } = require('./geocoding');
 const { get_gemini_response } = require('./gemini_ai');
 
 const app = express();
@@ -105,7 +105,7 @@ app.get('/api/major-news', async (req, res) => {
   }
 });
 
-// Updated country-info endpoint
+// country-info endpoint
 app.get('/api/country-info', async (req, res) => {
   const { lat, lng } = req.query;
 
@@ -115,7 +115,7 @@ app.get('/api/country-info', async (req, res) => {
 
   try {
     // Get country name from coordinates
-    const countryName = await reverseGeocode(lat, lng);
+    const countryName = await reverseGeocodeCountry(lat, lng);
 
     const REST_COUNTRIES_API_URL = `https://restcountries.com/v3.1/name/${countryName}?fullText=true`;
     const response = await axios.get(REST_COUNTRIES_API_URL);

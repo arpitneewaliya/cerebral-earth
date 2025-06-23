@@ -5,9 +5,11 @@ import Map from './components/Map';
 import NewsContainer from './components/NewsContainer';
 import axios from 'axios';
 import Header from './components/Header';
+import CountryInfo from './components/CountryInfo';
 
 const App = () => {
   const [region, setRegion] = useState(null);
+  const [selectedOption, setSelectedOption] = useState(null);
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -32,7 +34,7 @@ const App = () => {
     image: article.urlToImage,
     title: article.title,
     url: article.url,
-    category: 'Default' // Set a default category for display
+    category: 'Default'
   }));
 
   return (
@@ -40,12 +42,33 @@ const App = () => {
       <Header />
       <div style={{ display: 'flex', height: '100%' }}>
         <div className="map-container">
-          <Map setRegion={setRegion} pins={pins} />
+          <Map
+            setRegion={(coords) => {
+              setRegion(coords);
+              setSelectedOption(null); // reset option on new map click
+            }}
+            pins={pins}
+          />
         </div>
-        <div style={{ flex: 1, overflowY: 'scroll', padding: '20px' }}>
-          <div className="news-list">
-            <NewsContainer region={region} />
-          </div>
+        <div style={{ flex: 1, overflowY: 'scroll', padding: '20px' }} className="right-pane">
+          {region ? (
+            !selectedOption ? (
+              <div className="options-container">
+                <button className="option-button" onClick={() => setSelectedOption('news')}>
+                  📰 Get Latest News about this region
+                </button>
+                <button className="option-button" onClick={() => setSelectedOption('country')}>
+                  🌍 Get Country Information
+                </button>
+              </div>
+            ) : selectedOption === 'news' ? (
+              <NewsContainer region={region} category="All" />
+            ) : (
+              <CountryInfo region={region} />
+            )
+          ) : (
+            <p>Click on a region on the map to get started.</p>
+          )}
         </div>
       </div>
     </div>

@@ -111,3 +111,27 @@ header {
     transform: rotate(360deg);
   }
 }
+
+
+
+.options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.option-button {
+  padding: 1rem;
+  font-size: 1.1rem;
+  background-color: #2c3e50;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.option-button:hover {
+  background-color: #34495e;
+}
