@@ -1,9 +1,16 @@
 header {
-  background-color: #007bff;
+  background: linear-gradient(135deg, #0056b3, #007bff);
   color: white;
-  padding: 10px 20px;
+  padding: 0px;
   text-align: center;
   font-size: 1.5rem;
   font-weight: bold;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+header h1 {
+  margin: 10px;
+  text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5); /* Add a subtle text shadow */
+  position: relative; /* Ensure text is above the shine effect */
+  z-index: 1; /* Make sure the text is on top of the pseudo-element */
 }
