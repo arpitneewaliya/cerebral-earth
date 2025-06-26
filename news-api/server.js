@@ -16,6 +16,9 @@ const majorNewsRoutes = require('./routes/majorNewsRoutes');
 const countryInfoRoutes = require('./routes/countryInfoRoutes');
 const gdpChartRoute = require('./routes/gdpChartRoute');
 const reverseGeocodeRoute = require('./routes/reverseGeocodeRoute');
+const populationChartRoute = require('./routes/populationChartRoute');
+const fdiChartRoute = require('./routes/fdiChartRoute');
+const inflationChartRoute = require('./routes/inflationChartRoute');
 
 // Use routes
 app.use('/api/news', newsRoutes);
@@ -23,6 +26,9 @@ app.use('/api/major-news', majorNewsRoutes);
 app.use('/api/country-info', countryInfoRoutes);
 app.use('/api/chart', gdpChartRoute);
 app.use('/api/reverse-geocode-country-code', reverseGeocodeRoute);
+app.use('/api/population-chart', populationChartRoute);
+app.use('/api/fdi-chart', fdiChartRoute);
+app.use('/api/inflation-chart', inflationChartRoute);
 
 // Start server
 app.listen(PORT, () => {

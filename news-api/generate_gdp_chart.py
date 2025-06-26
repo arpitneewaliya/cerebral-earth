@@ -1,3 +1,4 @@
+# /news-api/generate_gdp_chart.py
 import requests
 import pandas as pd
 import matplotlib.pyplot as plt

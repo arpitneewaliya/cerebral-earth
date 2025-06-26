@@ -7,6 +7,12 @@ import axios from 'axios';
 import Header from './components/Header';
 import CountryInfo from './components/CountryInfo';
 import ChartComponent from './components/ChartComponent';
+import PopulationChartComponent from './components/PopulationChartComponent';
+import FDIChartComponent from './components/FDIChartComponent';
+import InflationChartComponent from './components/InflationChartComponent';
+
+
+
 
 const App = () => {
   const [region, setRegion] = useState(null);
@@ -14,7 +20,8 @@ const App = () => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [countryCode, setCountryCode] = useState('USA'); // default
+  const [countryCode, setCountryCode] = useState(null); // default
+
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -31,6 +38,7 @@ const App = () => {
     fetchNews();
   }, []);
 
+
   useEffect(() => {
     const getCountryCode = async () => {
       if (region && region.lat && region.lng) {
@@ -45,6 +53,7 @@ const App = () => {
     getCountryCode();
   }, [region]);
 
+
   const pins = news.map(article => ({
     position: [article.lat, article.lng],
     image: article.urlToImage,
@@ -52,10 +61,6 @@ const App = () => {
     url: article.url,
     category: 'Default'
   }));
-
-
-
-
 
 
   const renderContent = () => {
@@ -75,9 +80,19 @@ const App = () => {
           <button className="option-button" onClick={() => setSelectedOption('chart')}>
             📈 Show GDP Chart
           </button>
+          <button className="option-button" onClick={() => setSelectedOption('population')}>
+            👥 Show Population Chart
+          </button>
+          <button className="option-button" onClick={() => setSelectedOption('fdi')}>
+            💸 Show FDI Chart
+          </button>
+          <button className="option-button" onClick={() => setSelectedOption('inflation')}>
+            📊 Show Inflation Chart
+          </button>
         </div>
       );
     }
+
 
     switch (selectedOption) {
       case 'news':
@@ -90,12 +105,29 @@ const App = () => {
         ) : (
           <p>Loading chart data...</p>
         );
+      case 'population':
+        return countryCode ? (
+          <PopulationChartComponent countryCode={countryCode} start={1960} end={2023} />
+        ) : (
+          <p>Loading chart data...</p>
+        );
+      case 'fdi':
+        return countryCode ? (
+          <FDIChartComponent countryCode={countryCode} start={1960} end={2023} />
+        ) : (
+          <p>Loading chart data...</p>
+        );
+      case 'inflation':
+        return countryCode ? (
+          <InflationChartComponent countryCode={countryCode} start={2000} end={2023} />
+        ) : (
+          <p>Loading chart data...</p>
+        );
+
       default:
         return null;
     }
   };
-
-
 
 
   return (
@@ -118,5 +150,6 @@ const App = () => {
     </div>
   );
 };
+
 
 export default App;
