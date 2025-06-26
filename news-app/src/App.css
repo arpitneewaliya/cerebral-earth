@@ -117,21 +117,41 @@ header {
 .options-container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
+  gap: 20px;
+  align-items: center;
+  padding: 2rem;
 }
 
 .option-button {
-  padding: 1rem;
+  width: 90%;
+  max-width: 400px;
+  padding: 1.2rem 2rem;
   font-size: 1.1rem;
-  background-color: #2c3e50;
-  color: white;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
 }
 
 .option-button:hover {
-  background-color: #34495e;
+  background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.option-button:active {
+  transform: scale(0.98);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.option-button .icon {
+  font-size: 1.4rem;
 }

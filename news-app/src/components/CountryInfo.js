@@ -15,9 +15,10 @@ const CountryInfo = ({ region }) => {
                 try {
                     const response = await axios.get('http://localhost:5000/api/country-info', {
                         params: {
-                            lat: region[0],
-                            lng: region[1],
+                            lat: region.lat,
+                            lng: region.lng,
                         },
+
                     });
                     setCountry(response.data[0]);
                 } catch (err) {

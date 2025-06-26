@@ -6,6 +6,7 @@ import NewsContainer from './components/NewsContainer';
 import axios from 'axios';
 import Header from './components/Header';
 import CountryInfo from './components/CountryInfo';
+import ChartComponent from './components/ChartComponent';
 
 const App = () => {
   const [region, setRegion] = useState(null);
@@ -13,6 +14,7 @@ const App = () => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [countryCode, setCountryCode] = useState('USA'); // default
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -29,6 +31,20 @@ const App = () => {
     fetchNews();
   }, []);
 
+  useEffect(() => {
+    const getCountryCode = async () => {
+      if (region && region.lat && region.lng) {
+        try {
+          const res = await axios.get(`http://localhost:5000/api/reverse-geocode-country-code?lat=${region.lat}&lon=${region.lng}`);
+          setCountryCode(res.data.countryCode);
+        } catch (err) {
+          console.error('Error fetching country code:', err.message);
+        }
+      }
+    };
+    getCountryCode();
+  }, [region]);
+
   const pins = news.map(article => ({
     position: [article.lat, article.lng],
     image: article.urlToImage,
@@ -36,6 +52,51 @@ const App = () => {
     url: article.url,
     category: 'Default'
   }));
+
+
+
+
+
+
+  const renderContent = () => {
+    if (!region) {
+      return <p>Click on a region on the map to get started.</p>;
+    }
+
+    if (!selectedOption) {
+      return (
+        <div className="options-container">
+          <button className="option-button" onClick={() => setSelectedOption('news')}>
+            📰 Get Latest News about this region
+          </button>
+          <button className="option-button" onClick={() => setSelectedOption('country')}>
+            🌍 Get Country Information
+          </button>
+          <button className="option-button" onClick={() => setSelectedOption('chart')}>
+            📈 Show GDP Chart
+          </button>
+        </div>
+      );
+    }
+
+    switch (selectedOption) {
+      case 'news':
+        return <NewsContainer region={region} category="All" />;
+      case 'country':
+        return <CountryInfo region={region} />;
+      case 'chart':
+        return countryCode ? (
+          <ChartComponent countryCode={countryCode} start={1960} end={2023} />
+        ) : (
+          <p>Loading chart data...</p>
+        );
+      default:
+        return null;
+    }
+  };
+
+
+
 
   return (
     <div className="App">
@@ -45,30 +106,13 @@ const App = () => {
           <Map
             setRegion={(coords) => {
               setRegion(coords);
-              setSelectedOption(null); // reset option on new map click
+              setSelectedOption(null);
             }}
             pins={pins}
           />
         </div>
         <div style={{ flex: 1, overflowY: 'scroll', padding: '20px' }} className="right-pane">
-          {region ? (
-            !selectedOption ? (
-              <div className="options-container">
-                <button className="option-button" onClick={() => setSelectedOption('news')}>
-                  📰 Get Latest News about this region
-                </button>
-                <button className="option-button" onClick={() => setSelectedOption('country')}>
-                  🌍 Get Country Information
-                </button>
-              </div>
-            ) : selectedOption === 'news' ? (
-              <NewsContainer region={region} category="All" />
-            ) : (
-              <CountryInfo region={region} />
-            )
-          ) : (
-            <p>Click on a region on the map to get started.</p>
-          )}
+          {renderContent()}
         </div>
       </div>
     </div>

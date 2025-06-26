@@ -15,8 +15,8 @@ const NewsList = ({ region, category }) => {
         try {
           const response = await axios.get('http://localhost:5000/api/news', {
             params: {
-              lat: region[0],
-              lng: region[1],
+              lat: region.lat,
+              lng: region.lng,
               category: category,
             },
           });

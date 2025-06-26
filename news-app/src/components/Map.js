@@ -7,7 +7,7 @@ const Map = ({ setRegion, pins }) => {
   const MapClickHandler = () => {
     useMapEvents({
       click: (e) => {
-        setRegion([e.latlng.lat, e.latlng.lng]);
+        setRegion({ lat: e.latlng.lat, lng: e.latlng.lng });
       },
     });
     return null;

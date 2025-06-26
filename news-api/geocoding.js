@@ -1,6 +1,7 @@
 // geocoding.js
 const axios = require('axios');
 
+// Returns city name
 async function reverseGeocode(lat, lon) {
   const LOCATIONIQ_URL = `https://us1.locationiq.com/v1/reverse?key=pk.8ecec6f8b88e3e78fc9d9f5e80a5a25e&lat=${lat}&lon=${lon}&format=json`;
   
@@ -24,6 +25,7 @@ async function reverseGeocode(lat, lon) {
   }
 };
 
+// returns country name
 async function reverseGeocodeCountry(lat, lon) {
   const LOCATIONIQ_URL = `https://us1.locationiq.com/v1/reverse?key=pk.8ecec6f8b88e3e78fc9d9f5e80a5a25e&lat=${lat}&lon=${lon}&format=json`;
   
@@ -47,6 +49,31 @@ async function reverseGeocodeCountry(lat, lon) {
   }
 };
 
+// Returns country code
+async function reverseGeocodeCountryCode(lat, lon) {
+  const LOCATIONIQ_URL = `https://us1.locationiq.com/v1/reverse?key=pk.8ecec6f8b88e3e78fc9d9f5e80a5a25e&lat=${lat}&lon=${lon}&format=json`;
+  
+  try {
+    console.log(`Making request to: ${LOCATIONIQ_URL}`);  // Debugging the request URL
+
+    const response = await axios.get(LOCATIONIQ_URL);
+
+    console.log('Response received:', response.data);  // Debugging the response
+
+    if (response.data && response.data.address) {
+      const address = response.data.address;
+      const country_code = address.country_code;
+      return country_code;
+    } else {
+      throw new Error('No address found for the given coordinates');
+    }
+  } catch (error) {
+    console.error('Error in reverse geocoding:', error.message);
+    throw error;
+  }
+};
+
+
 const forwardGeocoding = async (region) => {
   const LOCATIONIQ_URL = `https://us1.locationiq.com/v1/search?key=pk.8ecec6f8b88e3e78fc9d9f5e80a5a25e&q=${region}&format=json`
   try {
@@ -66,5 +93,6 @@ const forwardGeocoding = async (region) => {
 module.exports = {
   reverseGeocode,
   forwardGeocoding,
-  reverseGeocodeCountry
+  reverseGeocodeCountry,
+  reverseGeocodeCountryCode
 };
