@@ -10,8 +10,7 @@ import ChartComponent from './components/ChartComponent';
 import PopulationChartComponent from './components/PopulationChartComponent';
 import FDIChartComponent from './components/FDIChartComponent';
 import InflationChartComponent from './components/InflationChartComponent';
-
-
+import UnemploymentChartComponent from './components/UnemploymentChartComponent';
 
 
 const App = () => {
@@ -89,6 +88,9 @@ const App = () => {
           <button className="option-button" onClick={() => setSelectedOption('inflation')}>
             📊 Show Inflation Chart
           </button>
+          <button className="option-button" onClick={() => setSelectedOption('unemployment')}>
+            📉 Show Unemployment Chart
+          </button>
         </div>
       );
     }
@@ -123,7 +125,12 @@ const App = () => {
         ) : (
           <p>Loading chart data...</p>
         );
-
+      case 'unemployment':
+        return countryCode ? (
+          <UnemploymentChartComponent countryCode={countryCode} start={2000} end={2023} />
+        ) : (
+          <p>Loading chart data...</p>
+        );
       default:
         return null;
     }
