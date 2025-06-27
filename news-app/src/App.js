@@ -1,9 +1,9 @@
 // src/App.js
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import axios from 'axios';
 import Map from './components/Map';
 import NewsContainer from './components/NewsContainer';
-import axios from 'axios';
 import Header from './components/Header';
 import CountryInfo from './components/CountryInfo';
 import ChartComponent from './components/ChartComponent';
@@ -11,6 +11,7 @@ import PopulationChartComponent from './components/PopulationChartComponent';
 import FDIChartComponent from './components/FDIChartComponent';
 import InflationChartComponent from './components/InflationChartComponent';
 import UnemploymentChartComponent from './components/UnemploymentChartComponent';
+import LiteracyChartComponent from './components/LiteracyChartComponent';
 
 
 const App = () => {
@@ -80,7 +81,7 @@ const App = () => {
             📈 Show GDP Chart
           </button>
           <button className="option-button" onClick={() => setSelectedOption('population')}>
-            👥 Show Population Chart
+            🧑‍🤝‍🧑 Show Population Chart
           </button>
           <button className="option-button" onClick={() => setSelectedOption('fdi')}>
             💸 Show FDI Chart
@@ -91,6 +92,10 @@ const App = () => {
           <button className="option-button" onClick={() => setSelectedOption('unemployment')}>
             📉 Show Unemployment Chart
           </button>
+          <button className="option-button" onClick={() => setSelectedOption('literacy')}>
+            📚 Show Literacy Rate Chart
+          </button>
+
         </div>
       );
     }
@@ -121,13 +126,19 @@ const App = () => {
         );
       case 'inflation':
         return countryCode ? (
-          <InflationChartComponent countryCode={countryCode} start={2000} end={2023} />
+          <InflationChartComponent countryCode={countryCode} start={1960} end={2023} />
         ) : (
           <p>Loading chart data...</p>
         );
       case 'unemployment':
         return countryCode ? (
-          <UnemploymentChartComponent countryCode={countryCode} start={2000} end={2023} />
+          <UnemploymentChartComponent countryCode={countryCode} start={1960} end={2023} />
+        ) : (
+          <p>Loading chart data...</p>
+        );
+      case 'literacy':
+        return countryCode ? (
+          <LiteracyChartComponent countryCode={countryCode} start={1980} end={2023} />
         ) : (
           <p>Loading chart data...</p>
         );

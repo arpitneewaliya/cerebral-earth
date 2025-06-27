@@ -20,6 +20,7 @@ const populationChartRoute = require('./routes/populationChartRoute');
 const fdiChartRoute = require('./routes/fdiChartRoute');
 const inflationChartRoute = require('./routes/inflationChartRoute');
 const unemploymentChartRoute = require('./routes/unemploymentChartRoute');
+const literacyChartRoute = require('./routes/literacyChartRoute');
 
 // Use routes
 app.use('/api/news', newsRoutes);
@@ -31,6 +32,7 @@ app.use('/api/population-chart', populationChartRoute);
 app.use('/api/fdi-chart', fdiChartRoute);
 app.use('/api/inflation-chart', inflationChartRoute);
 app.use('/api/unemployment-chart', unemploymentChartRoute);
+app.use('/api/literacy-chart', literacyChartRoute);
 
 // Start server
 app.listen(PORT, () => {
