@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const InflationChartComponent = ({ countryCode, start = 2000, end = 2023 }) => {
+const InflationChartComponent = ({ countryName, countryCode, start = 2000, end = 2023 }) => {
   const [imageBase64, setImageBase64] = useState(null);
   const [error, setError] = useState(null);
 
@@ -25,11 +25,11 @@ const InflationChartComponent = ({ countryCode, start = 2000, end = 2023 }) => {
     };
 
     fetchChart();
-  }, [countryCode, start, end]);
+  }, [countryName, countryCode, start, end]);
 
   return (
     <div>
-      <h2>Inflation (Consumer Price Index - CPI) Chart for {countryCode}</h2>
+      <h2>Inflation (Consumer Price Index - CPI) Chart for {countryName}</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {imageBase64 ? (
         <img

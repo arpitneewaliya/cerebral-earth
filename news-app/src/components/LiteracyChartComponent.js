@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const LiteracyChartComponent = ({ countryCode, start = 1980, end = 2023 }) => {
+const LiteracyChartComponent = ({ countryName, countryCode, start = 1980, end = 2023 }) => {
   const [imageBase64, setImageBase64] = useState(null);
   const [error, setError] = useState(null);
 
@@ -25,11 +25,11 @@ const LiteracyChartComponent = ({ countryCode, start = 1980, end = 2023 }) => {
     };
 
     fetchChart();
-  }, [countryCode, start, end]);
+  }, [countryName, countryCode, start, end]);
 
   return (
     <div>
-      <h2>Literacy Rate Chart for {countryCode}</h2>
+      <h2>Literacy Rate Chart for {countryName}</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {imageBase64 ? (
         <img

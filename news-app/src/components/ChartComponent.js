@@ -1,7 +1,7 @@
 // ChartComponent.jsx
 import React, { useEffect, useState } from 'react';
 
-const ChartComponent = ({ countryCode, start = 1960, end = 2023 }) => {
+const ChartComponent = ({ countryName, countryCode, start = 1960, end = 2023 }) => {
   const [imageBase64, setImageBase64] = useState(null);
   const [error, setError] = useState(null);
 
@@ -26,11 +26,11 @@ const ChartComponent = ({ countryCode, start = 1960, end = 2023 }) => {
     };
 
     fetchChart();
-  }, [countryCode, start, end]);
+  }, [countryName, countryCode, start, end]);
 
   return (
     <div>
-      <h2>GDP Chart for {countryCode}</h2>
+      <h2>GDP Chart for {countryName}</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {imageBase64 ? (
         <img

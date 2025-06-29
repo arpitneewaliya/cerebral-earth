@@ -13,16 +13,27 @@ import InflationChartComponent from './components/InflationChartComponent';
 import UnemploymentChartComponent from './components/UnemploymentChartComponent';
 import LiteracyChartComponent from './components/LiteracyChartComponent';
 
-
 const App = () => {
+  // State to store the selected region coordinates
   const [region, setRegion] = useState(null);
+
+  // State to track which content option (news, charts, etc.) the user selected
   const [selectedOption, setSelectedOption] = useState(null);
+
+  // News data fetched from backend
   const [news, setNews] = useState([]);
+
+  // Loading and error flags for fetching news
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [countryCode, setCountryCode] = useState(null); // default
 
+  // Country code derived from region coordinates (e.g., 'US', 'IN')
+  const [countryCode, setCountryCode] = useState(null);
 
+  // Country name derived from region coordinates.
+  const [countryName, setCountryName] = useState(null);
+
+  // Fetch latest news on component mount
   useEffect(() => {
     const fetchNews = async () => {
       setLoading(true);
@@ -38,12 +49,14 @@ const App = () => {
     fetchNews();
   }, []);
 
-
+  // Fetch country code when a region is selected
   useEffect(() => {
     const getCountryCode = async () => {
       if (region && region.lat && region.lng) {
         try {
-          const res = await axios.get(`http://localhost:5000/api/reverse-geocode-country-code?lat=${region.lat}&lon=${region.lng}`);
+          const res = await axios.get(
+            `http://localhost:5000/api/reverse-geocode-country-code?lat=${region.lat}&lon=${region.lng}`
+          );
           setCountryCode(res.data.countryCode);
         } catch (err) {
           console.error('Error fetching country code:', err.message);
@@ -53,7 +66,24 @@ const App = () => {
     getCountryCode();
   }, [region]);
 
+  // Fetch country name when a region is selected
+  useEffect(() => {
+    const getCountryName = async () => {
+      if (region && region.lat && region.lng) {
+        try {
+          const res = await axios.get(
+            `http://localhost:5000/api/reverse-geocode-country-name?lat=${region.lat}&lon=${region.lng}`
+          );
+          setCountryName(res.data.countryName);
+        } catch (err) {
+          console.error('Error fetching country code:', err.message);
+        }
+      }
+    };
+    getCountryName();
+  }, [region]);
 
+  // Create map pins for each news article
   const pins = news.map(article => ({
     position: [article.lat, article.lng],
     image: article.urlToImage,
@@ -62,13 +92,14 @@ const App = () => {
     category: 'Default'
   }));
 
-
+  // Renders the right pane content based on user selection
   const renderContent = () => {
     if (!region) {
       return <p>Click on a region on the map to get started.</p>;
     }
 
     if (!selectedOption) {
+      // Show option buttons if no selection has been made
       return (
         <div className="options-container">
           <button className="option-button" onClick={() => setSelectedOption('news')}>
@@ -95,12 +126,11 @@ const App = () => {
           <button className="option-button" onClick={() => setSelectedOption('literacy')}>
             📚 Show Literacy Rate Chart
           </button>
-
         </div>
       );
     }
 
-
+    // Render selected content
     switch (selectedOption) {
       case 'news':
         return <NewsContainer region={region} category="All" />;
@@ -108,37 +138,37 @@ const App = () => {
         return <CountryInfo region={region} />;
       case 'chart':
         return countryCode ? (
-          <ChartComponent countryCode={countryCode} start={1960} end={2023} />
+          <ChartComponent countryName={countryName} countryCode={countryCode} start={1960} end={2023} />
         ) : (
           <p>Loading chart data...</p>
         );
       case 'population':
         return countryCode ? (
-          <PopulationChartComponent countryCode={countryCode} start={1960} end={2023} />
+          <PopulationChartComponent countryName={countryName} countryCode={countryCode} start={1960} end={2023} />
         ) : (
           <p>Loading chart data...</p>
         );
       case 'fdi':
         return countryCode ? (
-          <FDIChartComponent countryCode={countryCode} start={1960} end={2023} />
+          <FDIChartComponent countryName={countryName} countryCode={countryCode} start={1960} end={2023} />
         ) : (
           <p>Loading chart data...</p>
         );
       case 'inflation':
         return countryCode ? (
-          <InflationChartComponent countryCode={countryCode} start={1960} end={2023} />
+          <InflationChartComponent countryName={countryName} countryCode={countryCode} start={1960} end={2023} />
         ) : (
           <p>Loading chart data...</p>
         );
       case 'unemployment':
         return countryCode ? (
-          <UnemploymentChartComponent countryCode={countryCode} start={1960} end={2023} />
+          <UnemploymentChartComponent countryName={countryName} countryCode={countryCode} start={1960} end={2023} />
         ) : (
           <p>Loading chart data...</p>
         );
       case 'literacy':
         return countryCode ? (
-          <LiteracyChartComponent countryCode={countryCode} start={1980} end={2023} />
+          <LiteracyChartComponent countryName={countryName} countryCode={countryCode} start={1980} end={2023} />
         ) : (
           <p>Loading chart data...</p>
         );
@@ -147,16 +177,16 @@ const App = () => {
     }
   };
 
-
   return (
     <div className="App">
       <Header />
       <div style={{ display: 'flex', height: '100%' }}>
         <div className="map-container">
+          {/* Map component allows selecting a region and shows pins */}
           <Map
             setRegion={(coords) => {
               setRegion(coords);
-              setSelectedOption(null);
+              setSelectedOption(null); // Reset selection when a new region is clicked
             }}
             pins={pins}
           />
@@ -168,6 +198,5 @@ const App = () => {
     </div>
   );
 };
-
 
 export default App;
