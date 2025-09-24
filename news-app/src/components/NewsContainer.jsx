@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import NewsList from './NewsList';
-import NewsFilter from './widgets/NewsFilter';
+import NewsList from './NewsList.jsx';
+import NewsFilter from './widgets/NewsFilter.jsx';
 
 const NewsContainer = ({region}) => {
   const [category, setCategory] = useState('All');

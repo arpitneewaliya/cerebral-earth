@@ -15,16 +15,26 @@ const Map = ({ setRegion, pins }) => {
 
   return (
     <MapContainer
-      center={[51.505, -0.09]}
-      zoom={2}
-      style={{ height: '100vh', width: '100%' }}
+      center={[28.7, 77.1]}
+      zoom={2.5}
+      // Full-screen styles
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: '100vw',
+        height: '100vh',
+        zIndex: 0
+      }}
       worldCopyJump={false}
       maxBounds={[
-        [-90, -180], // South West
-        [90, 180],   // North East
+        [-90, -180],
+        [90, 180],
       ]}
       maxBoundsViscosity={1.0}
-      minZoom={2}
+      minZoom={1}
       maxZoom={18}
     >
       <TileLayer
@@ -38,7 +48,7 @@ const Map = ({ setRegion, pins }) => {
           image={pin.image}
           title={pin.title}
           url={pin.url}
-          category={pin.category} // Pass category information
+          category={pin.category}
         />
       ))}
     </MapContainer>
