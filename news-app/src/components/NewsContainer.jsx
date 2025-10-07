@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import NewsList from './NewsList.jsx';
 import NewsFilter from './widgets/NewsFilter.jsx';
 
-const NewsContainer = ({region}) => {
+const NewsContainer = ({ region, isDarkMode }) => {
   const [category, setCategory] = useState('All');
 
   const handleFilterChange = (category) => {
@@ -11,8 +11,8 @@ const NewsContainer = ({region}) => {
 
   return (
     <div>
-      <NewsFilter selectedCategory={category} onFilterChange={handleFilterChange} />
-      <NewsList region={region} category={category} />
+      <NewsFilter selectedCategory={category} onFilterChange={handleFilterChange} isDarkMode={isDarkMode} />
+      <NewsList region={region} category={category} isDarkMode={isDarkMode} />
     </div>
   );
 };
