@@ -12,8 +12,12 @@ import UnemploymentChartComponent from './components/UnemploymentChartComponent.
 import LiteracyChartComponent from './components/LiteracyChartComponent.jsx';
 import Header from './components/Header.jsx';
 import { LoadingSpinner } from './components/LoadingComponents.jsx';
+import { useTheme } from './contexts/ThemeContext.jsx';
 
 const App = () => {
+  // Use theme from context
+  const { isDarkMode, toggleTheme } = useTheme();
+
   // State to store the selected region coordinates
   const [region, setRegion] = useState(null);
 
@@ -35,19 +39,6 @@ const App = () => {
 
   // NEW: controls the visibility of the options panel
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
-
-  // Dark mode state
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    const saved = localStorage.getItem('darkMode');
-    return saved ? JSON.parse(saved) : false;
-  });
-
-  // Toggle dark mode
-  const toggleTheme = () => {
-    const newMode = !isDarkMode;
-    setIsDarkMode(newMode);
-    localStorage.setItem('darkMode', JSON.stringify(newMode));
-  };
 
   // Fetch latest news on component mount
   useEffect(() => {
@@ -390,7 +381,7 @@ const App = () => {
           setRegion={(coords) => {
             setRegion(coords);
             setSelectedOption(null);   // reset to show options again
-            setIsOptionsOpen(false);   // keep panel closed until user clicks the button
+            setIsOptionsOpen(true);   // keep panel closed until user clicks the button
           }}
           pins={pins}
         />
@@ -481,7 +472,7 @@ const App = () => {
             }`}>
               <div className="text-center">
                 <div className="text-4xl mb-3">🗺️</div>
-                <h2 className="text-xl font-bold mb-2">Welcome to GlobalView</h2>
+                <h2 className="text-xl font-bold mb-2">Welcome to Cerebral Earth</h2>
                 <p className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                   Click anywhere on the map to explore news and data for that region
                 </p>
