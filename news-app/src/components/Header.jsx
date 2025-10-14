@@ -6,7 +6,7 @@ const Header = ({ isDarkMode, toggleTheme }) => {
   return (
     <header className={`fixed top-0 left-0 right-0 z-[1001] backdrop-blur-md border-b transition-colors duration-200 ${
       isDarkMode 
-        ? 'bg-gray-900/90 border-gray-700 text-white' 
+        ? 'bg-black border-gray-700 text-white' 
         : 'bg-white/90 border-gray-200 text-gray-900'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

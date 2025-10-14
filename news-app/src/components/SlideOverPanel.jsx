@@ -23,8 +23,8 @@ const SlideOverPanel = ({
       />
       
       {/* Panel */}
-      <div className={`fixed top-0 right-0 h-full w-[420px] max-w-[90vw] z-[1002] shadow-2xl transform transition-transform duration-300 ease-out flex flex-col ${
-        isDarkMode ? 'bg-gray-800' : 'bg-white'
+      <div className={`fixed top-0 right-0 h-full w-[720px] max-w-[90vw] z-[1002] shadow-2xl transform transition-transform duration-300 ease-out flex flex-col ${
+        isDarkMode ? 'bg-black' : 'bg-white'
       }`}>
         {/* Panel Header */}
         <PanelHeader 
@@ -76,12 +76,12 @@ const PanelHeader = ({
         </h3>
         {selectedOption && (
           <button
-            className={`text-sm flex items-center gap-1 mt-1 transition-colors ${
+            className={`text-lg flex items-center gap-1 mt-1 transition-colors border-2 p-1  ${
               isDarkMode ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-500'
             }`}
             onClick={() => setSelectedOption(null)}
           >
-            ← Back to options
+            Back
           </button>
         )}
       </div>

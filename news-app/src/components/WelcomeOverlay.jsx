@@ -7,7 +7,7 @@ const WelcomeOverlay = ({ isVisible, isDarkMode }) => {
     <div className="fixed inset-0 z-[999] pointer-events-none">
       <div className="flex items-center justify-center h-full">
         <div className={`mx-4 px-6 py-4 rounded-xl shadow-lg pointer-events-auto backdrop-blur-sm ${
-          isDarkMode ? 'bg-gray-800/90 text-gray-100' : 'bg-white/90 text-gray-900'
+          isDarkMode ? 'bg-black text-gray-100' : 'bg-white/90 text-gray-900'
         }`}>
           <div className="text-center">
             <div className="text-4xl mb-3">🗺️</div>
