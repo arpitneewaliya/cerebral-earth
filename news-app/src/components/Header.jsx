@@ -13,11 +13,6 @@ const Header = ({ isDarkMode, toggleTheme }) => {
         <div className="flex justify-between items-center h-16">
           {/* Logo and Title */}
           <div className="flex items-center space-x-3">
-            {/* <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-              isDarkMode ? 'bg-blue-600' : 'bg-blue-500'
-            }`}>
-              <span className="text-white font-bold text-lg">🌍</span>
-            </div> */}
             <div>
               <h1 className="text-xl font-bold tracking-tight">Cerebral Earth</h1>
               <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
@@ -30,15 +25,15 @@ const Header = ({ isDarkMode, toggleTheme }) => {
           <nav className="hidden md:flex items-center space-x-8">
             <a 
               href="#" 
-              className={`text-sm font-medium transition-colors hover:text-blue-600 ${
+              className={`border-2 p-3 rounded-2xl text-sm font-medium transition-colors hover:text-blue-600 ${
                 isDarkMode ? 'text-gray-300 hover:text-blue-400' : 'text-gray-700'
               }`}
             >
-              Explore Map
+              Explore
             </a>
             <a 
               href="#" 
-              className={`text-sm font-medium transition-colors hover:text-blue-600 ${
+              className={`border-2 p-3 rounded-2xl text-sm font-medium transition-colors hover:text-blue-600 ${
                 isDarkMode ? 'text-gray-300 hover:text-blue-400' : 'text-gray-700'
               }`}
             >
@@ -46,7 +41,7 @@ const Header = ({ isDarkMode, toggleTheme }) => {
             </a>
             <a 
               href="#" 
-              className={`text-sm font-medium transition-colors hover:text-blue-600 ${
+              className={`border-2 p-3 rounded-2xl text-sm font-medium transition-colors hover:text-blue-600 ${
                 isDarkMode ? 'text-gray-300 hover:text-blue-400' : 'text-gray-700'
               }`}
             >
@@ -110,7 +105,7 @@ const Header = ({ isDarkMode, toggleTheme }) => {
                   isDarkMode ? 'text-gray-300 hover:text-blue-400' : 'text-gray-700'
                 }`}
               >
-                Explore Map
+                Explore
               </a>
               <a 
                 href="#" 
