@@ -1,5 +1,7 @@
 import React from 'react';
 import { MapPin, Newspaper, Globe, TrendingUp, Users, CircleDollarSign, BarChart3, TrendingDown, BookOpen, ChevronDown } from 'lucide-react';
+import { IoNewspaperOutline } from "react-icons/io5";
+import { FaGlobeAmericas } from "react-icons/fa";
 
 const RegionOptionsPanel = ({ 
   region, 
@@ -69,10 +71,10 @@ const MainOptions = ({ setSelectedOption, isDarkMode }) => (
       onClick={() => setSelectedOption('news')}
     >
       <div className="flex items-center gap-4">
-        <div className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-lg ${
+        <div className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-lg ${
           isDarkMode ? 'bg-gradient-to-br from-red-500 to-red-600 text-white' : 'bg-gradient-to-br from-red-400 to-red-500 text-white'
         }`}>
-          <Newspaper className="w-6 h-6" />
+          <IoNewspaperOutline className="w-5 h-5" />
         </div>
         <div>
           <h5 className={`font-semibold ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
@@ -94,10 +96,10 @@ const MainOptions = ({ setSelectedOption, isDarkMode }) => (
       onClick={() => setSelectedOption('country')}
     >
       <div className="flex items-center gap-4">
-        <div className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-lg ${
+        <div className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-lg ${
           isDarkMode ? 'bg-gradient-to-br from-green-500 to-green-600 text-white' : 'bg-gradient-to-br from-green-400 to-green-500 text-white'
         }`}>
-          <Globe className="w-6 h-6" />
+          <FaGlobeAmericas className="w-5 h-5" />
         </div>
         <div>
           <h5 className={`font-semibold ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
