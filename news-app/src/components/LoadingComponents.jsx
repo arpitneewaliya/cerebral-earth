@@ -1,4 +1,5 @@
 import React from 'react';
+import { AlertTriangle, Loader2 } from 'lucide-react';
 
 export const LoadingSpinner = ({ size = 'md', color = 'blue' }) => {
   const sizeClasses = {
@@ -15,7 +16,7 @@ export const LoadingSpinner = ({ size = 'md', color = 'blue' }) => {
 
   return (
     <div className="flex justify-center items-center">
-      <div className={`animate-spin rounded-full border-2 border-t-transparent ${sizeClasses[size]} ${colorClasses[color]} border-current`}></div>
+      <Loader2 className={`animate-spin ${sizeClasses[size]} ${colorClasses[color]}`} />
     </div>
   );
 };
@@ -49,10 +50,10 @@ export const ChartSkeleton = ({ isDarkMode }) => (
 );
 
 export const ErrorMessage = ({ message, onRetry, isDarkMode }) => (
-  <div className={`p-6 rounded-lg text-center ${
-    isDarkMode ? 'bg-red-900/20 border border-red-800' : 'bg-red-50 border border-red-200'
+  <div className={`p-6 rounded-xl text-center border shadow-sm ${
+    isDarkMode ? 'bg-red-900/10 border-red-500/20' : 'bg-red-50 border-red-100'
   }`}>
-    <div className={`text-4xl mb-3`}>⚠️</div>
+    <AlertTriangle className={`w-12 h-12 mx-auto mb-3 ${isDarkMode ? 'text-red-400' : 'text-red-500'}`} />
     <h3 className={`text-lg font-semibold mb-2 ${isDarkMode ? 'text-red-400' : 'text-red-800'}`}>
       Something went wrong
     </h3>

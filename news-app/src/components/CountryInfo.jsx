@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Building, Globe2, Users, Maximize, Coins, SearchX, ExternalLink } from 'lucide-react';
 import { LoadingSpinner, ErrorMessage } from './LoadingComponents.jsx';
 
 const CountryInfo = ({ region, isDarkMode }) => {
@@ -54,8 +55,8 @@ const CountryInfo = ({ region, isDarkMode }) => {
     return (
         <div className="p-6">
             {country ? (
-                <div className={`rounded-2xl shadow-xl p-8 transition-all duration-200 hover:shadow-2xl ${
-                    isDarkMode ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-900'
+                <div className={`rounded-2xl shadow-xl p-8 transition-all duration-300 hover:shadow-2xl border ${
+                    isDarkMode ? 'bg-gray-800/80 backdrop-blur-md border-gray-700 text-gray-100' : 'bg-white border-gray-100/50 text-gray-900'
                 }`}>
                     {/* Header */}
                     <div className="text-center mb-6">
@@ -82,24 +83,24 @@ const CountryInfo = ({ region, isDarkMode }) => {
 
                     {/* Information Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className={`p-4 rounded-lg ${
-                            isDarkMode ? 'bg-gray-700' : 'bg-gray-50'
+                        <div className={`p-5 rounded-xl border ${
+                            isDarkMode ? 'bg-gray-800/50 border-gray-700/50' : 'bg-gray-50 border-gray-100'
                         }`}>
                             <h4 className={`font-semibold mb-2 flex items-center gap-2 ${
                                 isDarkMode ? 'text-blue-400' : 'text-blue-600'
                             }`}>
-                                🏛️ Capital
+                                <Building className="w-5 h-5" /> Capital
                             </h4>
                             <p>{country.capital?.[0] || 'N/A'}</p>
                         </div>
 
-                        <div className={`p-4 rounded-lg ${
-                            isDarkMode ? 'bg-gray-700' : 'bg-gray-50'
+                        <div className={`p-5 rounded-xl border ${
+                            isDarkMode ? 'bg-gray-800/50 border-gray-700/50' : 'bg-gray-50 border-gray-100'
                         }`}>
                             <h4 className={`font-semibold mb-2 flex items-center gap-2 ${
                                 isDarkMode ? 'text-green-400' : 'text-green-600'
                             }`}>
-                                🌍 Region
+                                <Globe2 className="w-5 h-5" /> Region
                             </h4>
                             <p>{country.region}</p>
                             {country.subregion && (
@@ -109,35 +110,35 @@ const CountryInfo = ({ region, isDarkMode }) => {
                             )}
                         </div>
 
-                        <div className={`p-4 rounded-lg ${
-                            isDarkMode ? 'bg-gray-700' : 'bg-gray-50'
+                        <div className={`p-5 rounded-xl border ${
+                            isDarkMode ? 'bg-gray-800/50 border-gray-700/50' : 'bg-gray-50 border-gray-100'
                         }`}>
                             <h4 className={`font-semibold mb-2 flex items-center gap-2 ${
                                 isDarkMode ? 'text-purple-400' : 'text-purple-600'
                             }`}>
-                                👥 Population
+                                <Users className="w-5 h-5" /> Population
                             </h4>
                             <p>{country.population.toLocaleString()}</p>
                         </div>
 
-                        <div className={`p-4 rounded-lg ${
-                            isDarkMode ? 'bg-gray-700' : 'bg-gray-50'
+                        <div className={`p-5 rounded-xl border ${
+                            isDarkMode ? 'bg-gray-800/50 border-gray-700/50' : 'bg-gray-50 border-gray-100'
                         }`}>
                             <h4 className={`font-semibold mb-2 flex items-center gap-2 ${
                                 isDarkMode ? 'text-orange-400' : 'text-orange-600'
                             }`}>
-                                📏 Area
+                                <Maximize className="w-5 h-5" /> Area
                             </h4>
                             <p>{country.area.toLocaleString()} km²</p>
                         </div>
 
-                        <div className={`p-4 rounded-lg md:col-span-2 ${
-                            isDarkMode ? 'bg-gray-700' : 'bg-gray-50'
+                        <div className={`p-5 rounded-xl border md:col-span-2 ${
+                            isDarkMode ? 'bg-gray-800/50 border-gray-700/50' : 'bg-gray-50 border-gray-100'
                         }`}>
                             <h4 className={`font-semibold mb-2 flex items-center gap-2 ${
                                 isDarkMode ? 'text-yellow-400' : 'text-yellow-600'
                             }`}>
-                                💰 Currency
+                                <Coins className="w-5 h-5" /> Currency
                             </h4>
                             <p>
                                 {country.currencies
@@ -156,22 +157,20 @@ const CountryInfo = ({ region, isDarkMode }) => {
                             href={country.maps.googleMaps} 
                             target="_blank" 
                             rel="noopener noreferrer"
-                            className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:scale-105 ${
+                            className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all duration-200 hover:scale-[1.02] shadow-sm ${
                                 isDarkMode 
-                                    ? 'bg-blue-600 hover:bg-blue-700 text-white' 
+                                    ? 'bg-blue-600 hover:bg-blue-500 text-white' 
                                     : 'bg-blue-600 hover:bg-blue-700 text-white'
                             }`}
                         >
-                            🗺️ View on Google Maps
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                            </svg>
+                            View on Google Maps
+                            <ExternalLink className="w-4 h-4" />
                         </a>
                     </div>
                 </div>
             ) : (
-                <div className="text-center py-12">
-                    <div className="text-6xl mb-4">🌍</div>
+                <div className="text-center py-12 flex flex-col items-center">
+                    <SearchX className={`w-16 h-16 mb-4 ${isDarkMode ? 'text-gray-600' : 'text-gray-400'}`} />
                     <h3 className={`text-lg font-semibold mb-2 ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
                         No country information available
                     </h3>

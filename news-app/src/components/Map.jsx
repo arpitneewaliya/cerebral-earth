@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import Pin from './Pin';
 
-const Map = ({ setRegion, pins }) => {
+const Map = ({ setRegion, pins, isDarkMode }) => {
   const MapClickHandler = () => {
     useMapEvents({
       click: (e) => {
@@ -12,6 +12,11 @@ const Map = ({ setRegion, pins }) => {
     });
     return null;
   };
+
+  // We consistently use the 'light_all' tiles here. 
+  // In Dark Mode, we use CSS filters in index.css (.dark-theme-map .leaflet-tile-pane) 
+  // to invert the light tiles. This generates a dark map with perfectly white, clear text labels!
+  const tileUrl = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
 
   return (
     <MapContainer
@@ -38,7 +43,8 @@ const Map = ({ setRegion, pins }) => {
       maxZoom={18}
     >
       <TileLayer
-        url="https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=eac5448467c34bd0bfaea5536ad8c1d3"
+        url={tileUrl}
+        attribution='&copy; <a href="https://carto.com/">CARTO</a>'
       />
       <MapClickHandler />
       {pins.map((pin, index) => (
