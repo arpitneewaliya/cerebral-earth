@@ -37,7 +37,7 @@ const CountryInfo = ({ region, isDarkMode }) => {
         return (
             <div className="flex items-center justify-center p-8">
                 <LoadingSpinner size="lg" />
-                <span className={`ml-3 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                <span className={`ml-3 text-sm font-medium ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
                     Loading country information...
                 </span>
             </div>
@@ -55,92 +55,92 @@ const CountryInfo = ({ region, isDarkMode }) => {
     return (
         <div className="p-6">
             {country ? (
-                <div className={`rounded-2xl shadow-xl p-8 transition-all duration-300 hover:shadow-2xl border ${
-                    isDarkMode ? 'bg-gray-800/80 backdrop-blur-md border-gray-700 text-gray-100' : 'bg-white border-gray-100/50 text-gray-900'
+                <div className={`rounded-xl shadow-sm p-8 border ${
+                    isDarkMode ? 'bg-zinc-950 border-zinc-800 text-zinc-50' : 'bg-white border-zinc-200 text-zinc-950'
                 }`}>
                     {/* Header */}
-                    <div className="text-center mb-6">
-                        <h2 className={`text-2xl font-bold mb-2 ${
-                            isDarkMode ? 'text-gray-100' : 'text-gray-900'
+                    <div className="text-center mb-8 flex flex-col gap-1.5">
+                        <h2 className={`text-3xl font-bold tracking-tight ${
+                            isDarkMode ? 'text-zinc-50' : 'text-zinc-950'
                         }`}>
                             {country.name.common}
                         </h2>
-                        <p className={`text-lg ${
-                            isDarkMode ? 'text-gray-400' : 'text-gray-600'
+                        <p className={`text-base font-medium ${
+                            isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
                         }`}>
                             {country.name.official}
                         </p>
                     </div>
 
                     {/* Flag */}
-                    <div className="flex justify-center mb-6">
+                    <div className="flex justify-center mb-10">
                         <img 
                             src={country.flags.svg} 
                             alt={`${country.name.common} flag`} 
-                            className="w-48 h-auto rounded-lg shadow-lg border-2 border-gray-200 dark:border-gray-700" 
+                            className={`w-48 h-auto rounded-md shadow-sm border ${isDarkMode ? 'border-zinc-800' : 'border-zinc-200'}`} 
                         />
                     </div>
 
                     {/* Information Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className={`p-5 rounded-xl border ${
-                            isDarkMode ? 'bg-gray-800/50 border-gray-700/50' : 'bg-gray-50 border-gray-100'
+                        <div className={`p-5 rounded-lg border ${
+                            isDarkMode ? 'bg-zinc-900/40 border-zinc-800' : 'bg-zinc-50 border-zinc-200'
                         }`}>
-                            <h4 className={`font-semibold mb-2 flex items-center gap-2 ${
-                                isDarkMode ? 'text-blue-400' : 'text-blue-600'
+                            <h4 className={`text-sm font-medium mb-1.5 flex items-center gap-2 ${
+                                isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
                             }`}>
-                                <Building className="w-5 h-5" /> Capital
+                                <Building className="w-4 h-4" /> Capital
                             </h4>
-                            <p>{country.capital?.[0] || 'N/A'}</p>
+                            <p className="text-xl font-semibold tracking-tight">{country.capital?.[0] || 'N/A'}</p>
                         </div>
 
-                        <div className={`p-5 rounded-xl border ${
-                            isDarkMode ? 'bg-gray-800/50 border-gray-700/50' : 'bg-gray-50 border-gray-100'
+                        <div className={`p-5 rounded-lg border ${
+                            isDarkMode ? 'bg-zinc-900/40 border-zinc-800' : 'bg-zinc-50 border-zinc-200'
                         }`}>
-                            <h4 className={`font-semibold mb-2 flex items-center gap-2 ${
-                                isDarkMode ? 'text-green-400' : 'text-green-600'
+                            <h4 className={`text-sm font-medium mb-1.5 flex items-center gap-2 ${
+                                isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
                             }`}>
-                                <Globe2 className="w-5 h-5" /> Region
+                                <Globe2 className="w-4 h-4" /> Region
                             </h4>
-                            <p>{country.region}</p>
+                            <p className="text-xl font-semibold tracking-tight">{country.region}</p>
                             {country.subregion && (
-                                <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                                <p className={`text-sm mt-0.5 ${isDarkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>
                                     {country.subregion}
                                 </p>
                             )}
                         </div>
 
-                        <div className={`p-5 rounded-xl border ${
-                            isDarkMode ? 'bg-gray-800/50 border-gray-700/50' : 'bg-gray-50 border-gray-100'
+                        <div className={`p-5 rounded-lg border ${
+                            isDarkMode ? 'bg-zinc-900/40 border-zinc-800' : 'bg-zinc-50 border-zinc-200'
                         }`}>
-                            <h4 className={`font-semibold mb-2 flex items-center gap-2 ${
-                                isDarkMode ? 'text-purple-400' : 'text-purple-600'
+                            <h4 className={`text-sm font-medium mb-1.5 flex items-center gap-2 ${
+                                isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
                             }`}>
-                                <Users className="w-5 h-5" /> Population
+                                <Users className="w-4 h-4" /> Population
                             </h4>
-                            <p>{country.population.toLocaleString()}</p>
+                            <p className="text-xl font-semibold tracking-tight">{country.population.toLocaleString()}</p>
                         </div>
 
-                        <div className={`p-5 rounded-xl border ${
-                            isDarkMode ? 'bg-gray-800/50 border-gray-700/50' : 'bg-gray-50 border-gray-100'
+                        <div className={`p-5 rounded-lg border ${
+                            isDarkMode ? 'bg-zinc-900/40 border-zinc-800' : 'bg-zinc-50 border-zinc-200'
                         }`}>
-                            <h4 className={`font-semibold mb-2 flex items-center gap-2 ${
-                                isDarkMode ? 'text-orange-400' : 'text-orange-600'
+                            <h4 className={`text-sm font-medium mb-1.5 flex items-center gap-2 ${
+                                isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
                             }`}>
-                                <Maximize className="w-5 h-5" /> Area
+                                <Maximize className="w-4 h-4" /> Area
                             </h4>
-                            <p>{country.area.toLocaleString()} km²</p>
+                            <p className="text-xl font-semibold tracking-tight">{country.area.toLocaleString()} km²</p>
                         </div>
 
-                        <div className={`p-5 rounded-xl border md:col-span-2 ${
-                            isDarkMode ? 'bg-gray-800/50 border-gray-700/50' : 'bg-gray-50 border-gray-100'
+                        <div className={`p-5 rounded-lg border md:col-span-2 ${
+                            isDarkMode ? 'bg-zinc-900/40 border-zinc-800' : 'bg-zinc-50 border-zinc-200'
                         }`}>
-                            <h4 className={`font-semibold mb-2 flex items-center gap-2 ${
-                                isDarkMode ? 'text-yellow-400' : 'text-yellow-600'
+                            <h4 className={`text-sm font-medium mb-1.5 flex items-center gap-2 ${
+                                isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
                             }`}>
-                                <Coins className="w-5 h-5" /> Currency
+                                <Coins className="w-4 h-4" /> Currency
                             </h4>
-                            <p>
+                            <p className="text-xl font-semibold tracking-tight">
                                 {country.currencies
                                     ? Object.values(country.currencies)
                                         .map(c => `${c.name} (${c.symbol})`)
@@ -152,15 +152,15 @@ const CountryInfo = ({ region, isDarkMode }) => {
                     </div>
 
                     {/* Action Button */}
-                    <div className="mt-6 text-center">
+                    <div className="mt-8 text-center flex justify-center">
                         <a 
                             href={country.maps.googleMaps} 
                             target="_blank" 
                             rel="noopener noreferrer"
-                            className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all duration-200 hover:scale-[1.02] shadow-sm ${
+                            className={`inline-flex items-center justify-center whitespace-nowrap gap-2 px-6 py-2.5 rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 disabled:pointer-events-none disabled:opacity-50 ${
                                 isDarkMode 
-                                    ? 'bg-blue-600 hover:bg-blue-500 text-white' 
-                                    : 'bg-blue-600 hover:bg-blue-700 text-white'
+                                    ? 'bg-zinc-50 text-zinc-900 hover:bg-zinc-200' 
+                                    : 'bg-zinc-900 text-zinc-50 hover:bg-zinc-900/90'
                             }`}
                         >
                             View on Google Maps
@@ -169,12 +169,12 @@ const CountryInfo = ({ region, isDarkMode }) => {
                     </div>
                 </div>
             ) : (
-                <div className="text-center py-12 flex flex-col items-center">
-                    <SearchX className={`w-16 h-16 mb-4 ${isDarkMode ? 'text-gray-600' : 'text-gray-400'}`} />
-                    <h3 className={`text-lg font-semibold mb-2 ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
+                <div className="text-center py-16 flex flex-col items-center">
+                    <SearchX className={`w-12 h-12 mb-4 stroke-1 ${isDarkMode ? 'text-zinc-600' : 'text-zinc-400'}`} />
+                    <h3 className={`text-base font-semibold tracking-tight mb-1 ${isDarkMode ? 'text-zinc-50' : 'text-zinc-900'}`}>
                         No country information available
                     </h3>
-                    <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                    <p className={`text-sm flex flex-col gap-1.5 ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
                         Unable to find information for this location.
                     </p>
                 </div>

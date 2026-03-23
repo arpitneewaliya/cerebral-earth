@@ -19,12 +19,12 @@ const SlideOverPanel = ({
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/20 backdrop-blur-sm z-[1001] transition-opacity"
+        className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[1001] transition-opacity duration-300"
         onClick={onClose}
       />
 
       {/* Panel */}
-      <div className={`fixed top-0 right-0 h-full w-[720px] max-w-[90vw] z-[1002] shadow-2xl transform transition-transform duration-300 ease-out flex flex-col ${isDarkMode ? 'bg-gray-900/95 backdrop-blur-2xl border-l border-white/10' : 'bg-white/95 backdrop-blur-2xl border-l border-gray-200'
+      <div className={`fixed top-0 right-0 h-full w-[720px] max-w-[90vw] z-[1002] shadow-[0_0_40px_rgba(0,0,0,0.1)] transform transition-transform duration-300 ease-out flex flex-col ${isDarkMode ? 'bg-zinc-950/95 backdrop-blur-xl border-l border-zinc-800 text-zinc-50' : 'bg-white/95 backdrop-blur-xl border-l border-zinc-200 text-zinc-950'
         }`}>
         {/* Panel Header */}
         <PanelHeader
@@ -39,7 +39,7 @@ const SlideOverPanel = ({
         <div className="flex-1 min-h-0 overflow-y-scroll"
           style={{
             scrollbarWidth: 'thin',
-            scrollbarColor: isDarkMode ? '#4B5563 transparent' : '#9CA3AF transparent'
+            scrollbarColor: isDarkMode ? '#27272a transparent' : '#e4e4e7 transparent'
           }}>
           <RegionOptionsPanel
             region={region}
@@ -68,15 +68,15 @@ const PanelHeader = ({
   onClose,
   isDarkMode
 }) => (
-  <div className={`flex-shrink-0 p-6 border-b ${isDarkMode ? 'border-white/10' : 'border-gray-200'}`}>
-    <div className="flex items-center justify-between">
-      <div>
-        <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-gray-100' : 'text-gray-900'}`}>
+  <div className={`flex-shrink-0 p-6 border-b ${isDarkMode ? 'border-zinc-800 bg-zinc-950/50' : 'border-zinc-200 bg-white/50'}`}>
+    <div className="flex items-start justify-between">
+      <div className="flex flex-col gap-1">
+        <h3 className={`text-xl font-semibold tracking-tight ${isDarkMode ? 'text-zinc-50' : 'text-zinc-950'}`}>
           {countryName ? `Explore ${countryName}` : 'Explore Region'}
         </h3>
         {selectedOption && (
           <button
-            className={`text-sm flex items-center gap-1 mt-2 transition-colors px-3 py-1.5 rounded-lg font-medium ${isDarkMode ? 'bg-white/5 text-gray-300 hover:text-white hover:bg-white/10' : 'bg-gray-100 text-gray-600 hover:text-gray-900 hover:bg-gray-200'
+            className={`inline-flex items-center gap-1.5 mt-2 transition-colors px-3 py-1.5 rounded-md text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 w-fit ${isDarkMode ? 'text-zinc-400 hover:text-zinc-50 hover:bg-zinc-800/80' : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
               }`}
             onClick={() => setSelectedOption(null)}
           >
@@ -86,9 +86,9 @@ const PanelHeader = ({
         )}
       </div>
       <button
-        className={`p-2 rounded-xl transition-all duration-200 ${isDarkMode
-            ? 'hover:bg-white/10 text-gray-400 hover:text-gray-200'
-            : 'hover:bg-gray-100 text-gray-500 hover:text-gray-700'
+        className={`inline-flex items-center justify-center p-2 rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 ${isDarkMode
+            ? 'hover:bg-zinc-800 text-zinc-400 hover:text-zinc-50'
+            : 'hover:bg-zinc-100 text-zinc-500 hover:text-zinc-900'
           }`}
         onClick={onClose}
         aria-label="Close panel"

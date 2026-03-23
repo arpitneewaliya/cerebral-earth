@@ -53,46 +53,46 @@ const NewsList = ({ region, category, isDarkMode }) => {
           {news.map((article, index) => (
             <div
               key={index}
-              className={`rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl group flex flex-col ${isDarkMode ? 'bg-gray-800/80 backdrop-blur-md shadow-black/50 border border-gray-700/50' : 'bg-white shadow-gray-200/50 border border-gray-100'
+              className={`rounded-xl overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:shadow-md group flex flex-col border ${isDarkMode ? 'bg-zinc-950 border-zinc-800 shadow-none' : 'bg-white border-zinc-200 shadow-sm'
                 }`}
             >
-              <div className="relative overflow-hidden">
+              <div className={`relative overflow-hidden border-b ${isDarkMode ? 'border-zinc-800' : 'border-zinc-100'}`}>
                 <img
                   src={article.urlToImage || '/src/media/news-default.svg'}
                   alt="News"
-                  className="w-full h-48 object-cover transition-transform duration-200 group-hover:scale-105"
+                  className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105"
                   onError={(e) => {
                     e.target.src = '/src/media/news-default.svg';
                   }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
 
-              <div className="p-4 space-y-3">
-                <h3 className={`font-semibold text-lg leading-tight line-clamp-2 transition-colors ${isDarkMode ? 'text-blue-400 group-hover:text-blue-300' : 'text-blue-600 group-hover:text-blue-700'
+              <div className="p-5 flex-1 flex flex-col gap-3">
+                <h3 className={`font-semibold text-base leading-tight line-clamp-2 transition-colors ${isDarkMode ? 'text-zinc-50 group-hover:text-zinc-300' : 'text-zinc-950 group-hover:text-zinc-600'
                   }`}>
                   {article.title}
                 </h3>
 
-                <p className={`text-sm leading-relaxed line-clamp-3 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'
+                <p className={`text-sm leading-relaxed line-clamp-3 ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
                   }`}>
                   {article.summarizedText || article.description || 'No description available.'}
                 </p>
 
-                <div className="flex items-center justify-between pt-2">
+                <div className="flex items-center justify-between pt-2 mt-auto">
                   <a
                     href={article.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`inline-flex items-center gap-2 text-sm font-medium transition-colors group/link ${isDarkMode ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-700'
+                    className={`inline-flex items-center gap-1.5 text-sm font-medium transition-colors group/link ${isDarkMode ? 'text-zinc-50 hover:text-zinc-300' : 'text-zinc-900 hover:text-zinc-600'
                       }`}
                   >
-                    Read full article
-                    <ExternalLink className="w-4 h-4 transition-transform group-hover/link:translate-x-1 group-hover/link:-translate-y-1" />
+                    Read article
+                    <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
                   </a>
 
                   {article.source?.name && (
-                    <span className={`text-xs px-2 py-1 rounded-full ${isDarkMode ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-600'
+                    <span className={`text-xs px-2 py-0.5 rounded-md font-medium border ${isDarkMode ? 'bg-zinc-900 border-zinc-800 text-zinc-300' : 'bg-zinc-50 border-zinc-200 text-zinc-600'
                       }`}>
                       {article.source.name}
                     </span>
@@ -103,12 +103,12 @@ const NewsList = ({ region, category, isDarkMode }) => {
           ))}
         </div>
       ) : (
-        <div className="text-center py-12 flex flex-col items-center">
-          <Newspaper className={`w-16 h-16 mb-4 ${isDarkMode ? 'text-gray-600' : 'text-gray-400'}`} />
-          <h3 className={`text-lg font-semibold mb-2 ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
+        <div className="text-center py-16 flex flex-col items-center">
+          <Newspaper className={`w-12 h-12 mb-4 stroke-1 ${isDarkMode ? 'text-zinc-600' : 'text-zinc-400'}`} />
+          <h3 className={`text-base font-semibold tracking-tight mb-1 ${isDarkMode ? 'text-zinc-50' : 'text-zinc-900'}`}>
             No news found
           </h3>
-          <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+          <p className={`text-sm ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
             No news articles available for this region and category.
           </p>
         </div>
