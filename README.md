@@ -1,4 +1,4 @@
-# Roadmap of the News Map App(Cerebral Earth)
+# Cerebral Earth (News Map App)
 
 ## Aim of the Project
 - To create an interactive, map-based web application that allows users to explore world news and country-specific information visually.
@@ -20,8 +20,55 @@ The News Map App is designed with a diverse set of end-users in mind, ensuring t
 - **Policy Analysts and Professionals** – Individuals who analyze global trends and need a consolidated platform for news, statistics, and data visualization.
 - **General Public** – Everyday users who want to stay updated on trending news and explore world events in a simple, map-based format.
 
-By targeting these end-users, the project ensures that it is not limited to personal or casual use but can evolve into a tool of global relevance—bridging the gap between raw information and user-friendly presentation.
+## Tech Stack
 
+The application spans from a dynamic frontend visualization tool to a robust backend handling map mapping, news aggregation, and global data parsing.
 
-### Resources and references:
-- https://www.geeksforgeeks.org/blogs/best-project-development-tips-for-every-computer-science-student/
+### Frontend (`news-app`)
+- **Framework:** React 18, Vite
+- **Styling:** Tailwind CSS (v4)
+- **Map Integration:** React Leaflet / Leaflet
+- **Icons:** Lucide React
+- **API Requests:** Axios
+- **State/Hooks:** Custom React Hooks and Context API for structured state management
+
+### Backend (`news-api`)
+- **Server Environment:** Node.js, Express.js
+- **Artificial Intelligence:** Google Generative AI (`@google/generative-ai`), Local LLaMa Support (`llama_local.py`)
+- **Geocoding:** Node Geocoder
+- **Data Visualization Scripts:** Python (Generates analytical charts for metrics like GDP, FDI, Inflation, Literacy, Population, and Unemployment using Python data libraries)
+- **API & Middleware:** Axios, CORS, Dotenv
+
+## Folder Structure
+
+The project relies on a monolithic repo architecture structured into a dedicated frontend client (`news-app`) and backend server API (`news-api`).
+
+```text
+cerebral_earth/
+├── news-api/                     # Node.js + Python Backend Server
+│   ├── routes/                   # Express API Route handlers
+│   ├── server.js                 # Entry point for the backend server
+│   ├── gemini_ai.js              # Integration with Google Gemini AI
+│   ├── geocoding.js              # Geocoding utilities
+│   ├── generate_*_chart.py       # Python scripts for data vis (e.g. GDP, FDI, Population)
+│   ├── llama_local.py            # Local LLaMa processing script
+│   ├── requirements.txt          # Python dependencies
+│   ├── package.json              # Node.js dependencies
+│   └── .env                      # Environment variables
+│
+├── news-app/                     # React Frontend Application
+│   ├── public/                   # Public static assets
+│   ├── src/                      # Source code
+│   │   ├── components/           # Reusable React components (Map, Header, SlideOverPanel, etc.)
+│   │   ├── contexts/             # React Contexts for global state (e.g., ThemeContext)
+│   │   ├── hooks/                # Custom React hooks (useRegionData, useAppState)
+│   │   ├── media/                # Media & static assets
+│   │   ├── mocks/                # Mock data for testing/development
+│   │   ├── App.jsx               # Main application component handling map logic
+│   │   ├── index.css             # Global styles and Tailwind configuration
+│   │   └── index.jsx             # Entry point for the frontend
+│   ├── package.json              # Frontend dependencies and scripts
+│   └── vite.config.js            # Vite configuration
+│
+└── README.md                     # Project documentation overview
+```

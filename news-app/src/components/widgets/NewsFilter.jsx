@@ -1,14 +1,15 @@
 import React from 'react';
+import { Newspaper, Cpu, Briefcase, HeartPulse, FlaskConical, Trophy, Film } from 'lucide-react';
 
 const NewsFilter = ({ selectedCategory, onFilterChange, isDarkMode }) => {
   const categories = [
-    { value: 'All', icon: '📰', label: 'All News' },
-    { value: 'Technology', icon: '💻', label: 'Technology' },
-    { value: 'Business', icon: '💼', label: 'Business' },
-    { value: 'Health', icon: '🏥', label: 'Health' },
-    { value: 'Science', icon: '🔬', label: 'Science' },
-    { value: 'Sports', icon: '⚽', label: 'Sports' },
-    { value: 'Entertainment', icon: '🎭', label: 'Entertainment' }
+    { value: 'All', icon: <Newspaper size={16} />, label: 'All News' },
+    { value: 'Technology', icon: <Cpu size={16} />, label: 'Technology' },
+    { value: 'Business', icon: <Briefcase size={16} />, label: 'Business' },
+    { value: 'Health', icon: <HeartPulse size={16} />, label: 'Health' },
+    { value: 'Science', icon: <FlaskConical size={16} />, label: 'Science' },
+    { value: 'Sports', icon: <Trophy size={16} />, label: 'Sports' },
+    { value: 'Entertainment', icon: <Film size={16} />, label: 'Entertainment' }
   ];
 
   return (
