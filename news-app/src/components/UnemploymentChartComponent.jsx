@@ -1,44 +1,76 @@
 import React, { useEffect, useState } from 'react';
+import { LoadingSpinner, ChartSkeleton, ErrorMessage } from './LoadingComponents.jsx';
 
-const UnemploymentChartComponent = ({ countryName, countryCode, start = 2000, end = 2023 }) => {
+const UnemploymentChartComponent = ({ countryName, countryCode, start = 2000, end = 2023, isDarkMode }) => {
   const [imageBase64, setImageBase64] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const fetchChart = async () => {
+    if (!countryCode) return;
+    
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const response = await fetch(`http://localhost:5000/api/unemployment-chart/${countryCode}?start=${start}&end=${end}`);
+      const data = await response.json();
+
+      if (response.ok && data.imageBase64) {
+        setImageBase64(data.imageBase64);
+      } else {
+        setError('Unemployment chart generation failed. Please try again.');
+      }
+    } catch (err) {
+      setError('Failed to connect to the server. Please check your connection.');
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    if (!countryCode) return;
-
-    const fetchChart = async () => {
-      try {
-        const response = await fetch(`http://localhost:5000/api/unemployment-chart/${countryCode}?start=${start}&end=${end}`);
-        const data = await response.json();
-
-        if (response.ok && data.imageBase64) {
-          setImageBase64(data.imageBase64);
-          setError(null);
-        } else {
-          setError('Chart generation failed');
-        }
-      } catch (err) {
-        setError('Failed to fetch chart');
-        console.error(err);
-      }
-    };
-
     fetchChart();
   }, [countryName, countryCode, start, end]);
 
+  if (loading) {
+    return <ChartSkeleton isDarkMode={isDarkMode} />;
+  }
+
+  if (error) {
+    return <ErrorMessage message={error} onRetry={fetchChart} isDarkMode={isDarkMode} />;
+  }
+
   return (
-    <div>
-      <h2>Unemployment Rate Chart for {countryName}</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+    <div className="p-6">
+      <div className="mb-6">
+        <h2 className={`text-2xl font-bold mb-2 ${isDarkMode ? 'text-gray-100' : 'text-gray-900'}`}>
+          Unemployment Rate Trends
+        </h2>
+        <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+          {countryName} • {start} - {end}
+        </p>
+      </div>
+      
       {imageBase64 ? (
-        <img
-          src={`data:image/png;base64,${imageBase64}`}
-          alt={`Unemployment Chart of ${countryCode}`}
-          style={{ width: '100%', maxWidth: '800px' }}
-        />
+        <div className={`rounded-lg overflow-hidden border ${
+          isDarkMode ? 'border-gray-700 bg-gray-800' : 'border-gray-200 bg-white'
+        }`}>
+          <img
+            src={`data:image/png;base64,${imageBase64}`}
+            alt={`Unemployment Chart of ${countryName}`}
+            className="w-full h-auto"
+          />
+        </div>
       ) : (
-        !error && <p>Loading chart...</p>
+        <div className="flex items-center justify-center h-64 border-2 border-dashed border-gray-300 rounded-lg">
+          <div className="text-center">
+            <LoadingSpinner size="lg" />
+            <p className={`mt-2 text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+              Generating chart...
+            </p>
+          </div>
+        </div>
       )}
     </div>
   );

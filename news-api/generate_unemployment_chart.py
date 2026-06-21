@@ -58,4 +58,5 @@ if __name__ == "__main__":
         result = generate_chart(country_code, start_year, end_year)
         print(result)
     except Exception as e:
-        print("Error:", e)
+        sys.stderr.write(f"Error: {e}\n")
+        sys.exit(1)

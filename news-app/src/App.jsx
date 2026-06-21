@@ -23,13 +23,15 @@ const App = () => {
   const { news } = useNews();
   const { countryCode, countryName } = useRegionData(region);
 
-  const pins = news.map(article => ({
-    position: [article.lat, article.lng],
-    image: article.urlToImage,
-    title: article.title,
-    url: article.url,
-    category: 'Default'
-  }));
+  const pins = news
+    .filter(article => typeof article.lat === 'number' && typeof article.lng === 'number' && !isNaN(article.lat) && !isNaN(article.lng))
+    .map(article => ({
+      position: [article.lat, article.lng],
+      image: article.urlToImage,
+      title: article.title,
+      url: article.url,
+      category: 'Default'
+    }));
 
   return (
     <div className={`flex flex-col h-screen text-center transition-colors duration-200 ${

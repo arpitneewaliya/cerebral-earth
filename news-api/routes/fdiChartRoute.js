@@ -1,12 +1,14 @@
 const express = require('express');
 const { spawn } = require('child_process');
+const { getPythonExecutable } = require('../pythonResolver');
 const router = express.Router();
 
 router.get('/:countryCode', (req, res) => {
   const { countryCode } = req.params;
   const { start = 2000, end = 2023 } = req.query;
 
-  const python = spawn('python', ['generate_fdi_chart.py', countryCode, start, end]);
+  const pythonExecutable = getPythonExecutable();
+  const python = spawn(pythonExecutable, ['generate_fdi_chart.py', countryCode, start, end]);
 
   let output = '';
   python.stdout.on('data', data => output += data.toString());

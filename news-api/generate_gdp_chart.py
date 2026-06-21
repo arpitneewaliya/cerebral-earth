@@ -60,4 +60,5 @@ if __name__ == "__main__":
         img_base64 = generate_gdp_chart(country_code, start_year, end_year)
         print(img_base64)
     except Exception as e:
-        print(f"Error: {e}")
+        sys.stderr.write(f"Error: {e}\n")
+        sys.exit(1)

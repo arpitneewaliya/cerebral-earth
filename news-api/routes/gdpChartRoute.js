@@ -1,13 +1,15 @@
 // gdpChartRoute.js
 const express = require('express');
 const { spawn } = require('child_process');
+const { getPythonExecutable } = require('../pythonResolver');
 const router = express.Router();
 
 router.get('/:countryCode', (req, res) => {
   const { countryCode } = req.params;
   const { start = 1960, end = 2023 } = req.query;
 
-  const python = spawn('python', ['generate_gdp_chart.py', countryCode, start, end]);
+  const pythonExecutable = getPythonExecutable();
+  const python = spawn(pythonExecutable, ['generate_gdp_chart.py', countryCode, start, end]);
 
   let output = '';
   python.stdout.on('data', data => output += data.toString());

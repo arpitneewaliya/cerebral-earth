@@ -115,6 +115,15 @@ const MainOptions = ({ setSelectedOption, isDarkMode }) => (
 );
 
 const ChartsOptions = ({ setSelectedOption, isDarkMode }) => {
+  const hoverStyles = {
+    blue: isDarkMode ? 'hover:border-blue-500/50 hover:bg-white/10' : 'hover:border-blue-400 hover:bg-blue-50/50',
+    purple: isDarkMode ? 'hover:border-purple-500/50 hover:bg-white/10' : 'hover:border-purple-400 hover:bg-purple-50/50',
+    orange: isDarkMode ? 'hover:border-orange-500/50 hover:bg-white/10' : 'hover:border-orange-400 hover:bg-orange-50/50',
+    red: isDarkMode ? 'hover:border-red-500/50 hover:bg-white/10' : 'hover:border-red-400 hover:bg-red-50/50',
+    yellow: isDarkMode ? 'hover:border-yellow-500/50 hover:bg-white/10' : 'hover:border-yellow-400 hover:bg-yellow-50/50',
+    indigo: isDarkMode ? 'hover:border-indigo-500/50 hover:bg-white/10' : 'hover:border-indigo-400 hover:bg-indigo-50/50',
+  };
+
   const chartOptions = [
     { key: 'chart', icon: <TrendingUp className="w-5 h-5 text-blue-500" />, title: 'GDP Trends', description: 'Economic growth over time', color: 'blue' },
     { key: 'population', icon: <Users className="w-5 h-5 text-purple-500" />, title: 'Population', description: 'Demographic trends', color: 'purple' },
@@ -136,9 +145,9 @@ const ChartsOptions = ({ setSelectedOption, isDarkMode }) => {
             key={option.key}
             className={`w-full p-4 rounded-xl border transition-all duration-200 text-left hover:scale-[1.01] ${
               isDarkMode 
-                ? `bg-white/5 border-white/10 hover:border-${option.color}-500/50 hover:bg-white/10` 
-                : `bg-white border-gray-200 hover:border-${option.color}-400 hover:bg-${option.color}-50 shadow-sm`
-            }`}
+                ? 'bg-white/5 border-white/10' 
+                : 'bg-white border-gray-200 shadow-sm'
+            } ${hoverStyles[option.color] || ''}`}
             onClick={() => setSelectedOption(option.key)}
           >
             <div className="flex items-center gap-4">
