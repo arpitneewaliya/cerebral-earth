@@ -1,27 +1,35 @@
 // gdpChartRoute.js
 const express = require('express');
-const { spawn } = require('child_process');
-const { getPythonExecutable } = require('../pythonResolver');
+const axios = require('axios');
 const router = express.Router();
 
-router.get('/:countryCode', (req, res) => {
+router.get('/:countryCode', async (req, res) => {
   const { countryCode } = req.params;
   const { start = 1960, end = 2023 } = req.query;
 
-  const pythonExecutable = getPythonExecutable();
-  const python = spawn(pythonExecutable, ['generate_gdp_chart.py', countryCode, start, end]);
+  try {
+    const url = `http://api.worldbank.org/v2/country/${countryCode}/indicator/NY.GDP.MKTP.CD?date=${start}:${end}&format=json`;
+    const response = await axios.get(url);
 
-  let output = '';
-  python.stdout.on('data', data => output += data.toString());
-  python.stderr.on('data', err => console.error('Python error:', err.toString()));
-
-  python.on('close', code => {
-    if (code === 0) {
-      res.json({ imageBase64: output.trim() });
-    } else {
-      res.status(500).json({ error: 'Chart generation failed' });
+    if (!response.data || response.data.length < 2 || !Array.isArray(response.data[1])) {
+      return res.json([]);
     }
-  });
+
+    const records = response.data[1];
+    const formatted = records
+      .filter(record => record.value !== null)
+      .map(record => ({
+        year: parseInt(record.date),
+        value: record.value
+      }))
+      .sort((a, b) => a.year - b.year);
+
+    res.json(formatted);
+  } catch (error) {
+    console.error('Error fetching GDP data:', error.message);
+    res.status(500).json({ error: 'Failed to fetch GDP data' });
+  }
 });
 
 module.exports = router;
+

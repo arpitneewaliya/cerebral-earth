@@ -1,9 +1,9 @@
-// ChartComponent.jsx
 import React, { useEffect, useState } from 'react';
 import { LoadingSpinner, ChartSkeleton, ErrorMessage } from './LoadingComponents.jsx';
+import InteractiveChart from './InteractiveChart.jsx';
 
 const ChartComponent = ({ countryName, countryCode, start = 1960, end = 2023, isDarkMode }) => {
-  const [imageBase64, setImageBase64] = useState(null);
+  const [chartData, setChartData] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -17,10 +17,10 @@ const ChartComponent = ({ countryName, countryCode, start = 1960, end = 2023, is
       const response = await fetch(`http://localhost:5000/api/chart/${countryCode}?start=${start}&end=${end}`);
       const data = await response.json();
 
-      if (response.ok && data.imageBase64) {
-        setImageBase64(data.imageBase64);
+      if (response.ok) {
+        setChartData(data);
       } else {
-        setError('Chart generation failed. Please try again.');
+        setError('GDP chart data retrieval failed. Please try again.');
       }
     } catch (err) {
       setError('Failed to connect to the server. Please check your connection.');
@@ -48,31 +48,22 @@ const ChartComponent = ({ countryName, countryCode, start = 1960, end = 2023, is
         <h2 className={`text-2xl font-bold mb-2 ${isDarkMode ? 'text-gray-100' : 'text-gray-900'}`}>
           GDP Trends
         </h2>
-        <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+        <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-zinc-500'}`}>
           {countryName} • {start} - {end}
         </p>
       </div>
       
-      {imageBase64 ? (
-        <div className={`rounded-lg overflow-hidden border ${
-          isDarkMode ? 'border-gray-700 bg-gray-800' : 'border-gray-200 bg-white'
-        }`}>
-          <img
-            src={`data:image/png;base64,${imageBase64}`}
-            alt={`GDP Chart of ${countryName}`}
-            className="w-full h-auto"
-          />
-        </div>
-      ) : (
-        <div className="flex items-center justify-center h-64 border-2 border-dashed border-gray-300 rounded-lg">
-          <div className="text-center">
-            <LoadingSpinner size="lg" />
-            <p className={`mt-2 text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-              Generating chart...
-            </p>
-          </div>
-        </div>
-      )}
+      <div className={`p-4 rounded-xl border ${
+        isDarkMode ? 'border-zinc-800 bg-zinc-950/40' : 'border-zinc-200 bg-white'
+      }`}>
+        <InteractiveChart
+          data={chartData}
+          type="area"
+          name="GDP"
+          unit="USD"
+          isDarkMode={isDarkMode}
+        />
+      </div>
     </div>
   );
 };
