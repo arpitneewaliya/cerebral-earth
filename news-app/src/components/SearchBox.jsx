@@ -52,7 +52,7 @@ const SearchBox = ({ onSelectLocation, isDarkMode }) => {
   };
 
   return (
-    <div className="absolute top-20 left-4 z-[1000] w-80 max-w-[calc(100vw-2rem)]">
+    <div className="absolute top-4 left-16 z-[1000] w-80 max-w-[calc(100vw-2rem)]">
       {/* Search Input Container */}
       <div className={`relative flex items-center rounded-xl shadow-lg border transition-all duration-200 backdrop-blur-md ${
         isDarkMode 

@@ -13,17 +13,17 @@ const SlideOverPanel = ({
   countryName,
   isDarkMode
 }) => {
-  const [position, setPosition] = React.useState({ x: null, y: 80 });
+  const [position, setPosition] = React.useState({ x: null, y: 16 });
   const [size, setSize] = React.useState({ width: 460, height: 600 });
 
   // Initialize position to the top-right on open
   React.useEffect(() => {
     if (isOpen && position.x === null) {
       const defaultWidth = Math.min(460, window.innerWidth - 32);
-      const defaultHeight = Math.min(600, window.innerHeight - 100);
+      const defaultHeight = Math.min(600, window.innerHeight - 40);
       setPosition({
         x: window.innerWidth - defaultWidth - 16,
-        y: 80
+        y: 16
       });
       setSize({
         width: defaultWidth,
@@ -40,7 +40,7 @@ const SlideOverPanel = ({
         const maxX = window.innerWidth - size.width - 8;
         const maxY = window.innerHeight - 50;
         const newX = Math.max(8, Math.min(prev.x, maxX));
-        const newY = Math.max(72, Math.min(prev.y, maxY));
+        const newY = Math.max(16, Math.min(prev.y, maxY));
         return { x: newX, y: newY };
       });
     };
@@ -73,7 +73,7 @@ const SlideOverPanel = ({
       const maxY = window.innerHeight - 50;
 
       newX = Math.max(8, Math.min(newX, maxX));
-      newY = Math.max(72, Math.min(newY, maxY));
+      newY = Math.max(16, Math.min(newY, maxY));
 
       setPosition({ x: newX, y: newY });
     };

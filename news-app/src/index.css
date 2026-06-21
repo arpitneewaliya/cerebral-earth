@@ -122,12 +122,12 @@ html.dark *,
   -webkit-backdrop-filter: blur(10px);
 }
 
-/* Adjust Leaflet zoom controls so they don't sit underneath the fixed header.
+/* Adjust Leaflet zoom controls so they don't sit underneath the search bar.
    We add higher specificity + !important because leaflet.css (imported in Map.jsx)
    may load after this file and otherwise override 'top'. */
 .leaflet-container .leaflet-top.leaflet-left {
-  top: 136px !important;
-  /* Header height (64px) + SearchBox height (~42px) + spacing */
+  top: 64px !important;
+  /* SearchBox height (~42px) + spacing */
 }
 
 /* If you later move zoom control to the right (position="topright"), uncomment:
