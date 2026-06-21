@@ -126,8 +126,8 @@ html.dark *,
    We add higher specificity + !important because leaflet.css (imported in Map.jsx)
    may load after this file and otherwise override 'top'. */
 .leaflet-container .leaflet-top.leaflet-left {
-  top: 72px !important;
-  /* Header height (h-16 = 64px) + spacing */
+  top: 136px !important;
+  /* Header height (64px) + SearchBox height (~42px) + spacing */
 }
 
 /* If you later move zoom control to the right (position="topright"), uncomment:

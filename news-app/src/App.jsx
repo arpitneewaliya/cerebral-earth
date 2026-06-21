@@ -41,6 +41,7 @@ const App = () => {
 
       <div className={`mt-16 h-full ${isDarkMode ? 'dark-theme-map' : ''}`}>
         <Map
+          region={region}
           setRegion={handleRegionSelect}
           pins={pins}
           isDarkMode={isDarkMode}
