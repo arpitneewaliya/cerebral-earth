@@ -34,32 +34,28 @@ The application spans from a dynamic frontend visualization tool to a robust bac
 
 ### Backend (`news-api`)
 - **Server Environment:** Node.js, Express.js
-- **Artificial Intelligence:** Google Generative AI (`@google/generative-ai`), Local LLaMa Support (`llama_local.py`)
+- **Artificial Intelligence:** Google Generative AI (`@google/generative-ai`)
 - **Geocoding:** Node Geocoder
-- **Data Visualization Scripts:** Python (Generates analytical charts for metrics like GDP, FDI, Inflation, Literacy, Population, and Unemployment using Python data libraries)
 - **API & Middleware:** Axios, CORS, Dotenv
 
 ## Folder Structure
 
-The project relies on a monolithic repo architecture structured into a dedicated frontend client (`news-app`) and backend server API (`news-api`).
+The project relies on a monolithic repo architecture structured into a dedicated frontend client (`news-app`) and backend server API (`news-api`), configured as npm workspaces.
 
 ```text
 cerebral_earth/
-├── news-api/                     # Node.js + Python Backend Server
-│   ├── routes/                   # Express API Route handlers
+├── news-api/                     # Express Node.js Backend Server
+│   ├── routes/                   # Express API Route handlers (consolidated dynamic charts, news, geocode)
 │   ├── server.js                 # Entry point for the backend server
 │   ├── gemini_ai.js              # Integration with Google Gemini AI
 │   ├── geocoding.js              # Geocoding utilities
-│   ├── generate_*_chart.py       # Python scripts for data vis (e.g. GDP, FDI, Population)
-│   ├── llama_local.py            # Local LLaMa processing script
-│   ├── requirements.txt          # Python dependencies
 │   ├── package.json              # Node.js dependencies
 │   └── .env                      # Environment variables
 │
 ├── news-app/                     # React Frontend Application
 │   ├── public/                   # Public static assets
 │   ├── src/                      # Source code
-│   │   ├── components/           # Reusable React components (Map, Header, SlideOverPanel, etc.)
+│   │   ├── components/           # Reusable React components (Map, Header, SlideOverPanel, IndicatorChart, etc.)
 │   │   ├── contexts/             # React Contexts for global state (e.g., ThemeContext)
 │   │   ├── hooks/                # Custom React hooks (useRegionData, useAppState)
 │   │   ├── media/                # Media & static assets
@@ -70,5 +66,6 @@ cerebral_earth/
 │   ├── package.json              # Frontend dependencies and scripts
 │   └── vite.config.js            # Vite configuration
 │
+├── package.json                  # Workspace definition and startup scripts
 └── README.md                     # Project documentation overview
 ```
