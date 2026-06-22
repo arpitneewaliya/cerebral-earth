@@ -3,6 +3,7 @@ import axios from 'axios';
 
 export const useRegionData = (region) => {
   const [countryCode, setCountryCode] = useState(null);
+  const [alpha3Code, setAlpha3Code] = useState(null);
   const [countryName, setCountryName] = useState(null);
 
   // Fetch country code when a region is selected
@@ -14,6 +15,7 @@ export const useRegionData = (region) => {
             `http://localhost:5000/api/reverse-geocode-country-code?lat=${region.lat}&lon=${region.lng}`
           );
           setCountryCode(res.data.countryCode);
+          setAlpha3Code(res.data.alpha3Code);
         } catch (err) {
           console.error('Error fetching country code:', err.message);
         }
@@ -39,7 +41,7 @@ export const useRegionData = (region) => {
     getCountryName();
   }, [region]);
 
-  return { countryCode, countryName };
+  return { countryCode, alpha3Code, countryName };
 };
 
 export const useNews = () => {

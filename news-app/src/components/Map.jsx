@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { MapContainer, TileLayer, useMapEvents, useMap, GeoJSON } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import Pin from './Pin';
@@ -22,8 +22,9 @@ const MapAutofocus = ({ region }) => {
   return null;
 };
 
-const Map = ({ region, setRegion, pins, isDarkMode }) => {
+const Map = ({ region, setRegion, pins, isDarkMode, selectedCountryId }) => {
   const [geoJsonData, setGeoJsonData] = useState(null);
+  const geoJsonRef = useRef(null);
 
   useEffect(() => {
     fetch('/countries.geojson')
@@ -41,28 +42,37 @@ const Map = ({ region, setRegion, pins, isDarkMode }) => {
     return null;
   };
 
+  // Compute the styling rule for a feature (country)
+  const getFeatureStyle = (feature) => {
+    const isSelected = selectedCountryId && selectedCountryId === feature.id;
+    return {
+      color: isSelected ? (isDarkMode ? '#60a5fa' : '#2563eb') : 'transparent',
+      weight: isSelected ? 2.0 : 0,
+      fillColor: isSelected ? (isDarkMode ? '#60a5fa' : '#2563eb') : 'transparent',
+      fillOpacity: isSelected ? 0.08 : 0,
+    };
+  };
+
+  // Re-apply style when selectedCountryId or isDarkMode changes
+  useEffect(() => {
+    if (geoJsonRef.current) {
+      geoJsonRef.current.setStyle(getFeatureStyle);
+
+      // Pop the highlighted boundary to the front layer so it draws clean borders on top
+      if (selectedCountryId) {
+        geoJsonRef.current.eachLayer((layer) => {
+          if (layer.feature && layer.feature.id === selectedCountryId) {
+            layer.bringToFront();
+          }
+        });
+      }
+    }
+  }, [selectedCountryId, isDarkMode, geoJsonData]);
+
   const onEachFeature = (feature, layer) => {
     layer.on({
-      mouseover: (e) => {
-        const targetLayer = e.target;
-        targetLayer.setStyle({
-          color: isDarkMode ? '#60a5fa' : '#2563eb', // soft blue in dark mode, clear blue in light mode
-          weight: 2.0, // clean, high-precision border line
-          fillColor: isDarkMode ? '#60a5fa' : '#2563eb',
-          fillOpacity: 0.06, // subtle, premium backdrop glow
-        });
-        targetLayer.bringToFront();
-      },
-      mouseout: (e) => {
-        const targetLayer = e.target;
-        targetLayer.setStyle({
-          color: 'transparent',
-          weight: 0,
-          fillColor: 'transparent',
-          fillOpacity: 0,
-        });
-      },
       click: (e) => {
+        // Triggers region updates on click
         setRegion({ lat: e.latlng.lat, lng: e.latlng.lng });
       },
     });
@@ -104,14 +114,9 @@ const Map = ({ region, setRegion, pins, isDarkMode }) => {
         
         {geoJsonData && (
           <GeoJSON
-            key={isDarkMode ? 'geojson-dark' : 'geojson-light'}
+            ref={geoJsonRef}
             data={geoJsonData}
-            style={{
-              color: 'transparent', // invisible by default to avoid overlapping map tile borders
-              weight: 0,
-              fillColor: 'transparent',
-              fillOpacity: 0,
-            }}
+            style={getFeatureStyle}
             onEachFeature={onEachFeature}
           />
         )}
@@ -132,4 +137,3 @@ const Map = ({ region, setRegion, pins, isDarkMode }) => {
 };
 
 export default Map;
-

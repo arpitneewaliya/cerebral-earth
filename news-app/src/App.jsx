@@ -21,7 +21,7 @@ const App = () => {
   } = useAppState();
 
   const { news } = useNews();
-  const { countryCode, countryName } = useRegionData(region);
+  const { countryCode, alpha3Code, countryName } = useRegionData(region);
 
   const pins = news
     .filter(article => typeof article.lat === 'number' && typeof article.lng === 'number' && !isNaN(article.lat) && !isNaN(article.lng))
@@ -45,6 +45,7 @@ const App = () => {
           setRegion={handleRegionSelect}
           pins={pins}
           isDarkMode={isDarkMode}
+          selectedCountryId={alpha3Code}
         />
       </div>
 
