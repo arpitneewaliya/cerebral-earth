@@ -17,7 +17,7 @@ const SearchBox = ({ onSelectLocation, isDarkMode }) => {
     const fetchSuggestions = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:5000/api/search?q=${encodeURIComponent(query)}`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/search?q=${encodeURIComponent(query)}`);
         setSuggestions(response.data);
       } catch (err) {
         console.error('Error fetching search results:', err);

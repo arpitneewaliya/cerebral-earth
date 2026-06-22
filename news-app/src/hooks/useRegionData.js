@@ -12,7 +12,7 @@ export const useRegionData = (region) => {
       if (region && region.lat && region.lng) {
         try {
           const res = await axios.get(
-            `http://localhost:5000/api/reverse-geocode-country-code?lat=${region.lat}&lon=${region.lng}`
+            `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reverse-geocode-country-code?lat=${region.lat}&lon=${region.lng}`
           );
           setCountryCode(res.data.countryCode);
           setAlpha3Code(res.data.alpha3Code);
@@ -30,7 +30,7 @@ export const useRegionData = (region) => {
       if (region && region.lat && region.lng) {
         try {
           const res = await axios.get(
-            `http://localhost:5000/api/reverse-geocode-country-name?lat=${region.lat}&lon=${region.lng}`
+            `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reverse-geocode-country-name?lat=${region.lat}&lon=${region.lng}`
           );
           setCountryName(res.data.countryName);
         } catch (err) {
@@ -55,7 +55,7 @@ export const useNews = () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await axios.get('http://localhost:5000/api/major-news');
+        const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/major-news`);
         setNews(response.data);
       } catch (err) {
         setError('Error fetching news');

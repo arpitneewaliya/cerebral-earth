@@ -1,0 +1,34 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "news-app/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    },
+    {
+      "src": "news-api/server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "news-api/server.js"
+    },
+    {
+      "src": "/countries.geojson",
+      "dest": "news-app/countries.geojson"
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "news-app/assets/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "news-app/$1"
+    }
+  ]
+}
