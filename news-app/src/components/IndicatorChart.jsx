@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { LoadingSpinner, ChartSkeleton, ErrorMessage } from './LoadingComponents.jsx';
 import InteractiveChart from './InteractiveChart.jsx';
 
+const API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:5000' : '');
+
 const IndicatorChart = ({ 
   indicator, 
   title, 
@@ -24,7 +26,7 @@ const IndicatorChart = ({
     setError(null);
     
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/charts/${indicator}/${countryCode}?start=${start}&end=${end}`);
+      const response = await fetch(`${API_BASE}/api/charts/${indicator}/${countryCode}?start=${start}&end=${end}`);
       const data = await response.json();
 
       if (response.ok) {

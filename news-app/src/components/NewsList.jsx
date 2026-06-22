@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Newspaper, ExternalLink } from 'lucide-react';
 import { SkeletonList, ErrorMessage } from './LoadingComponents.jsx';
 
+const API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:5000' : '');
+
 const NewsList = ({ region, category, isDarkMode }) => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -15,7 +17,7 @@ const NewsList = ({ region, category, isDarkMode }) => {
     setError(null);
 
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/news`, {
+      const response = await axios.get(`${API_BASE}/api/news`, {
         params: {
           lat: region.lat,
           lng: region.lng,

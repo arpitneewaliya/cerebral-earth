@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Building, Globe2, Users, Maximize, Coins, SearchX, ExternalLink } from 'lucide-react';
 import { LoadingSpinner, ErrorMessage } from './LoadingComponents.jsx';
 
+const API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:5000' : '');
+
 const CountryInfo = ({ region, isDarkMode }) => {
     const [country, setCountry] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -15,7 +17,7 @@ const CountryInfo = ({ region, isDarkMode }) => {
         setError(null);
         
         try {
-            const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/country-info`, {
+            const response = await axios.get(`${API_BASE}/api/country-info`, {
                 params: {
                     lat: region.lat,
                     lng: region.lng,

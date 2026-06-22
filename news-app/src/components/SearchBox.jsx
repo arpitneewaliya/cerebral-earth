@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Search, Loader2, X } from 'lucide-react';
 import axios from 'axios';
 
+const API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:5000' : '');
+
 const SearchBox = ({ onSelectLocation, isDarkMode }) => {
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
@@ -17,7 +19,7 @@ const SearchBox = ({ onSelectLocation, isDarkMode }) => {
     const fetchSuggestions = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/search?q=${encodeURIComponent(query)}`);
+        const response = await axios.get(`${API_BASE}/api/search?q=${encodeURIComponent(query)}`);
         setSuggestions(response.data);
       } catch (err) {
         console.error('Error fetching search results:', err);
