@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { MapContainer, TileLayer, useMapEvents, useMap } from 'react-leaflet';
+import React, { useEffect, useState } from 'react';
+import { MapContainer, TileLayer, useMapEvents, useMap, GeoJSON } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import Pin from './Pin';
 import SearchBox from './SearchBox.jsx';
@@ -23,6 +23,15 @@ const MapAutofocus = ({ region }) => {
 };
 
 const Map = ({ region, setRegion, pins, isDarkMode }) => {
+  const [geoJsonData, setGeoJsonData] = useState(null);
+
+  useEffect(() => {
+    fetch('/countries.geojson')
+      .then((res) => res.json())
+      .then((data) => setGeoJsonData(data))
+      .catch((err) => console.error('Error loading country borders:', err));
+  }, []);
+
   const MapClickHandler = () => {
     useMapEvents({
       click: (e) => {
@@ -32,9 +41,33 @@ const Map = ({ region, setRegion, pins, isDarkMode }) => {
     return null;
   };
 
-  // We consistently use the 'light_all' tiles here. 
-  // In Dark Mode, we use CSS filters in index.css (.dark-theme-map .leaflet-tile-pane) 
-  // to invert the light tiles. This generates a dark map with perfectly white, clear text labels!
+  const onEachFeature = (feature, layer) => {
+    layer.on({
+      mouseover: (e) => {
+        const targetLayer = e.target;
+        targetLayer.setStyle({
+          color: '#3b82f6', // vibrant blue highlight
+          weight: 2.5,
+          fillColor: '#3b82f6',
+          fillOpacity: 0.08,
+        });
+        targetLayer.bringToFront();
+      },
+      mouseout: (e) => {
+        const targetLayer = e.target;
+        targetLayer.setStyle({
+          color: isDarkMode ? '#52525b' : '#a1a1aa', // zinc-600 in dark mode, zinc-400 in light mode
+          weight: 0.8,
+          fillColor: '#3b82f6',
+          fillOpacity: 0,
+        });
+      },
+      click: (e) => {
+        setRegion({ lat: e.latlng.lat, lng: e.latlng.lng });
+      },
+    });
+  };
+
   const tileUrl = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
 
   return (
@@ -43,7 +76,6 @@ const Map = ({ region, setRegion, pins, isDarkMode }) => {
       <MapContainer
         center={[28.7, 77.1]}
         zoom={2.5}
-        // Full-screen styles
         style={{
           position: 'fixed',
           top: 0,
@@ -69,6 +101,21 @@ const Map = ({ region, setRegion, pins, isDarkMode }) => {
         />
         <MapClickHandler />
         <MapAutofocus region={region} />
+        
+        {geoJsonData && (
+          <GeoJSON
+            key={isDarkMode ? 'geojson-dark' : 'geojson-light'}
+            data={geoJsonData}
+            style={{
+              color: isDarkMode ? '#52525b' : '#a1a1aa',
+              weight: 0.8,
+              fillColor: '#3b82f6',
+              fillOpacity: 0,
+            }}
+            onEachFeature={onEachFeature}
+          />
+        )}
+
         {pins.map((pin, index) => (
           <Pin
             key={index}
@@ -85,3 +132,4 @@ const Map = ({ region, setRegion, pins, isDarkMode }) => {
 };
 
 export default Map;
+
