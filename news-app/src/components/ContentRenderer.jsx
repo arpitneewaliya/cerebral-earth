@@ -1,12 +1,7 @@
 import React from 'react';
 import NewsContainer from './NewsContainer.jsx';
 import CountryInfo from './CountryInfo.jsx';
-import ChartComponent from './ChartComponent.jsx';
-import PopulationChartComponent from './PopulationChartComponent.jsx';
-import FDIChartComponent from './FDIChartComponent.jsx';
-import InflationChartComponent from './InflationChartComponent.jsx';
-import UnemploymentChartComponent from './UnemploymentChartComponent.jsx';
-import LiteracyChartComponent from './LiteracyChartComponent.jsx';
+import IndicatorChart from './IndicatorChart.jsx';
 import { LoadingSpinner } from './LoadingComponents.jsx';
 
 const ContentRenderer = ({ 
@@ -29,17 +24,11 @@ const ContentRenderer = ({
     </div>
   );
 
-  const chartProps = {
+  const baseChartProps = {
     countryName,
     countryCode,
-    start: 1960,
-    end: 2023,
-    isDarkMode
-  };
-
-  const literacyProps = {
-    ...chartProps,
-    start: 1980
+    isDarkMode,
+    end: 2023
   };
 
   switch (selectedOption) {
@@ -51,32 +40,32 @@ const ContentRenderer = ({
     
     case 'chart':
       return countryCode ? 
-        <ChartComponent {...chartProps} /> : 
+        <IndicatorChart {...baseChartProps} indicator="gdp" title="GDP Trends" chartType="area" start={1960} unit="USD" /> : 
         renderLoadingState();
     
     case 'population':
       return countryCode ? 
-        <PopulationChartComponent {...chartProps} /> : 
+        <IndicatorChart {...baseChartProps} indicator="population" title="Population" chartType="line" start={1960} /> : 
         renderLoadingState();
     
     case 'fdi':
       return countryCode ? 
-        <FDIChartComponent {...chartProps} /> : 
+        <IndicatorChart {...baseChartProps} indicator="fdi" title="Foreign Direct Investments (FDI)" chartType="line" start={2000} unit="USD" /> : 
         renderLoadingState();
     
     case 'inflation':
       return countryCode ? 
-        <InflationChartComponent {...chartProps} /> : 
+        <IndicatorChart {...baseChartProps} indicator="inflation" title="Inflation Rate" chartType="line" start={2000} unit="%" /> : 
         renderLoadingState();
     
     case 'unemployment':
       return countryCode ? 
-        <UnemploymentChartComponent {...chartProps} /> : 
+        <IndicatorChart {...baseChartProps} indicator="unemployment" title="Unemployment Rate" chartType="line" start={2000} unit="%" /> : 
         renderLoadingState();
     
     case 'literacy':
       return countryCode ? 
-        <LiteracyChartComponent {...literacyProps} /> : 
+        <IndicatorChart {...baseChartProps} indicator="literacy" title="Literacy Rate" chartType="line" start={1980} unit="%" /> : 
         renderLoadingState();
     
     default:

@@ -2,7 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { LoadingSpinner, ChartSkeleton, ErrorMessage } from './LoadingComponents.jsx';
 import InteractiveChart from './InteractiveChart.jsx';
 
-const PopulationChartComponent = ({ countryName, countryCode, start = 1960, end = 2023, isDarkMode }) => {
+const IndicatorChart = ({ 
+  indicator, 
+  title, 
+  unit = '', 
+  chartType = 'line',
+  countryName, 
+  countryCode, 
+  start = 1960, 
+  end = 2023, 
+  isDarkMode 
+}) => {
   const [chartData, setChartData] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -14,13 +24,13 @@ const PopulationChartComponent = ({ countryName, countryCode, start = 1960, end 
     setError(null);
     
     try {
-      const response = await fetch(`http://localhost:5000/api/population-chart/${countryCode}?start=${start}&end=${end}`);
+      const response = await fetch(`http://localhost:5000/api/charts/${indicator}/${countryCode}?start=${start}&end=${end}`);
       const data = await response.json();
 
       if (response.ok) {
         setChartData(data);
       } else {
-        setError('Population chart data retrieval failed. Please try again.');
+        setError(`${title} data retrieval failed. Please try again.`);
       }
     } catch (err) {
       setError('Failed to connect to the server. Please check your connection.');
@@ -32,7 +42,7 @@ const PopulationChartComponent = ({ countryName, countryCode, start = 1960, end 
 
   useEffect(() => {
     fetchChart();
-  }, [countryName, countryCode, start, end]);
+  }, [countryName, countryCode, start, end, indicator]);
 
   if (loading) {
     return <ChartSkeleton isDarkMode={isDarkMode} />;
@@ -46,7 +56,7 @@ const PopulationChartComponent = ({ countryName, countryCode, start = 1960, end 
     <div className="p-6">
       <div className="mb-6">
         <h2 className={`text-2xl font-bold mb-2 ${isDarkMode ? 'text-gray-100' : 'text-gray-900'}`}>
-          Population Trends
+          {title}
         </h2>
         <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-zinc-500'}`}>
           {countryName} • {start} - {end}
@@ -58,8 +68,9 @@ const PopulationChartComponent = ({ countryName, countryCode, start = 1960, end 
       }`}>
         <InteractiveChart
           data={chartData}
-          type="line"
-          name="Population"
+          type={chartType}
+          name={title}
+          unit={unit}
           isDarkMode={isDarkMode}
         />
       </div>
@@ -67,4 +78,4 @@ const PopulationChartComponent = ({ countryName, countryCode, start = 1960, end 
   );
 };
 
-export default PopulationChartComponent;
+export default IndicatorChart;

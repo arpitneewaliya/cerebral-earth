@@ -102,7 +102,7 @@ const Header = ({ isDarkMode, toggleTheme }) => {
                 : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100'
             }`}
           >
-            {isDarkMode ? <Sun className="w-4 h-4 text-yellow-400" /> : <Moon className="w-4 h-4" />}
+            {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             <span>{isDarkMode ? 'Light Mode' : 'Dark Mode'}</span>
           </button>
         </div>
