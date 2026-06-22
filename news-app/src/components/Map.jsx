@@ -46,19 +46,19 @@ const Map = ({ region, setRegion, pins, isDarkMode }) => {
       mouseover: (e) => {
         const targetLayer = e.target;
         targetLayer.setStyle({
-          color: '#3b82f6', // vibrant blue highlight
-          weight: 2.5,
-          fillColor: '#3b82f6',
-          fillOpacity: 0.08,
+          color: isDarkMode ? '#60a5fa' : '#2563eb', // soft blue in dark mode, clear blue in light mode
+          weight: 2.0, // clean, high-precision border line
+          fillColor: isDarkMode ? '#60a5fa' : '#2563eb',
+          fillOpacity: 0.06, // subtle, premium backdrop glow
         });
         targetLayer.bringToFront();
       },
       mouseout: (e) => {
         const targetLayer = e.target;
         targetLayer.setStyle({
-          color: isDarkMode ? '#52525b' : '#a1a1aa', // zinc-600 in dark mode, zinc-400 in light mode
-          weight: 0.8,
-          fillColor: '#3b82f6',
+          color: 'transparent',
+          weight: 0,
+          fillColor: 'transparent',
           fillOpacity: 0,
         });
       },
@@ -107,9 +107,9 @@ const Map = ({ region, setRegion, pins, isDarkMode }) => {
             key={isDarkMode ? 'geojson-dark' : 'geojson-light'}
             data={geoJsonData}
             style={{
-              color: isDarkMode ? '#52525b' : '#a1a1aa',
-              weight: 0.8,
-              fillColor: '#3b82f6',
+              color: 'transparent', // invisible by default to avoid overlapping map tile borders
+              weight: 0,
+              fillColor: 'transparent',
               fillOpacity: 0,
             }}
             onEachFeature={onEachFeature}
