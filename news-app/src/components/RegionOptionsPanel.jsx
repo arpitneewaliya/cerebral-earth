@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Newspaper, Globe, TrendingUp, Users, CircleDollarSign, BarChart3, TrendingDown, BookOpen, ChevronRight, Activity, Camera } from 'lucide-react';
+import { MapPin, Newspaper, Globe, TrendingUp, Users, CircleDollarSign, BarChart3, TrendingDown, BookOpen, ChevronRight, Activity } from 'lucide-react';
 import { IoNewspaperOutline } from "react-icons/io5";
 import { FaGlobeAmericas } from "react-icons/fa";
 
@@ -51,14 +51,6 @@ const RegionOptionsPanel = ({
             description="Key facts, geography, and statistics."
             gradient="from-emerald-500 to-teal-600"
             onClick={() => setSelectedOption('country')}
-            isDarkMode={isDarkMode}
-          />
-          <OptionCard
-            icon={<Camera className="w-5 h-5" />}
-            title="Photo Gallery"
-            description="Photos and landmarks from this place."
-            gradient="from-blue-500 to-indigo-600"
-            onClick={() => setSelectedOption('images')}
             isDarkMode={isDarkMode}
           />
         </div>
