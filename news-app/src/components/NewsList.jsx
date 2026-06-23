@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Newspaper, ExternalLink } from 'lucide-react';
 import { SkeletonList, ErrorMessage } from './LoadingComponents.jsx';
+import newsDefault from '../media/news-default.svg';
 
 const API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:5000' : '');
 
@@ -60,11 +61,11 @@ const NewsList = ({ region, category, isDarkMode }) => {
             >
               <div className={`relative overflow-hidden border-b ${isDarkMode ? 'border-zinc-800' : 'border-zinc-100'}`}>
                 <img
-                  src={article.urlToImage || '/src/media/news-default.svg'}
+                  src={article.urlToImage || newsDefault}
                   alt="News"
                   className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105"
                   onError={(e) => {
-                    e.target.src = '/src/media/news-default.svg';
+                    e.target.src = newsDefault;
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

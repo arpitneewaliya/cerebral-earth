@@ -185,7 +185,7 @@ const MapLegend = ({ selectedLayer, layerStats, isDarkMode }) => {
   ];
 
   return (
-    <div className={`absolute bottom-8 left-4 z-[1000] flex flex-col gap-2 items-start`}>
+    <div className={`absolute bottom-20 sm:bottom-8 left-4 z-[1000] flex flex-col gap-2 items-start`}>
       <button 
         onClick={() => setIsOpen(!isOpen)}
         className={`p-2.5 rounded-full shadow-lg border transition-colors flex items-center justify-center ${
