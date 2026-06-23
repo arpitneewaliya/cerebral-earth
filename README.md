@@ -25,7 +25,7 @@ Cerebral Earth is a premium, interactive web application that bridges geography,
 * **Interactive Legend Panel:** Toggleable indicator details panel explaining exact value ranges for each color scale.
 
 ### 3. Integrated Global & Region-Specific News
-* **AI-Geocoded Major Global News:** On startup, major news headlines are aggregated via the **GNews API**. A backend process passes the articles to **Google Gemini AI** to extract the primary city mentioned, geocodes it via forward lookup, and plots custom image pins on the map.
+* **AI-Geocoded Major Global News:** On startup, major news headlines are aggregated via **NewsAPI** (`newsapi.org`). A backend process passes the articles to **Google Gemini AI** to extract the primary city mentioned, geocodes it via forward lookup, and plots custom image pins on the map.
 * **Region-Specific News Feed:** Clicking on any country on the map performs a reverse-geocoding lookup to identify the country name and pulls a list of localized news stories.
 * **Category Filters:** Filter news articles directly from the sidebar by category (e.g., Business, Technology, Science).
 
@@ -90,7 +90,7 @@ cerebral_earth/
 ### Prerequisites
 * **Node.js:** Ensure Node.js (v18+) is installed.
 * **API Keys:** You will need API keys for:
-  * [GNews API](https://gnews.io/) (for real-time news articles).
+  * [NewsAPI](https://newsapi.org/) (for real-time news articles).
   * [Google Gemini API](https://ai.google.dev/) (for news text analysis).
   * [LocationIQ](https://locationiq.com/) (for geocoding).
 
@@ -98,7 +98,7 @@ cerebral_earth/
 1. Create a `.env` file in the `news-api/` directory:
    ```env
    PORT=5000
-   GNEWS_API_KEY=your_gnews_key
+   NEWS_API_KEY=your_news_api_key
    GEMINI_API_KEY=your_gemini_key
    LOCATIONIQ_API_KEY=your_locationiq_key
    ```

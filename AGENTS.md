@@ -57,6 +57,12 @@ LocationIQ free tiers limit requests to 2 per second (500ms intervals).
   ```
 * Also implement cache maps (`geocodeCache`) on the server to prevent querying the geocoding service for the same location name multiple times.
 
+### 3. NewsAPI Service Integration
+Our regional and global top headlines endpoints retrieve news via **NewsAPI** (`newsapi.org`).
+* **Everything API (`/api/news`)**: Queries the `/v2/everything` endpoint based on location (reverse-geocoded) and category.
+* **Top Headlines API (`/api/major-news`)**: Queries the `/v2/top-headlines` endpoint, parses the returned headlines using Gemini AI to extract cities, and resolves coordinates using forward-geocoding.
+* **Image Fields:** Use standard camelCase `urlToImage` for images, which is natively returned by NewsAPI. Do not map from `image` as was required by GNews.
+
 ---
 
 ## 🔄 State Coordination Flow
