@@ -4,7 +4,7 @@ const axios = require('axios');
 const { reverseGeocode } = require('../geocoding');
 
 const router = express.Router();
-const NEWS_API_URL = 'https://newsapi.org/v2/everything';
+const NEWS_API_URL = 'https://gnews.io/api/v4/search';
 
 // Endpoint: GET /api/news
 router.get('/', async (req, res) => {
@@ -23,16 +23,22 @@ router.get('/', async (req, res) => {
 
     const params = {
       q: query,
-      apiKey: process.env.NEWS_API_KEY,
-      pageSize: 10,
-      sortBy: 'publishedAt',
-      language: 'en',
+      apikey: process.env.GNEWS_API_KEY,
+      max: 10,
+      lang: 'en',
     };
 
     const newsResponse = await axios.get(NEWS_API_URL, { params });
-    res.json(newsResponse.data.articles);
+    
+    // Map GNews format to what frontend expects
+    const formattedArticles = newsResponse.data.articles.map(article => ({
+      ...article,
+      urlToImage: article.image,
+    }));
+    
+    res.json(formattedArticles);
   } catch (error) {
-    console.error('Error fetching news:', error.message);
+    console.error('Error fetching news:', error.response ? error.response.data : error.message);
     res.status(500).json({ message: 'Error fetching news' });
   }
 });

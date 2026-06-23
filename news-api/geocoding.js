@@ -14,7 +14,7 @@ async function reverseGeocode(lat, lon) {
 
     if (response.data && response.data.address) {
       const address = response.data.address;
-      const city = address.city || address.town || address.village;
+      const city = address.city || address.town || address.village || address.state || address.country;
       return city;
     } else {
       throw new Error('No address found for the given coordinates');
