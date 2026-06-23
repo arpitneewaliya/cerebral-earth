@@ -18,6 +18,7 @@ const chartRoutes = require('./routes/chartRoutes');
 const reverseGeocodeRoute = require('./routes/reverseGeocodeRoute');
 const reverseGeocodeCountryName = require('./routes/reverseGeocodeCountryName');
 const searchRoute = require('./routes/searchRoute');
+const imageRoutes = require('./routes/imageRoutes');
 
 // Use routes
 app.use('/api/news', newsRoutes);
@@ -27,6 +28,7 @@ app.use('/api/charts', chartRoutes);
 app.use('/api/reverse-geocode-country-code', reverseGeocodeRoute);
 app.use('/api/reverse-geocode-country-name', reverseGeocodeCountryName);
 app.use('/api/search', searchRoute);
+app.use('/api/images', imageRoutes);
 
 // Start server
 app.listen(PORT, () => {

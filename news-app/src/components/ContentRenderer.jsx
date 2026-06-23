@@ -2,6 +2,7 @@ import React from 'react';
 import NewsContainer from './NewsContainer.jsx';
 import CountryInfo from './CountryInfo.jsx';
 import IndicatorChart from './IndicatorChart.jsx';
+import ImageGallery from './ImageGallery.jsx';
 import { LoadingSpinner } from './LoadingComponents.jsx';
 
 const ContentRenderer = ({ 
@@ -37,6 +38,9 @@ const ContentRenderer = ({
     
     case 'country':
       return <CountryInfo region={region} isDarkMode={isDarkMode} />;
+
+    case 'images':
+      return <ImageGallery region={region} countryName={countryName} isDarkMode={isDarkMode} />;
     
     case 'chart':
       return countryCode ? 
