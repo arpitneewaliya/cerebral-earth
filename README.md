@@ -1,71 +1,119 @@
-# Cerebral Earth (News Map App)
+# Cerebral Earth — Interactive News & Data Map
 
-## Aim of the Project
-- To create an interactive, map-based web application that allows users to explore world news and country-specific information visually.
-- To solve the problem of scattered and text-heavy news sources by presenting information in a geographical and intuitive format.
-- To integrate real-time news updates and trending events directly linked to their respective regions.
-- To provide comprehensive country details (name, capital, currency, GDP, population, flag, language, etc.) for educational and informational purposes.
-- To incorporate data visualization tools (charts for GDP, FDI, population, etc.) for deeper analytical insights.
-- To serve as an information hub and educational resource for students, researchers, travelers, policymakers, and general users.
-- To promote global awareness and understanding by connecting world events with their geographical contexts.
-- To ensure the platform is scalable, engaging, and user-friendly, encouraging exploration and analysis of global data.
+Cerebral Earth is a premium, interactive web application that bridges geography, global news, and socio-economic data visualization. By combining custom-layered map views, location-aware news feeds, and dynamic charts, the app provides a highly visual, analytical interface to explore the state of the world.
 
-## End-users of the Project
+---
 
-The News Map App is designed with a diverse set of end-users in mind, ensuring that the application serves not only as a news platform but also as an educational and analytical tool. Identifying the end-users helps in shaping the features, interface, and scalability of the project. The primary end-users include:
+## 🌟 Key Features
 
-- **Students and Learners** – Individuals who want to explore geography, world events, and socio-economic data in an interactive and engaging way.
-- **Researchers and Academics** – Users who require quick access to reliable information about countries, their demographics, and visual data for study and analysis.
-- **Travel Enthusiasts** – People interested in learning about countries, cultures, and current affairs before visiting or engaging with a new region.
-- **Policy Analysts and Professionals** – Individuals who analyze global trends and need a consolidated platform for news, statistics, and data visualization.
-- **General Public** – Everyday users who want to stay updated on trending news and explore world events in a simple, map-based format.
+### 1. Interactive Leaflet Map & Split-Tile Rendering
+* **Split Basemaps for Text Legibility:** To prevent coloring or overlay layers from covering map text labels (country names, cities, and borders), the basemap is split into two layers:
+  * **Base Map Tiles:** A label-free base layer (`dark_nolabels` / `light_nolabels`) sitting underneath.
+  * **Interactive GeoJSON:** Vector country boundaries and heatmap layers render on top of the base.
+  * **Labels Pane Overlay:** A transparent, high z-index overlay layer (`dark_only_labels` / `light_only_labels`) rendering printed names on top of everything, ensuring country names remain crisp and readable without capturing hover or click events.
+* **Seamless Dark Mode:** Natively integrates CARTO's light and dark tile sets, updating dynamically via React state and context.
 
-## Tech Stack
+### 2. Custom Choropleth Data Layers (Heatmaps)
+* **Visual Global Indicators:** Turn on layers to color-code the entire globe based on World Bank database indicators:
+  * **GDP Heatmap:** Gross Domestic Product in USD (Greens).
+  * **Population Heatmap:** Total population count (Purples).
+  * **FDI Heatmap:** Foreign Direct Investment inflows (Oranges).
+  * **Inflation Heatmap:** Consumer price inflation rate (Reds).
+  * **Unemployment Heatmap:** Unemployment percentage of labor force (Yellows).
+  * **Literacy Heatmap:** Adult literacy rates (Blues).
+* **Quantile Percentile Styling:** Map coloring dynamically calculates values based on percentiles (e.g., top 20% dark shades, bottom 20% light shades) rather than linear values to maintain high visual contrast regardless of extreme outliers.
+* **Interactive Legend Panel:** Toggleable indicator details panel explaining exact value ranges for each color scale.
 
-The application spans from a dynamic frontend visualization tool to a robust backend handling map mapping, news aggregation, and global data parsing.
+### 3. Integrated Global & Region-Specific News
+* **AI-Geocoded Major Global News:** On startup, major news headlines are aggregated via the **GNews API**. A backend process passes the articles to **Google Gemini AI** to extract the primary city mentioned, geocodes it via forward lookup, and plots custom image pins on the map.
+* **Region-Specific News Feed:** Clicking on any country on the map performs a reverse-geocoding lookup to identify the country name and pulls a list of localized news stories.
+* **Category Filters:** Filter news articles directly from the sidebar by category (e.g., Business, Technology, Science).
 
-### Frontend (`news-app`)
-- **Framework:** React 18, Vite
-- **Styling:** Tailwind CSS (v4)
-- **Map Integration:** React Leaflet / Leaflet
-- **Icons:** Lucide React
-- **API Requests:** Axios
-- **State/Hooks:** Custom React Hooks and Context API for structured state management
+### 4. Interactive Analytical Charts
+* **Socio-Economic History:** Selecting any country opens a slide-over panel displaying interactive historical trend lines using `recharts` for the active indicator.
+* **Performance Caching:** Backend caches World Bank global datasets in-memory to provide instant transition speeds when selecting different heatmap layers.
+
+---
+
+## 🛠️ Technology Stack
+
+### Client (`news-app`)
+* **Core:** React 18, Vite
+* **Map Engine:** React Leaflet / Leaflet
+* **Charts:** Recharts
+* **Styling:** Vanilla CSS, Tailwind CSS (v4)
+* **Icons:** Lucide React
+* **Client Request Handling:** Axios
 
 ### Backend (`news-api`)
-- **Server Environment:** Node.js, Express.js
-- **Artificial Intelligence:** Google Generative AI (`@google/generative-ai`)
-- **Geocoding:** Node Geocoder
-- **API & Middleware:** Axios, CORS, Dotenv
+* **Server Environment:** Node.js, Express
+* **AI integration:** Google Generative AI (`@google/generative-ai`)
+* **Geocoding:** Node Geocoder (LocationIQ)
+* **Request Handling:** Axios, CORS, Dotenv
 
-## Folder Structure
+---
 
-The project relies on a monolithic repo architecture structured into a dedicated frontend client (`news-app`) and backend server API (`news-api`), configured as npm workspaces.
+## 📂 Project Architecture
+
+The repository is organized as a monorepo utilizing npm workspaces:
 
 ```text
 cerebral_earth/
-├── news-api/                     # Express Node.js Backend Server
-│   ├── routes/                   # Express API Route handlers (consolidated dynamic charts, news, geocode)
-│   ├── server.js                 # Entry point for the backend server
-│   ├── gemini_ai.js              # Integration with Google Gemini AI
-│   ├── geocoding.js              # Geocoding utilities
-│   ├── package.json              # Node.js dependencies
-│   └── .env                      # Environment variables
+├── news-api/                     # Node.js backend server
+│   ├── routes/                   # API routes (charts, news lookup, search)
+│   ├── server.js                 # Entry point (Express server setup)
+│   ├── gemini_ai.js              # Google Gemini AI client configuration
+│   ├── geocoding.js              # Location geocoding utility functions
+│   └── countries_db.json         # Static country coordinates database
 │
-├── news-app/                     # React Frontend Application
-│   ├── public/                   # Public static assets
+├── news-app/                     # React client application
+│   ├── public/                   # Static icons, GeoJSON map borders
 │   ├── src/                      # Source code
-│   │   ├── components/           # Reusable React components (Map, Header, SlideOverPanel, IndicatorChart, etc.)
-│   │   ├── contexts/             # React Contexts for global state (e.g., ThemeContext)
-│   │   ├── hooks/                # Custom React hooks (useRegionData, useAppState)
-│   │   ├── media/                # Media & static assets
-│   │   ├── mocks/                # Mock data for testing/development
-│   │   ├── App.jsx               # Main application component handling map logic
-│   │   ├── index.css             # Global styles and Tailwind configuration
-│   │   └── index.jsx             # Entry point for the frontend
-│   ├── package.json              # Frontend dependencies and scripts
-│   └── vite.config.js            # Vite configuration
+│   │   ├── components/           # UI elements (Map, Header, SlideOverPanel, MapLayerControl, etc.)
+│   │   ├── contexts/             # ThemeContext (Dark/Light mode)
+│   │   ├── hooks/                # Custom React hooks (useAppState, useRegionData)
+│   │   ├── index.css             # Main styling configuration
+│   │   └── index.jsx             # React entry mount
+│   ├── vite.config.js            # Vite build configuration
+│   └── package.json              # Frontend scripts & modules
 │
-├── package.json                  # Workspace definition and startup scripts
-└── README.md                     # Project documentation overview
+├── package.json                  # Workspace workspace definition & monorepo script entry
+├── README.md                     # General setup & details
+├── AGENTS.md                     # Repository instructions & developer patterns for agents
+└── CLAUDE.md                     # CLI developer scripting handbook
 ```
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+* **Node.js:** Ensure Node.js (v18+) is installed.
+* **API Keys:** You will need API keys for:
+  * [GNews API](https://gnews.io/) (for real-time news articles).
+  * [Google Gemini API](https://ai.google.dev/) (for news text analysis).
+  * [LocationIQ](https://locationiq.com/) (for geocoding).
+
+### Environment Configuration
+1. Create a `.env` file in the `news-api/` directory:
+   ```env
+   PORT=5000
+   GNEWS_API_KEY=your_gnews_key
+   GEMINI_API_KEY=your_gemini_key
+   LOCATIONIQ_API_KEY=your_locationiq_key
+   ```
+2. Create a `.env` file in the `news-app/` directory (if configuring custom URLs):
+   ```env
+   VITE_API_URL=http://localhost:5000
+   ```
+
+### Setup and Start
+Run the following commands in the project root:
+```bash
+# Install dependencies in workspaces
+npm install
+
+# Start both backend and frontend servers concurrently
+npm run dev
+```
+Access the application at `http://localhost:5173` (or the console printed port).
