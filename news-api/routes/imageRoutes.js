@@ -45,10 +45,15 @@ function parseWikimediaResponse(data) {
     if (page.imageinfo && page.imageinfo[0]) {
       const info = page.imageinfo[0];
 
-      // Check if file is a standard image and not SVG, PDF, Audio, Video
+      // Check if file is a standard image (not PDF, audio, video)
       const isImage = info.mime && info.mime.startsWith('image/');
       
       const titleLower = page.title.toLowerCase();
+      
+      // Filter out non-photo extensions (.svg, .pdf, .djvu, .tif, .tiff, etc.)
+      const extension = page.title.substring(page.title.lastIndexOf('.')).toLowerCase();
+      const isValidExtension = ['.jpg', '.jpeg', '.png', '.webp'].includes(extension);
+
       // Filter out flags, maps, coat of arms, locator maps, and diagrams
       const isMapOrFlag = 
         titleLower.includes('map') || 
@@ -64,7 +69,47 @@ function parseWikimediaResponse(data) {
         titleLower.includes('seal of') ||
         titleLower.includes('blazon');
 
-      if (isImage && !isMapOrFlag) {
+      // Filter out closeups, wildlife, books, and portraits to keep strictly landscape / landmarks
+      const isRandomNonScenic =
+        titleLower.includes('portrait') ||
+        titleLower.includes('close up') ||
+        titleLower.includes('close-up') ||
+        titleLower.includes('butterfly') ||
+        titleLower.includes('insect') ||
+        titleLower.includes('bee ') ||
+        titleLower.includes('wasp') ||
+        titleLower.includes('fly ') ||
+        titleLower.includes('spider') ||
+        titleLower.includes('caterpillar') ||
+        titleLower.includes('beetle') ||
+        titleLower.includes('bird') ||
+        titleLower.includes('flower') ||
+        titleLower.includes('leaf') ||
+        titleLower.includes('plant') ||
+        titleLower.includes('mushroom') ||
+        titleLower.includes('fungus') ||
+        titleLower.includes('animal') ||
+        titleLower.includes('mammal') ||
+        titleLower.includes('cat ') ||
+        titleLower.includes('dog ') ||
+        titleLower.includes('food') ||
+        titleLower.includes('dish') ||
+        titleLower.includes('recipe') ||
+        titleLower.includes('stamp') ||
+        titleLower.includes('coin') ||
+        titleLower.includes('money') ||
+        titleLower.includes('book') ||
+        titleLower.includes('page') ||
+        titleLower.includes('volume') ||
+        titleLower.includes('vol ') ||
+        titleLower.includes('cover') ||
+        titleLower.includes('history') ||
+        titleLower.includes('handshake') ||
+        titleLower.includes('meeting') ||
+        titleLower.includes('signing') ||
+        titleLower.includes('ceremony');
+
+      if (isImage && isValidExtension && !isMapOrFlag && !isRandomNonScenic) {
         // Clean up title (remove "File:" and extension, replace underscores with spaces)
         let title = page.title.replace(/^File:/i, '');
         title = title.substring(0, title.lastIndexOf('.')) || title;
@@ -125,15 +170,53 @@ router.get('/', async (req, res) => {
       return res.status(400).json({ error: 'Search query or coordinates are required' });
     }
 
-    console.log(`Searching images on Wikimedia for: "${searchQuery}"`);
-    let data = await fetchWikimediaImages(searchQuery);
+    // 1. Primary: Search for query + restricted to high-quality images category
+    const qualityQuery = `${searchQuery} incategory:"Quality images"`;
+    console.log(`Searching primary quality query: "${qualityQuery}"`);
+    let data = await fetchWikimediaImages(qualityQuery);
     let images = parseWikimediaResponse(data);
 
-    // If specific search returns nothing and we have a country name, fall back to country
-    if (images.length === 0 && countryName && searchQuery !== countryName) {
-      console.log(`No results for "${searchQuery}". Falling back to country search: "${countryName}"`);
-      data = await fetchWikimediaImages(countryName);
-      images = parseWikimediaResponse(data);
+    // 2. Secondary: If we have fewer than 5 images, do a keyword-refined search
+    const targetKeywords = '(landscape OR landmark OR "tourist attraction" OR scenery OR architecture OR travel)';
+    if (images.length < 5) {
+      const refinedQuery = `${searchQuery} ${targetKeywords}`;
+      console.log(`Fewer than 5 images found. Searching secondary: "${refinedQuery}"`);
+      data = await fetchWikimediaImages(refinedQuery);
+      const secondaryImages = parseWikimediaResponse(data);
+      
+      for (const img of secondaryImages) {
+        if (!images.some(i => i.id === img.id)) {
+          images.push(img);
+        }
+      }
+    }
+
+    // 3. Tertiary: Fallback to country name Quality search if we still have fewer than 3 images
+    if (images.length < 3 && countryName && searchQuery !== countryName) {
+      const countryQualityQuery = `${countryName} incategory:"Quality images"`;
+      console.log(`Fewer than 3 images. Falling back to country quality: "${countryQualityQuery}"`);
+      data = await fetchWikimediaImages(countryQualityQuery);
+      const countryImages = parseWikimediaResponse(data);
+      
+      for (const img of countryImages) {
+        if (!images.some(i => i.id === img.id)) {
+          images.push(img);
+        }
+      }
+    }
+
+    // 4. Quaternary: Fallback to country name + keywords if needed
+    if (images.length < 3 && countryName && searchQuery !== countryName) {
+      const countryRefinedQuery = `${countryName} ${targetKeywords}`;
+      console.log(`Still fewer than 3 images. Falling back to country refined: "${countryRefinedQuery}"`);
+      data = await fetchWikimediaImages(countryRefinedQuery);
+      const countryRefinedImages = parseWikimediaResponse(data);
+      
+      for (const img of countryRefinedImages) {
+        if (!images.some(i => i.id === img.id)) {
+          images.push(img);
+        }
+      }
     }
 
     // Limit to top 5 images as requested
