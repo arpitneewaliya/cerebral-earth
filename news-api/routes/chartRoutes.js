@@ -11,6 +11,47 @@ const INDICATORS = {
   literacy: { id: 'SE.ADT.LITR.ZS', defaultStart: 1980 }
 };
 
+const globalDataCache = {};
+const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours
+
+router.get('/global/:indicator', async (req, res) => {
+  const { indicator } = req.params;
+  const config = INDICATORS[indicator];
+
+  if (!config) {
+    return res.status(400).json({ error: `Unsupported indicator: ${indicator}` });
+  }
+
+  const cached = globalDataCache[indicator];
+  if (cached && (Date.now() - cached.timestamp < CACHE_DURATION)) {
+    return res.json(cached.data);
+  }
+
+  try {
+    const url = `http://api.worldbank.org/v2/country/all/indicator/${config.id}?mrnev=1&format=json&per_page=300`;
+    const response = await axios.get(url);
+
+    if (!response.data || response.data.length < 2 || !Array.isArray(response.data[1])) {
+      return res.json({});
+    }
+
+    const records = response.data[1];
+    const formattedData = {};
+    
+    records.forEach(record => {
+      if (record.countryiso3code && record.value !== null) {
+        formattedData[record.countryiso3code] = record.value;
+      }
+    });
+
+    globalDataCache[indicator] = { data: formattedData, timestamp: Date.now() };
+    res.json(formattedData);
+  } catch (error) {
+    console.error(`Error fetching global ${indicator} data:`, error.message);
+    res.status(500).json({ error: `Failed to fetch global ${indicator} data` });
+  }
+});
+
 router.get('/:indicator/:countryCode', async (req, res) => {
   const { indicator, countryCode } = req.params;
   const config = INDICATORS[indicator];
