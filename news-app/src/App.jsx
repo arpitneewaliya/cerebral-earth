@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Map from './components/Map.jsx';
 import Header from './components/Header.jsx';
 import SlideOverPanel from './components/SlideOverPanel.jsx';
@@ -10,6 +10,7 @@ import { useAppState } from './hooks/useAppState.js';
 
 const App = () => {
   const { isDarkMode, toggleTheme } = useTheme();
+  const [showLayersControl, setShowLayersControl] = useState(false);
 
   const {
     region,
@@ -37,7 +38,11 @@ const App = () => {
     <div className={`flex flex-col h-screen text-center transition-colors duration-200 ${
       isDarkMode ? 'bg-gray-900' : 'bg-gray-50'
     }`}>
-      <Header isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
+      <Header 
+        isDarkMode={isDarkMode} 
+        toggleTheme={toggleTheme} 
+        onActivateLayers={() => setShowLayersControl(true)}
+      />
 
       <div className="h-full">
         <Map
@@ -46,6 +51,8 @@ const App = () => {
           pins={pins}
           isDarkMode={isDarkMode}
           selectedCountryId={alpha3Code}
+          showLayersControl={showLayersControl}
+          setShowLayersControl={setShowLayersControl}
         />
       </div>
 

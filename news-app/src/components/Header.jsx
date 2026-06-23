@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Globe, Newspaper, LineChart, Menu, X, Sun, Moon } from 'lucide-react';
+import { Globe, Newspaper, LineChart, Menu, X, Sun, Moon, Layers } from 'lucide-react';
 
-const Header = ({ isDarkMode, toggleTheme }) => {
+const Header = ({ isDarkMode, toggleTheme, onActivateLayers }) => {
   const [isDockOpen, setIsDockOpen] = useState(false);
   const panelRef = useRef(null);
 
@@ -83,7 +83,15 @@ const Header = ({ isDarkMode, toggleTheme }) => {
 
         {/* Navigation Links */}
         <nav className="flex flex-col gap-1 px-4 pt-4">
-          <NavLink icon={Globe} label="Explore" isDarkMode={isDarkMode} onClick={() => setIsDockOpen(false)} />
+          <NavLink 
+            icon={Layers} 
+            label="Activate Layers" 
+            isDarkMode={isDarkMode} 
+            onClick={() => {
+              onActivateLayers();
+              setIsDockOpen(false);
+            }} 
+          />
           <NavLink icon={Newspaper} label="Global News" isDarkMode={isDarkMode} onClick={() => setIsDockOpen(false)} />
           <NavLink icon={LineChart} label="Analytics" isDarkMode={isDarkMode} onClick={() => setIsDockOpen(false)} />
         </nav>

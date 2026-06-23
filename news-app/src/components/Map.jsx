@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react';
-import { MapContainer, TileLayer, useMapEvents, useMap, GeoJSON } from 'react-leaflet';
-import { Info, Layers } from 'lucide-react';
+import React, { useEffect, useState, useRef } from 'react';
+import { MapContainer, TileLayer, useMapEvents, useMap, GeoJSON, Pane } from 'react-leaflet';
+import { Info, Layers, X, Coins, Users, Landmark, Flame, Briefcase, BookOpen, Map as MapIcon } from 'lucide-react';
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
 import Pin from './Pin';
@@ -27,33 +27,138 @@ const formatValue = (val) => {
   return val.toFixed(1);
 };
 
-const MapLayerControl = ({ selectedLayer, setSelectedLayer, isDarkMode }) => {
+const MapLayerControl = ({ selectedLayer, setSelectedLayer, isDarkMode, showLayersControl, setShowLayersControl }) => {
+  if (!showLayersControl) return null;
+
   const layers = [
-    { id: 'none', name: 'Default Map' },
-    { id: 'gdp', name: 'GDP Heatmap' },
-    { id: 'population', name: 'Population Heatmap' },
-    { id: 'fdi', name: 'FDI Heatmap' },
-    { id: 'inflation', name: 'Inflation Heatmap' },
-    { id: 'unemployment', name: 'Unemployment Heatmap' },
-    { id: 'literacy', name: 'Literacy Heatmap' }
+    { 
+      id: 'none', 
+      name: 'Default Map', 
+      desc: 'Standard political boundary map', 
+      icon: MapIcon, 
+      color: '#71717a' 
+    },
+    { 
+      id: 'gdp', 
+      name: 'GDP Heatmap', 
+      desc: 'Gross Domestic Product in USD', 
+      icon: Coins, 
+      color: '#22c55e' 
+    },
+    { 
+      id: 'population', 
+      name: 'Population Heatmap', 
+      desc: 'Total population count', 
+      icon: Users, 
+      color: '#a855f7' 
+    },
+    { 
+      id: 'fdi', 
+      name: 'FDI Heatmap', 
+      desc: 'Foreign Direct Investment inflows', 
+      icon: Landmark, 
+      color: '#f97316' 
+    },
+    { 
+      id: 'inflation', 
+      name: 'Inflation Heatmap', 
+      desc: 'Consumer price inflation rate', 
+      icon: Flame, 
+      color: '#ef4444' 
+    },
+    { 
+      id: 'unemployment', 
+      name: 'Unemployment Heatmap', 
+      desc: 'Unemployment share of labor force', 
+      icon: Briefcase, 
+      color: '#eab308' 
+    },
+    { 
+      id: 'literacy', 
+      name: 'Literacy Heatmap', 
+      desc: 'Adult literacy rate', 
+      icon: BookOpen, 
+      color: '#3b82f6' 
+    }
   ];
 
   return (
-    <div className={`absolute top-24 left-4 z-[1000] p-2.5 rounded-xl border shadow-lg ${
-      isDarkMode ? 'bg-zinc-900/90 border-zinc-800 text-zinc-50' : 'bg-white/90 border-zinc-200 text-zinc-900'
-    } backdrop-blur-md flex items-center gap-3`}>
-      <Layers className={`w-5 h-5 ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`} />
-      <select 
-        value={selectedLayer} 
-        onChange={(e) => setSelectedLayer(e.target.value)}
-        className={`text-sm font-medium rounded-lg px-2 py-1.5 focus:outline-none cursor-pointer transition-colors ${
-          isDarkMode ? 'bg-zinc-800 text-zinc-100 border-zinc-700 hover:bg-zinc-700' : 'bg-zinc-100 text-zinc-800 border-zinc-200 hover:bg-zinc-200'
-        }`}
-      >
-        {layers.map(l => (
-          <option key={l.id} value={l.id}>{l.name}</option>
-        ))}
-      </select>
+    <div className={`absolute top-20 right-4 left-16 md:top-6 md:right-6 md:left-auto md:w-80 z-[1000] p-4 rounded-2xl border shadow-2xl backdrop-blur-md transition-all duration-300 ${
+      isDarkMode 
+        ? 'bg-zinc-950/90 border-zinc-800 text-zinc-50' 
+        : 'bg-white/90 border-zinc-200 text-zinc-950'
+    }`}>
+      {/* Header */}
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-2">
+          <Layers className={`w-5 h-5 ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`} />
+          <h3 className="font-semibold text-base tracking-tight">Choropleth Layers</h3>
+        </div>
+        <button 
+          onClick={() => setShowLayersControl(false)}
+          className={`p-1.5 rounded-lg transition-colors ${
+            isDarkMode ? 'hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200' : 'hover:bg-zinc-100 text-zinc-500 hover:text-zinc-800'
+          }`}
+          title="Turn off layers panel"
+        >
+          <X className="w-4 h-4" />
+        </button>
+      </div>
+
+      {/* Layers List */}
+      <div className="flex flex-col gap-1.5 max-h-[360px] overflow-y-auto pr-1">
+        {layers.map(layer => {
+          const IconComponent = layer.icon;
+          const isActive = selectedLayer === layer.id;
+          return (
+            <button
+              key={layer.id}
+              onClick={() => setSelectedLayer(layer.id)}
+              className={`flex items-center text-left gap-3.5 p-2.5 rounded-xl transition-all duration-200 border w-full group ${
+                isActive 
+                  ? (isDarkMode 
+                      ? 'bg-zinc-850 border-zinc-700 shadow-inner' 
+                      : 'bg-zinc-100 border-zinc-300 shadow-inner')
+                  : (isDarkMode 
+                      ? 'bg-transparent border-transparent hover:bg-zinc-900/60 hover:border-zinc-800' 
+                      : 'bg-transparent border-transparent hover:bg-zinc-50 hover:border-zinc-100')
+              }`}
+            >
+              {/* Icon / Badge Indicator */}
+              <div 
+                className="p-2 rounded-lg flex items-center justify-center transition-transform group-hover:scale-105"
+                style={{ 
+                  backgroundColor: isActive ? `${layer.color}20` : (isDarkMode ? '#27272a' : '#f4f4f5'),
+                  color: layer.color 
+                }}
+              >
+                <IconComponent className="w-4 h-4" />
+              </div>
+
+              {/* Text Info */}
+              <div className="flex-1 min-w-0">
+                <p className={`text-sm font-semibold truncate leading-tight ${isActive ? 'text-blue-500 dark:text-blue-400' : ''}`}>
+                  {layer.name}
+                </p>
+                <p className={`text-xs truncate ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'} mt-0.5`}>
+                  {layer.desc}
+                </p>
+              </div>
+
+              {/* Active Indicator Dot */}
+              {isActive && (
+                <div 
+                  className="w-2.5 h-2.5 rounded-full ring-4"
+                  style={{ 
+                    backgroundColor: layer.color,
+                    "--tw-ring-color": `${layer.color}25`
+                  }}
+                />
+              )}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 };
@@ -137,7 +242,7 @@ const MapClickHandler = ({ setRegion }) => {
   return null;
 };
 
-const Map = ({ region, setRegion, pins, isDarkMode, selectedCountryId }) => {
+const Map = ({ region, setRegion, pins, isDarkMode, selectedCountryId, showLayersControl, setShowLayersControl }) => {
   const [geoJsonData, setGeoJsonData] = useState(null);
   const geoJsonRef = useRef(null);
 
@@ -232,10 +337,15 @@ const Map = ({ region, setRegion, pins, isDarkMode, selectedCountryId }) => {
     });
   };
 
-  // Adjust base map brightness based on dark mode and layer
-  const tileUrl = isDarkMode 
-    ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-    : "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
+  // Load background tiles (without labels) and transparent labels separately
+  // so text labels render on top of the GeoJSON choropleth layers
+  const baseTileUrl = isDarkMode 
+    ? "https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png"
+    : "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png";
+
+  const labelsTileUrl = isDarkMode
+    ? "https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png"
+    : "https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png";
 
   return (
     <>
@@ -245,6 +355,8 @@ const Map = ({ region, setRegion, pins, isDarkMode, selectedCountryId }) => {
         selectedLayer={selectedLayer} 
         setSelectedLayer={setSelectedLayer} 
         isDarkMode={isDarkMode} 
+        showLayersControl={showLayersControl}
+        setShowLayersControl={setShowLayersControl}
       />
       
       <MapLegend 
@@ -276,8 +388,8 @@ const Map = ({ region, setRegion, pins, isDarkMode, selectedCountryId }) => {
         maxZoom={18}
       >
         <TileLayer
-          key={isDarkMode ? 'dark' : 'light'}
-          url={tileUrl}
+          key={`base-${isDarkMode ? 'dark' : 'light'}`}
+          url={baseTileUrl}
           attribution='&copy; <a href="https://carto.com/">CARTO</a>'
         />
         <MapClickHandler setRegion={setRegion} />
@@ -291,6 +403,15 @@ const Map = ({ region, setRegion, pins, isDarkMode, selectedCountryId }) => {
             onEachFeature={onEachFeature}
           />
         )}
+
+        {/* Labels Overlay Pane - sits on top of GeoJSON overlays (zIndex 450) and does not capture pointer events */}
+        <Pane name="map-labels" style={{ zIndex: 450, pointerEvents: 'none' }}>
+          <TileLayer
+            key={`labels-${isDarkMode ? 'dark' : 'light'}`}
+            url={labelsTileUrl}
+            attribution='&copy; <a href="https://carto.com/">CARTO</a>'
+          />
+        </Pane>
 
         {pins.map((pin, index) => (
           <Pin
