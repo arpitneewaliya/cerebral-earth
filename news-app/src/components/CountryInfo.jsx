@@ -57,7 +57,7 @@ const CountryInfo = ({ region, isDarkMode }) => {
     return (
         <div className="p-6">
             {country ? (
-                <div className={`rounded-xl shadow-sm p-8 border ${
+                <div className={`rounded-xl shadow-sm p-4 sm:p-8 border ${
                     isDarkMode ? 'bg-zinc-950 border-zinc-800 text-zinc-50' : 'bg-white border-zinc-200 text-zinc-950'
                 }`}>
                     {/* Header */}
