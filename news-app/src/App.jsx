@@ -39,7 +39,7 @@ const App = () => {
     }`}>
       <Header isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
 
-      <div className={`h-full ${isDarkMode ? 'dark-theme-map' : ''}`}>
+      <div className="h-full">
         <Map
           region={region}
           setRegion={handleRegionSelect}

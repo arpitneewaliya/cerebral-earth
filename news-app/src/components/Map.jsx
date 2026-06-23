@@ -276,6 +276,7 @@ const Map = ({ region, setRegion, pins, isDarkMode, selectedCountryId }) => {
         maxZoom={18}
       >
         <TileLayer
+          key={isDarkMode ? 'dark' : 'light'}
           url={tileUrl}
           attribution='&copy; <a href="https://carto.com/">CARTO</a>'
         />

@@ -144,9 +144,4 @@ html.dark .leaflet-control-zoom a {
   background: rgba(31, 41, 55, 0.85); /* gray-800 */
   color: #f3f4f6; /* gray-100 */
 }
-
-/* Invert the map tiles in dark mode to provide high-visibility white text on dark background */
-/* We target .leaflet-tile-pane so that markers and popups remain their original colors! */
-.dark-theme-map .leaflet-tile-pane {
-  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
-}
+
