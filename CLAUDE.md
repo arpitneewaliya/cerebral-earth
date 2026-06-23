@@ -34,7 +34,7 @@ npm run build --workspace=news-app
 ### Backend Environment Variables (`news-api/.env`)
 ```env
 PORT=5000
-GNEWS_API_KEY=your_gnews_api_key
+NEWS_API_KEY=your_news_api_key
 GEMINI_API_KEY=your_google_gemini_api_key
 LOCATIONIQ_API_KEY=your_locationiq_api_key
 ```

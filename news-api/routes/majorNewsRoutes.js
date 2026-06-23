@@ -5,7 +5,7 @@ const { forwardGeocoding } = require('../geocoding');
 const { get_gemini_response } = require('../gemini_ai');
 
 const router = express.Router();
-const NEWS_API_URL = 'https://gnews.io/api/v4/top-headlines';
+const NEWS_API_URL = 'https://newsapi.org/v2/top-headlines';
 
 // In-memory cache for coordinates to avoid repetitive external requests
 const geocodeCache = {};
@@ -38,19 +38,13 @@ router.get('/', async (req, res) => {
   try {
     const newsResponse = await axios.get(NEWS_API_URL, {
       params: {
-        apikey: process.env.GNEWS_API_KEY,
-        max: 10,
-        lang: 'en',
+        apiKey: process.env.NEWS_API_KEY,
+        pageSize: 10,
+        language: 'en',
       },
     });
 
-    const rawArticles = newsResponse.data.articles || [];
-    
-    // Map GNews format to what frontend expects
-    const articles = rawArticles.map(article => ({
-      ...article,
-      urlToImage: article.image,
-    }));
+    const articles = newsResponse.data.articles || [];
 
     if (articles.length === 0) {
       return res.json([]);

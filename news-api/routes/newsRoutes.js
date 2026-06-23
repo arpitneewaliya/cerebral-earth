@@ -4,7 +4,7 @@ const axios = require('axios');
 const { reverseGeocode } = require('../geocoding');
 
 const router = express.Router();
-const NEWS_API_URL = 'https://gnews.io/api/v4/search';
+const NEWS_API_URL = 'https://newsapi.org/v2/everything';
 
 // Endpoint: GET /api/news
 router.get('/', async (req, res) => {
@@ -23,18 +23,15 @@ router.get('/', async (req, res) => {
 
     const params = {
       q: query,
-      apikey: process.env.GNEWS_API_KEY,
-      max: 10,
-      lang: 'en',
+      apiKey: process.env.NEWS_API_KEY,
+      pageSize: 10,
+      language: 'en',
     };
 
     const newsResponse = await axios.get(NEWS_API_URL, { params });
     
-    // Map GNews format to what frontend expects
-    const formattedArticles = newsResponse.data.articles.map(article => ({
-      ...article,
-      urlToImage: article.image,
-    }));
+    // NewsAPI natively returns urlToImage
+    const formattedArticles = newsResponse.data.articles || [];
     
     res.json(formattedArticles);
   } catch (error) {
