@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Globe, Newspaper, LineChart, Menu, X, Sun, Moon, Layers } from 'lucide-react';
+import { Menu, X, Sun, Moon, Layers } from 'lucide-react';
 
 const Header = ({ isDarkMode, toggleTheme, onActivateLayers }) => {
   const [isDockOpen, setIsDockOpen] = useState(false);
@@ -92,8 +92,6 @@ const Header = ({ isDarkMode, toggleTheme, onActivateLayers }) => {
               setIsDockOpen(false);
             }} 
           />
-          <NavLink icon={Newspaper} label="Global News" isDarkMode={isDarkMode} onClick={() => setIsDockOpen(false)} />
-          <NavLink icon={LineChart} label="Analytics" isDarkMode={isDarkMode} onClick={() => setIsDockOpen(false)} />
         </nav>
 
         {/* Spacer */}
