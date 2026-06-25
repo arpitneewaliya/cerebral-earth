@@ -38,6 +38,8 @@ NEWS_API_KEY=your_news_api_key
 GEMINI_API_KEY=your_google_gemini_api_key
 LOCATIONIQ_API_KEY=your_locationiq_api_key
 YOUTUBE_API_KEY=your_youtube_api_key_optional
+KV_REST_API_URL=your_vercel_kv_rest_api_url_optional
+KV_REST_API_TOKEN=your_vercel_kv_rest_api_token_optional
 ```
 
 ### Frontend Environment Variables (`news-app/.env`)

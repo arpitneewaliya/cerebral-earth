@@ -4,9 +4,25 @@ const router = express.Router();
 const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
+const { Redis } = require('@upstash/redis');
 
 const cacheFilePath = path.join(__dirname, '../conflicts_cache.json');
 let memoryCache = null;
+
+// Initialize Vercel KV / Upstash Redis client conditionally
+let redis = null;
+const isKvConfigured = process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN;
+
+if (isKvConfigured) {
+  redis = new Redis({
+    url: process.env.KV_REST_API_URL,
+    token: process.env.KV_REST_API_TOKEN,
+  });
+  console.log('[Conflict Cache] Vercel KV / Upstash Redis client initialized successfully.');
+} else {
+  console.log('[Conflict Cache] No KV environment variables found. Falling back to local disk and memory cache.');
+}
+
 
 // Static fallback data in case GDELT API fails, is rate-limited (429), or is slow
 const fallbackConflicts = [
@@ -114,61 +130,63 @@ function classifyThemes(themesStr) {
   return 'GEOPOLITICAL_TENSION';
 }
 
-// Background sync function
+// Helper function to fetch and parse live GDELT data
+async function fetchLiveConflicts() {
+  const gdeltUrl = 'https://api.gdeltproject.org/api/v1/gkg_geojson?QUERY=(theme:PROTEST%20OR%20theme:MILITARY%20OR%20theme:ARMEDCONFLICT%20OR%20theme:TERROR)&MAXROWS=80';
+  const response = await axios.get(gdeltUrl, { timeout: 15000 });
+  
+  if (response.status === 200 && response.data && Array.isArray(response.data.features)) {
+    const parsedConflicts = response.data.features
+      .filter(feature => 
+        feature.geometry && 
+        feature.geometry.type === 'Point' && 
+        Array.isArray(feature.geometry.coordinates) && 
+        feature.geometry.coordinates.length >= 2 &&
+        !(feature.geometry.coordinates[0] === 0 && feature.geometry.coordinates[1] === 0)
+      )
+      .map((feature, idx) => {
+        const coords = feature.geometry.coordinates;
+        const props = feature.properties || {};
+        const category = classifyThemes(props.mentionedthemes || '');
+
+        return {
+          id: `gdelt-${idx}-${props.urlpubtimedate || ''}`,
+          lng: coords[0],
+          lat: coords[1],
+          name: props.name || 'Unknown Location',
+          pubDate: props.urlpubtimedate || new Date().toISOString(),
+          tone: typeof props.urltone === 'number' ? props.urltone : 0,
+          url: props.url || 'https://www.gdeltproject.org/',
+          category: category,
+          themes: props.mentionedthemes || ''
+        };
+      });
+
+    // Filter out duplicates (same location and URL)
+    const seen = new Set();
+    const uniqueConflicts = parsedConflicts.filter(item => {
+      const key = `${item.lat.toFixed(3)},${item.lng.toFixed(3)},${item.url}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+
+    return uniqueConflicts;
+  } else {
+    throw new Error(`GDELT API returned status ${response.status}`);
+  }
+}
+
+// Background sync function for local cache fallback mode
 async function syncConflicts() {
   console.log('[Background Sync] Fetching live conflict data from GDELT API...');
   try {
-    const gdeltUrl = 'https://api.gdeltproject.org/api/v1/gkg_geojson?QUERY=(theme:PROTEST%20OR%20theme:MILITARY%20OR%20theme:ARMEDCONFLICT%20OR%20theme:TERROR)&MAXROWS=80';
-    const response = await axios.get(gdeltUrl, { timeout: 15000 });
-    
-    if (response.status === 200 && response.data && Array.isArray(response.data.features)) {
-      const parsedConflicts = response.data.features
-        .filter(feature => 
-          feature.geometry && 
-          feature.geometry.type === 'Point' && 
-          Array.isArray(feature.geometry.coordinates) && 
-          feature.geometry.coordinates.length >= 2 &&
-          !(feature.geometry.coordinates[0] === 0 && feature.geometry.coordinates[1] === 0)
-        )
-        .map((feature, idx) => {
-          const coords = feature.geometry.coordinates;
-          const props = feature.properties || {};
-          const category = classifyThemes(props.mentionedthemes || '');
-
-          return {
-            id: `gdelt-${idx}-${props.urlpubtimedate || ''}`,
-            lng: coords[0],
-            lat: coords[1],
-            name: props.name || 'Unknown Location',
-            pubDate: props.urlpubtimedate || new Date().toISOString(),
-            tone: typeof props.urltone === 'number' ? props.urltone : 0,
-            url: props.url || 'https://www.gdeltproject.org/',
-            category: category,
-            themes: props.mentionedthemes || ''
-          };
-        });
-
-      // Filter out duplicates (same location and URL)
-      const seen = new Set();
-      const uniqueConflicts = parsedConflicts.filter(item => {
-        const key = `${item.lat.toFixed(3)},${item.lng.toFixed(3)},${item.url}`;
-        if (seen.has(key)) return false;
-        seen.add(key);
-        return true;
-      });
-
-      // Update memory cache
-      memoryCache = uniqueConflicts;
-
-      // Write to local disk cache
-      fs.writeFileSync(cacheFilePath, JSON.stringify(uniqueConflicts, null, 2), 'utf8');
-      console.log(`[Background Sync] Success: Cached ${uniqueConflicts.length} conflicts to disk.`);
-    } else {
-      console.error(`[Background Sync] Failed: GDELT API returned status ${response.status}`);
-    }
+    const uniqueConflicts = await fetchLiveConflicts();
+    memoryCache = uniqueConflicts;
+    fs.writeFileSync(cacheFilePath, JSON.stringify(uniqueConflicts, null, 2), 'utf8');
+    console.log(`[Background Sync] Success: Cached ${uniqueConflicts.length} conflicts to disk.`);
   } catch (error) {
     console.error('[Background Sync] Error fetching GDELT data:', error.message);
-    // If memory cache is null, try to load existing cache from disk
     if (!memoryCache && fs.existsSync(cacheFilePath)) {
       try {
         const fileContent = fs.readFileSync(cacheFilePath, 'utf8');
@@ -181,15 +199,44 @@ async function syncConflicts() {
   }
 }
 
-// Initial Sync on server start (non-blocking)
-syncConflicts();
+// Only start background timers and local file caching if Vercel KV is not configured
+if (!isKvConfigured) {
+  // Initial Sync on server start (non-blocking)
+  syncConflicts();
 
-// Set interval for periodic background syncs (every 15 minutes)
-const SYNC_INTERVAL = 15 * 60 * 1000;
-setInterval(syncConflicts, SYNC_INTERVAL);
+  // Set interval for periodic background syncs (every 15 minutes)
+  const SYNC_INTERVAL = 15 * 60 * 1000;
+  setInterval(syncConflicts, SYNC_INTERVAL);
+}
 
 // GET /api/conflicts - responds instantly
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+  // Scenario A: Vercel KV Cache Mode (Production Serverless Environment)
+  if (isKvConfigured && redis) {
+    try {
+      // 1. Try to read from Vercel KV Redis
+      const cachedConflicts = await redis.get('conflicts_data');
+      if (cachedConflicts) {
+        console.log('[Conflict Cache] Serving live conflicts from Vercel KV Redis');
+        return res.json({ source: 'vercel-kv', conflicts: cachedConflicts });
+      }
+
+      // 2. Cache Miss: Fetch live GDELT data
+      console.log('[Conflict Cache] Vercel KV cache miss. Fetching from GDELT...');
+      const conflicts = await fetchLiveConflicts();
+
+      // 3. Save to Redis with 15-minute TTL (900 seconds)
+      await redis.set('conflicts_data', conflicts, { ex: 900 });
+      console.log('[Conflict Cache] Successfully saved fresh GDELT conflicts to Vercel KV with 15m TTL.');
+      
+      return res.json({ source: 'live-fetch-kv', conflicts });
+    } catch (err) {
+      console.error('[Conflict Cache] Vercel KV error, falling back to static list:', err.message);
+      return res.json({ source: 'fallback', conflicts: fallbackConflicts });
+    }
+  }
+
+  // Scenario B: Local Dev / File Cache Mode
   // 1. Serve memory cache if available (sub-1ms)
   if (memoryCache) {
     return res.json({ source: 'memory-cache', conflicts: memoryCache });

@@ -63,10 +63,16 @@ Our regional and global top headlines endpoints retrieve news via **NewsAPI** (`
 * **Top Headlines API (`/api/major-news`)**: Queries the `/v2/top-headlines` endpoint, parses the returned headlines using Gemini AI to extract cities, and resolves coordinates using forward-geocoding.
 * **Image Fields:** Use standard camelCase `urlToImage` for images, which is natively returned by NewsAPI. Do not map from `image` as was required by GNews.
 
-### 4. GDELT Conflict API & Background Sync Caching
-To bypass GDELT API latency and rate-limiting:
-* **Background Sync:** Implement a background sync loop in `news-api/routes/conflictRoutes.js` (`syncConflicts()`) running every 15 minutes. It fetches the GDELT GKG GeoJSON stream, removes coordinate/URL duplicates, and saves it to `news-api/conflicts_cache.json` on disk while updating `memoryCache`.
-* **Instant Responses:** The `/api/conflicts` endpoint must serve from `memoryCache` first, falling back to disk cache, and finally a static hardcoded array (`fallbackConflicts`) if both fail.
+### 4. GDELT Conflict API & Caching (Hybrid Mode)
+To bypass GDELT API latency and rate-limiting across environments:
+* **Production/Vercel Mode:** When `KV_REST_API_URL` and `KV_REST_API_TOKEN` are present, the app initializes an `@upstash/redis` client.
+  * The `/api/conflicts` route fetches data from Redis (`conflicts_data`).
+  * On cache miss, it fetches GDELT data, caches it in Redis with a 15-minute Time-To-Live (`EX 900`), and returns the results.
+  * Background intervals are disabled to prevent running extra timers on serverless infrastructure.
+* **Local/File Mode (Fallback):** If KV variables are absent:
+  * A background sync loop `syncConflicts()` runs every 15 minutes, querying GDELT and caching to `news-api/conflicts_cache.json` and in-memory `memoryCache`.
+  * The endpoint serves instantly from `memoryCache` (falling back to disk `conflicts_cache.json` or `fallbackConflicts` if unpopulated).
+
 * **Incident Classification:** Map incoming GDELT news mentioned themes into three categories:
   * `ARMED_CONFLICT`: Triggered by active violence themes (`ARMEDCONFLICT`, `AIRSTRIKE`, `BOMBS`, `EXPLOSION`, `HOSTAGE`, `KILL`).
   * `CIVIL_UNREST`: Triggered by public disorder themes (`PROTEST`, `RIOT`, `STRIKE`, `DEMONSTRATION`, `CIVIL_WAR`).

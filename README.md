@@ -42,7 +42,7 @@ Cerebral Earth is a premium, interactive web application that bridges geography,
 * **GDELT Live Event Feed:** Displays current global security events, protests, and armed conflicts by querying the GDELT Project GKG GeoJSON stream.
 * **Real-time Categorized Pins:** Map markers pulse color-coded rings based on severity: Red for Armed Conflicts, Orange for Civil Unrest, and Yellow for Geopolitical Tensions.
 * **Responsive Sub-Views & Bottom Sheets:** The Conflict Panel features full desktop resizability and dynamic mobile bottom-sheet adjustments, complete with click-to-fly map autofocus zoom transitions.
-* **Double-Layer Caching:** Fetches events in the background every 15 minutes, persisting updates to a local disk JSON file and in-memory cache to guarantee sub-1ms load times.
+* **Hybrid Environment Caching:** Uses Vercel KV (Upstash Redis) in production serverless environments with a 15-minute TTL to ensure extremely fast (sub-10ms) responses. Falls back to local background sync and file caching during offline/local development.
 
 ---
 
@@ -116,6 +116,8 @@ cerebral_earth/
    GEMINI_API_KEY=your_gemini_key
    LOCATIONIQ_API_KEY=your_locationiq_key
    YOUTUBE_API_KEY=your_youtube_api_key_optional
+   KV_REST_API_URL=your_vercel_kv_rest_api_url_optional
+   KV_REST_API_TOKEN=your_vercel_kv_rest_api_token_optional
    ```
 
 2. Create a `.env` file in the `news-app/` directory (if configuring custom URLs):
