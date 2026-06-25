@@ -11,12 +11,14 @@ let memoryCache = null;
 
 // Initialize Vercel KV / Upstash Redis client conditionally
 let redis = null;
-const isKvConfigured = process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN;
+const redisUrl = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+const redisToken = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+const isKvConfigured = redisUrl && redisToken;
 
 if (isKvConfigured) {
   redis = new Redis({
-    url: process.env.KV_REST_API_URL,
-    token: process.env.KV_REST_API_TOKEN,
+    url: redisUrl,
+    token: redisToken,
   });
   console.log('[Conflict Cache] Vercel KV / Upstash Redis client initialized successfully.');
 } else {

@@ -118,6 +118,8 @@ cerebral_earth/
    YOUTUBE_API_KEY=your_youtube_api_key_optional
    KV_REST_API_URL=your_vercel_kv_rest_api_url_optional
    KV_REST_API_TOKEN=your_vercel_kv_rest_api_token_optional
+   UPSTASH_REDIS_REST_URL=your_upstash_redis_rest_url_optional
+   UPSTASH_REDIS_REST_TOKEN=your_upstash_redis_rest_token_optional
    ```
 
 2. Create a `.env` file in the `news-app/` directory (if configuring custom URLs):

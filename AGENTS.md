@@ -65,7 +65,7 @@ Our regional and global top headlines endpoints retrieve news via **NewsAPI** (`
 
 ### 4. GDELT Conflict API & Caching (Hybrid Mode)
 To bypass GDELT API latency and rate-limiting across environments:
-* **Production/Vercel Mode:** When `KV_REST_API_URL` and `KV_REST_API_TOKEN` are present, the app initializes an `@upstash/redis` client.
+* **Production/Vercel Mode:** When `KV_REST_API_URL` / `KV_REST_API_TOKEN` or `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` are present, the app initializes an `@upstash/redis` client.
   * The `/api/conflicts` route fetches data from Redis (`conflicts_data`).
   * On cache miss, it fetches GDELT data, caches it in Redis with a 15-minute Time-To-Live (`EX 900`), and returns the results.
   * Background intervals are disabled to prevent running extra timers on serverless infrastructure.

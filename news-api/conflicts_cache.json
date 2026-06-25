@@ -1,6 +1,28 @@
 [
   {
-    "id": "gdelt-0-2026-06-25T19:00:00Z",
+    "id": "gdelt-0-2026-06-25T19:15:00Z",
+    "lng": -72.4167,
+    "lat": 19,
+    "name": "Haiti",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": -1.14,
+    "url": "https://www.cnn.com/2026/06/25/americas/haiti-supreme-court-world-cup-intl-latam",
+    "category": "GEOPOLITICAL_TENSION",
+    "themes": ";CRISISLEX_C05_NEED_OF_SHELTERS;TERROR;TERROR;"
+  },
+  {
+    "id": "gdelt-3-2026-06-25T19:15:00Z",
+    "lng": -84.388,
+    "lat": 33.749,
+    "name": "Atlanta, Georgia, United States",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": -1.14,
+    "url": "https://www.cnn.com/2026/06/25/americas/haiti-supreme-court-world-cup-intl-latam",
+    "category": "GEOPOLITICAL_TENSION",
+    "themes": ";TAX_FOODSTAPLES_PLANTAINS;TAX_ETHNICITY_HAITIAN;TAX_ETHNICITY_HAITIAN;TAX_ETHNICITY_HAITIAN;TERROR;TERROR;TAX_FOODSTAPLES_RICE;"
+  },
+  {
+    "id": "gdelt-4-2026-06-25T19:00:00Z",
     "lng": 10.2333,
     "lat": 43.8667,
     "name": "Viareggio, Toscana, Italy",
@@ -11,7 +33,7 @@
     "themes": ";ARREST;TAX_FNCACT_CRIMINAL;TAX_FNCACT_JUDGES;KILL;TERROR;ARMEDCONFLICT;KILL;TERROR;ARMEDCONFLICT;"
   },
   {
-    "id": "gdelt-1-2026-06-25T19:00:00Z",
+    "id": "gdelt-5-2026-06-25T19:00:00Z",
     "lng": 30.5167,
     "lat": 50.4333,
     "name": "Kiev, Ukraine (General), Ukraine",
@@ -22,7 +44,7 @@
     "themes": ";TERROR;ARMEDCONFLICT;USPEC_UNCERTAINTY1;"
   },
   {
-    "id": "gdelt-2-2026-06-25T19:00:00Z",
+    "id": "gdelt-6-2026-06-25T19:00:00Z",
     "lng": 34.75,
     "lat": 31.5,
     "name": "Israel",
@@ -33,7 +55,7 @@
     "themes": ";EPU_CATS_NATIONAL_SECURITY;JIHAD;TERROR;"
   },
   {
-    "id": "gdelt-3-2026-06-25T19:00:00Z",
+    "id": "gdelt-7-2026-06-25T19:00:00Z",
     "lng": 53,
     "lat": 32,
     "name": "Iran",
@@ -44,7 +66,40 @@
     "themes": ";TAX_FNCACT_LEADER;JIHAD;TERROR;"
   },
   {
-    "id": "gdelt-5-2026-06-25T19:00:00Z",
+    "id": "gdelt-8-2026-06-25T19:15:00Z",
+    "lng": 70,
+    "lat": 30,
+    "name": "Pakistan",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": 2.05,
+    "url": "https://dailythepatriot.com/we-will-make-pakistan-an-economic-power-if-anyone-casts-an-evil-eye/",
+    "category": "GEOPOLITICAL_TENSION",
+    "themes": ";TAX_ETHNICITY_AMERICAN;TERROR;UNGP_FORESTS_RIVERS_OCEANS;"
+  },
+  {
+    "id": "gdelt-9-2026-06-25T19:15:00Z",
+    "lng": 34.3333,
+    "lat": 31.4167,
+    "name": "Gaza, Israel (General), Israel",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": -3.16,
+    "url": "https://www.ynet.co.il/news/article/ry8003scgzl",
+    "category": "CIVIL_UNREST",
+    "themes": ";KIDNAP;TERROR;PROTEST;"
+  },
+  {
+    "id": "gdelt-10-2026-06-25T19:15:00Z",
+    "lng": 34.75,
+    "lat": 31.5,
+    "name": "Israel",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": -3.16,
+    "url": "https://www.ynet.co.il/news/article/ry8003scgzl",
+    "category": "CIVIL_UNREST",
+    "themes": ";KIDNAP;TERROR;PROTEST;"
+  },
+  {
+    "id": "gdelt-11-2026-06-25T19:00:00Z",
     "lng": 100,
     "lat": 60,
     "name": "Russia",
@@ -55,7 +110,29 @@
     "themes": ";EVACUATION;CRISISLEX_T01_CAUTION_ADVICE;CRISISLEX_T09_DISPLACEDRELOCATEDEVACUATED;TERROR;ARMEDCONFLICT;TERROR;ARMEDCONFLICT;TAX_WORLDLANGUAGES_RUSSIA;TAX_WORLDLANGUAGES_RUSSIA;USPEC_UNCERTAINTY1;"
   },
   {
-    "id": "gdelt-8-2026-06-25T19:00:00Z",
+    "id": "gdelt-14-2026-06-25T19:15:00Z",
+    "lng": -5,
+    "lat": 32,
+    "name": "Morocco",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": -7.29,
+    "url": "https://www.cawalisse.com/237731/",
+    "category": "ARMED_CONFLICT",
+    "themes": ";TERROR;ARMEDCONFLICT;TERROR;ARMEDCONFLICT;SECURITY_SERVICES;TAX_FNCACT_POLICE;NATURAL_DISASTER_VOLCANO;CRISISLEX_C07_SAFETY;TAX_FNCACT_CITIZENS;TAX_FNCACT_LEADERS;"
+  },
+  {
+    "id": "gdelt-15-2026-06-25T19:15:00Z",
+    "lng": -6.83,
+    "lat": 34.02,
+    "name": "Rabat, Rabat-Sal�Emmour-Za�Mo, Morocco",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": -7.29,
+    "url": "https://www.cawalisse.com/237731/",
+    "category": "ARMED_CONFLICT",
+    "themes": ";TERROR;ARMEDCONFLICT;TERROR;ARMEDCONFLICT;SECURITY_SERVICES;TAX_FNCACT_POLICE;NATURAL_DISASTER_VOLCANO;CRISISLEX_C07_SAFETY;TAX_FNCACT_CITIZENS;TAX_FNCACT_LEADERS;"
+  },
+  {
+    "id": "gdelt-17-2026-06-25T19:00:00Z",
     "lng": 10.2333,
     "lat": 43.8667,
     "name": "Viareggio, Toscana, Italy",
@@ -66,7 +143,84 @@
     "themes": ";TAX_FNCACT_CRIMINAL;WB_135_TRANSPORT;WB_1803_TRANSPORT_INFRASTRUCTURE;WB_166_RAILWAYS;KILL;TERROR;ARMEDCONFLICT;KILL;TERROR;ARMEDCONFLICT;TAX_FNCACT_JUDGES;"
   },
   {
-    "id": "gdelt-10-2026-06-25T19:00:00Z",
+    "id": "gdelt-18-2026-06-25T19:15:00Z",
+    "lng": 21.85,
+    "lat": 32.8304,
+    "name": "Cyrene, Libya (General), Libya",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": -3.34,
+    "url": "https://www.arabnews.com/node/2648573/middle-east",
+    "category": "ARMED_CONFLICT",
+    "themes": ";JIHAD;TERROR;ARMEDCONFLICT;CRISISLEX_CRISISLEXREC;"
+  },
+  {
+    "id": "gdelt-19-2026-06-25T19:15:00Z",
+    "lng": 17,
+    "lat": 25,
+    "name": "Libya",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": -3.34,
+    "url": "https://www.arabnews.com/node/2648573/middle-east",
+    "category": "ARMED_CONFLICT",
+    "themes": ";JIHAD;TERROR;ARMEDCONFLICT;CRISISLEX_CRISISLEXREC;"
+  },
+  {
+    "id": "gdelt-20-2026-06-25T19:15:00Z",
+    "lng": -96,
+    "lat": 60,
+    "name": "Canada",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": 5.56,
+    "url": "https://caledoncitizen.com/celebrate-canada-in-the-heart-of-ontarios-capital/",
+    "category": "ARMED_CONFLICT",
+    "themes": ";TERROR;ARMEDCONFLICT;TAX_FNCACT_HITMEN;TAX_FNCACT_QUEEN;"
+  },
+  {
+    "id": "gdelt-21-2026-06-25T19:15:00Z",
+    "lng": -4,
+    "lat": 54,
+    "name": "United Kingdom",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": -7.29,
+    "url": "https://www.cawalisse.com/237731/",
+    "category": "ARMED_CONFLICT",
+    "themes": ";TERROR;ARMEDCONFLICT;TERROR;ARMEDCONFLICT;SECURITY_SERVICES;TAX_FNCACT_POLICE;ARREST;CRISISLEX_CRISISLEXREC;NATURAL_DISASTER_VOLCANO;CRISISLEX_C07_SAFETY;TAX_FNCACT_CITIZENS;TAX_FNCACT_LEADERS;"
+  },
+  {
+    "id": "gdelt-22-2026-06-25T19:15:00Z",
+    "lng": 21,
+    "lat": 42.5833,
+    "name": "Kosovo",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": -5.31,
+    "url": "https://www.botasot.info/shqiperia/2499087/ikballe-huduti-person-non-grata-ne-shqiperi-ministri-lamallari-kercenon-sigurine-kombetare-kemi-te-dhena-per-personat-qe-perbejne-rrezik/",
+    "category": "ARMED_CONFLICT",
+    "themes": ";WB_696_PUBLIC_SECTOR_MANAGEMENT;WB_840_JUSTICE;WB_1014_CRIMINAL_JUSTICE;GENERAL_GOVERNMENT;GENERAL_GOVERNMENT;TERROR;ARMEDCONFLICT;TERROR;ARMEDCONFLICT;TAX_FNCACT_CRIMINAL;TAX_FNCACT_CRIMINAL;TAX_FNCACT_CRIMINAL;TAX_FNCACT_CRIMINAL;"
+  },
+  {
+    "id": "gdelt-23-2026-06-25T19:15:00Z",
+    "lng": 20,
+    "lat": 52,
+    "name": "Poland",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": -0.84,
+    "url": "https://interfax.com.ua/news/economic/1179740.html",
+    "category": "ARMED_CONFLICT",
+    "themes": ";WB_137_WATER;TERROR;ARMEDCONFLICT;GENERAL_GOVERNMENT;EPU_POLICY_GOVERNMENT;"
+  },
+  {
+    "id": "gdelt-24-2026-06-25T19:15:00Z",
+    "lng": 32,
+    "lat": 49,
+    "name": "Ukraine",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": -0.84,
+    "url": "https://interfax.com.ua/news/economic/1179740.html",
+    "category": "ARMED_CONFLICT",
+    "themes": ";WB_137_WATER;TERROR;ARMEDCONFLICT;GENERAL_GOVERNMENT;EPU_POLICY_GOVERNMENT;"
+  },
+  {
+    "id": "gdelt-26-2026-06-25T19:00:00Z",
     "lng": 35.2333,
     "lat": 31.7667,
     "name": "Jerusalem, Israel (General), Israel",
@@ -77,7 +231,7 @@
     "themes": ";EPU_CATS_NATIONAL_SECURITY;TAX_TERROR_GROUP_HEZBOLLAH;TAX_POLITICAL_PARTY_HEZBOLLAH;JIHAD;TERROR;"
   },
   {
-    "id": "gdelt-12-2026-06-25T19:00:00Z",
+    "id": "gdelt-28-2026-06-25T19:00:00Z",
     "lng": 53,
     "lat": 32,
     "name": "Iran",
@@ -88,7 +242,84 @@
     "themes": ";TAX_ETHNICITY_IRANIAN;GENERAL_GOVERNMENT;TAX_ETHNICITY_AMERICAN;JIHAD;TERROR;"
   },
   {
-    "id": "gdelt-14-2026-06-25T19:00:00Z",
+    "id": "gdelt-29-2026-06-25T19:15:00Z",
+    "lng": -73.5833,
+    "lat": 45.5,
+    "name": "Montreal, Quebec, Canada",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": -11.81,
+    "url": "https://panow.com/2026/06/25/protest-against-incel-ideology-today-in-montreal-after-deadly-shooting/",
+    "category": "CIVIL_UNREST",
+    "themes": ";CRISISLEX_CRISISLEXREC;TAX_FNCACT_WOMEN;TERROR;PROTEST;IDEOLOGY;"
+  },
+  {
+    "id": "gdelt-30-2026-06-25T19:15:00Z",
+    "lng": 34.75,
+    "lat": 31.5,
+    "name": "Israel",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": 2.05,
+    "url": "https://dailythepatriot.com/we-will-make-pakistan-an-economic-power-if-anyone-casts-an-evil-eye/",
+    "category": "GEOPOLITICAL_TENSION",
+    "themes": ";USPEC_POLICY1;EPU_POLICY_BUDGET;TAX_ETHNICITY_AMERICAN;TERROR;UNGP_FORESTS_RIVERS_OCEANS;"
+  },
+  {
+    "id": "gdelt-31-2026-06-25T19:15:00Z",
+    "lng": -4,
+    "lat": 54,
+    "name": "United Kingdom",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": 3.04,
+    "url": "https://economictimes.indiatimes.com/news/economy/foreign-trade/us-trade-deal-to-be-on-the-day-india-secures-tariff-edge-piyush-goyal/articleshow/132001599.cms",
+    "category": "GEOPOLITICAL_TENSION",
+    "themes": ";TERROR;WB_2467_TERRORISM;WB_2433_CONFLICT_AND_VIOLENCE;WB_2462_POLITICAL_VIOLENCE_AND_WAR;EPU_CATS_NATIONAL_SECURITY;"
+  },
+  {
+    "id": "gdelt-32-2026-06-25T19:15:00Z",
+    "lng": 77.2,
+    "lat": 28.6,
+    "name": "New Delhi, Delhi, India",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": 3.04,
+    "url": "https://economictimes.indiatimes.com/news/economy/foreign-trade/us-trade-deal-to-be-on-the-day-india-secures-tariff-edge-piyush-goyal/articleshow/132001599.cms",
+    "category": "GEOPOLITICAL_TENSION",
+    "themes": ";TERROR;WB_2467_TERRORISM;WB_2433_CONFLICT_AND_VIOLENCE;WB_2462_POLITICAL_VIOLENCE_AND_WAR;EPU_CATS_NATIONAL_SECURITY;"
+  },
+  {
+    "id": "gdelt-33-2026-06-25T19:15:00Z",
+    "lng": -73.5833,
+    "lat": 45.5,
+    "name": "Montreal, Quebec, Canada",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": -10.68,
+    "url": "https://www.brandonsun.com/national/2026/06/25/protest-against-incel-ideology-today-in-montreal-after-deadly-shooting",
+    "category": "CIVIL_UNREST",
+    "themes": ";TERROR;IDEOLOGY;PROTEST;CRISISLEX_CRISISLEXREC;TAX_FNCACT_WOMEN;"
+  },
+  {
+    "id": "gdelt-34-2026-06-25T19:15:00Z",
+    "lng": 53,
+    "lat": 32,
+    "name": "Iran",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": -5.31,
+    "url": "https://www.botasot.info/shqiperia/2499087/ikballe-huduti-person-non-grata-ne-shqiperi-ministri-lamallari-kercenon-sigurine-kombetare-kemi-te-dhena-per-personat-qe-perbejne-rrezik/",
+    "category": "ARMED_CONFLICT",
+    "themes": ";TAX_FNCACT_AUTHORITIES;CRISISLEX_CRISISLEXREC;EPU_POLICY_AUTHORITIES;ACT_MAKESTATEMENT;ARREST;SOC_GENERALCRIME;LEGISLATION;EPU_POLICY_LAW;TERROR;ARMEDCONFLICT;TERROR;ARMEDCONFLICT;TAX_FNCACT_CRIMINAL;TAX_FNCACT_CRIMINAL;TAX_FNCACT_CRIMINAL;"
+  },
+  {
+    "id": "gdelt-35-2026-06-25T19:15:00Z",
+    "lng": 34.75,
+    "lat": 31.5,
+    "name": "Israel",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": -6.59,
+    "url": "https://www.thenational.scot/politics/26229606.keir-starmers-tears-children-palestine/",
+    "category": "ARMED_CONFLICT",
+    "themes": ";SELF_IDENTIFIED_ATROCITY;TERROR;ARMEDCONFLICT;WB_2507_HUMAN_RIGHTS_ABUSES_AND_VIOLATIONS;WB_2203_HUMAN_RIGHTS;WB_2509_GENOCIDE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;SELF_IDENTIFIED_ATROCITY;TERROR;ARMEDCONFLICT;WB_2507_HUMAN_RIGHTS_ABUSES_AND_VIOLATIONS;WB_2203_HUMAN_RIGHTS;WB_2509_GENOCIDE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;SELF_IDENTIFIED_ATROCITY;TERROR;ARMEDCONFLICT;WB_2507_HUMAN_RIGHTS_ABUSES_AND_VIOLATIONS;WB_2203_HUMAN_RIGHTS;WB_2509_GENOCIDE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;TAX_ETHNICITY_PALESTINIAN;TAX_FNCACT_CHILDREN;RESIGNATION;TAX_FNCACT_FATHER;"
+  },
+  {
+    "id": "gdelt-40-2026-06-25T19:00:00Z",
     "lng": 48,
     "lat": 6,
     "name": "Somalia",
@@ -99,7 +330,7 @@
     "themes": ";TAX_FNCACT_LEADER;TAX_FNCACT_LEADER;UNGP_FORESTS_RIVERS_OCEANS;UNGP_FORESTS_RIVERS_OCEANS;JIHAD;TERROR;"
   },
   {
-    "id": "gdelt-15-2026-06-25T19:00:00Z",
+    "id": "gdelt-41-2026-06-25T19:00:00Z",
     "lng": 100,
     "lat": 60,
     "name": "Russia",
@@ -110,7 +341,18 @@
     "themes": ";ARMEDCONFLICT;MARITIME;TAX_ETHNICITY_RUSSIAN;TAX_WORLDLANGUAGES_RUSSIAN;TERROR;TAX_WORLDLANGUAGES_RUSSIA;"
   },
   {
-    "id": "gdelt-17-2026-06-25T19:00:00Z",
+    "id": "gdelt-45-2026-06-25T19:15:00Z",
+    "lng": 34.3333,
+    "lat": 31.4167,
+    "name": "Gaza, Israel (General), Israel",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": -0.63,
+    "url": "https://www.haberler.com/guncel/roma-da-filistin-destekcilerinden-belediyeye-israil-isbirligini-sonlandirma-cagrisi-19989588-haberi/",
+    "category": "ARMED_CONFLICT",
+    "themes": ";EPU_POLICY_POLITICAL;TAX_FNCACT_CHILDREN;SELF_IDENTIFIED_ATROCITY;TERROR;ARMEDCONFLICT;WB_2507_HUMAN_RIGHTS_ABUSES_AND_VIOLATIONS;WB_2203_HUMAN_RIGHTS;WB_2509_GENOCIDE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;SELF_IDENTIFIED_ATROCITY;TERROR;ARMEDCONFLICT;WB_2507_HUMAN_RIGHTS_ABUSES_AND_VIOLATIONS;WB_2203_HUMAN_RIGHTS;WB_2509_GENOCIDE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;"
+  },
+  {
+    "id": "gdelt-46-2026-06-25T19:00:00Z",
     "lng": 6.6333,
     "lat": 12.55,
     "name": "Kogi, Nigeria (General), Nigeria",
@@ -121,7 +363,7 @@
     "themes": ";SMUGGLING;IDEOLOGY;TERROR;WB_2467_TERRORISM;WB_2433_CONFLICT_AND_VIOLENCE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;WB_2462_POLITICAL_VIOLENCE_AND_WAR;EPU_CATS_NATIONAL_SECURITY;TERROR;WB_2467_TERRORISM;WB_2433_CONFLICT_AND_VIOLENCE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;WB_2462_POLITICAL_VIOLENCE_AND_WAR;EPU_CATS_NATIONAL_SECURITY;KIDNAP;KIDNAP;"
   },
   {
-    "id": "gdelt-18-2026-06-25T19:00:00Z",
+    "id": "gdelt-47-2026-06-25T19:00:00Z",
     "lng": 5.239,
     "lat": 13.0609,
     "name": "Sokoto, Sokoto, Nigeria",
@@ -132,18 +374,51 @@
     "themes": ";SMUGGLING;IDEOLOGY;TERROR;WB_2467_TERRORISM;WB_2433_CONFLICT_AND_VIOLENCE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;WB_2462_POLITICAL_VIOLENCE_AND_WAR;EPU_CATS_NATIONAL_SECURITY;TERROR;WB_2467_TERRORISM;WB_2433_CONFLICT_AND_VIOLENCE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;WB_2462_POLITICAL_VIOLENCE_AND_WAR;EPU_CATS_NATIONAL_SECURITY;KIDNAP;KIDNAP;"
   },
   {
-    "id": "gdelt-20-2026-06-25T19:00:00Z",
-    "lng": 100,
-    "lat": 60,
-    "name": "Russia",
-    "pubDate": "2026-06-25T19:00:00Z",
-    "tone": -3.78,
-    "url": "https://www.obozrevatel.com/novosti-obschestvo/zavershenyi-rabotyi-po-konservatsii-zelenskij-rasskazal-o-hode-restavratsii-lavryi-povrezhdennoj-v-rezultate-rossijskogo-obstrela.htm",
+    "id": "gdelt-49-2026-06-25T19:15:00Z",
+    "lng": 34.75,
+    "lat": 31.5,
+    "name": "Israel",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": -9.01,
+    "url": "https://www.1in.am/3731327.html",
     "category": "ARMED_CONFLICT",
-    "themes": ";CRISISLEX_CRISISLEXREC;TAX_WORLDLANGUAGES_RUSSIA;TERROR;ARMEDCONFLICT;MANMADE_DISASTER_IMPLIED;CRISISLEX_C04_LOGISTICS_TRANSPORT;CRISISLEX_T01_CAUTION_ADVICE;"
+    "themes": ";ORGANIZED_CRIME;WB_2433_CONFLICT_AND_VIOLENCE;WB_2452_GANGS;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;WB_2445_NON_STATE_SECURITY_ACTORS;TAX_RELIGION_ISLAMIC;TAX_RELIGION_ISLAMIC;TAX_RELIGION_ISLAMIC;CRISISLEX_CRISISLEXREC;MILITARY;TAX_MILITARY_TITLE_COMMANDER;TAX_FNCACT_COMMANDER;TAX_MILITARY_TITLE_COMMANDER;TAX_FNCACT_COMMANDER;JIHAD;TERROR;ARMEDCONFLICT;TAX_TERROR_GROUP_ISLAMIC_JIHAD;JIHAD;TERROR;ARMEDCONFLICT;TAX_TERROR_GROUP_ISLAMIC_JIHAD;JIHAD;TERROR;ARMEDCONFLICT;TAX_TERROR_GROUP_ISLAMIC_JIHAD;"
   },
   {
-    "id": "gdelt-21-2026-06-25T19:00:00Z",
+    "id": "gdelt-50-2026-06-25T19:15:00Z",
+    "lng": 34.3333,
+    "lat": 31.4167,
+    "name": "Gaza, Israel (General), Israel",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": -9.01,
+    "url": "https://www.1in.am/3731327.html",
+    "category": "ARMED_CONFLICT",
+    "themes": ";ORGANIZED_CRIME;WB_2433_CONFLICT_AND_VIOLENCE;WB_2452_GANGS;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;WB_2445_NON_STATE_SECURITY_ACTORS;TAX_RELIGION_ISLAMIC;TAX_RELIGION_ISLAMIC;TAX_RELIGION_ISLAMIC;CRISISLEX_CRISISLEXREC;MILITARY;TAX_MILITARY_TITLE_COMMANDER;TAX_FNCACT_COMMANDER;TAX_MILITARY_TITLE_COMMANDER;TAX_FNCACT_COMMANDER;JIHAD;TERROR;ARMEDCONFLICT;TAX_TERROR_GROUP_ISLAMIC_JIHAD;JIHAD;TERROR;ARMEDCONFLICT;TAX_TERROR_GROUP_ISLAMIC_JIHAD;JIHAD;TERROR;ARMEDCONFLICT;TAX_TERROR_GROUP_ISLAMIC_JIHAD;"
+  },
+  {
+    "id": "gdelt-51-2026-06-25T19:15:00Z",
+    "lng": 12.4833,
+    "lat": 41.9,
+    "name": "Rome, Lazio, Italy",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": -10.08,
+    "url": "https://askanews.it/2026/06/25/strage-viareggio-condanna-definitiva-per-moretti-andra-in-carcere/",
+    "category": "ARMED_CONFLICT",
+    "themes": ";TAX_ETHNICITY_ITALIAN;TAX_WORLDLANGUAGES_ITALIAN;TAX_FNCACT_JUDGES;ARREST;MANMADE_DISASTER_IMPLIED;WB_135_TRANSPORT;WB_1803_TRANSPORT_INFRASTRUCTURE;WB_166_RAILWAYS;CRISISLEX_C04_LOGISTICS_TRANSPORT;TAX_FNCACT_DIRECTOR;TAX_FNCACT_MANAGING_DIRECTOR;KILL;TERROR;ARMEDCONFLICT;KILL;TERROR;ARMEDCONFLICT;"
+  },
+  {
+    "id": "gdelt-52-2026-06-25T19:15:00Z",
+    "lng": 34.75,
+    "lat": 31.5,
+    "name": "Israel",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": -0.63,
+    "url": "https://www.haberler.com/guncel/roma-da-filistin-destekcilerinden-belediyeye-israil-isbirligini-sonlandirma-cagrisi-19989588-haberi/",
+    "category": "ARMED_CONFLICT",
+    "themes": ";LEADER;TAX_FNCACT_MAYOR;TAX_FNCACT_CHILDREN;SELF_IDENTIFIED_ATROCITY;TERROR;ARMEDCONFLICT;WB_2507_HUMAN_RIGHTS_ABUSES_AND_VIOLATIONS;WB_2203_HUMAN_RIGHTS;WB_2509_GENOCIDE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;SELF_IDENTIFIED_ATROCITY;TERROR;ARMEDCONFLICT;WB_2507_HUMAN_RIGHTS_ABUSES_AND_VIOLATIONS;WB_2203_HUMAN_RIGHTS;WB_2509_GENOCIDE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;"
+  },
+  {
+    "id": "gdelt-54-2026-06-25T19:00:00Z",
     "lng": 30.5167,
     "lat": 50.4333,
     "name": "Kiev, Ukraine (General), Ukraine",
@@ -154,18 +429,106 @@
     "themes": ";TAX_FNCACT_COMEDIAN;ARMEDCONFLICT;TAX_ETHNICITY_RUSSIAN;TAX_WORLDLANGUAGES_RUSSIAN;TERROR;EPU_POLICY_DUMA;CRISISLEX_C07_SAFETY;"
   },
   {
-    "id": "gdelt-26-2026-06-25T19:00:00Z",
-    "lng": 20,
-    "lat": 52,
-    "name": "Poland",
+    "id": "gdelt-56-2026-06-25T19:00:00Z",
+    "lng": 100,
+    "lat": 60,
+    "name": "Russia",
     "pubDate": "2026-06-25T19:00:00Z",
-    "tone": -4.27,
-    "url": "https://www.voachinese.com/a/eu-begins-disbursing-102-billion-loan-to-ukraine-as-russian-strikes-kill-several-across-the-country-20260625/8164782.html",
+    "tone": -3.78,
+    "url": "https://www.obozrevatel.com/novosti-obschestvo/zavershenyi-rabotyi-po-konservatsii-zelenskij-rasskazal-o-hode-restavratsii-lavryi-povrezhdennoj-v-rezultate-rossijskogo-obstrela.htm",
     "category": "ARMED_CONFLICT",
-    "themes": ";TAX_FNCACT_PRESIDENT;TAX_FNCACT_PRESIDENT;ARMEDCONFLICT;EPU_CATS_NATIONAL_SECURITY;KILL;TERROR;WB_2433_CONFLICT_AND_VIOLENCE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;"
+    "themes": ";CRISISLEX_CRISISLEXREC;TAX_WORLDLANGUAGES_RUSSIA;TERROR;ARMEDCONFLICT;MANMADE_DISASTER_IMPLIED;CRISISLEX_C04_LOGISTICS_TRANSPORT;CRISISLEX_T01_CAUTION_ADVICE;"
   },
   {
-    "id": "gdelt-27-2026-06-25T19:00:00Z",
+    "id": "gdelt-57-2026-06-25T19:15:00Z",
+    "lng": 53,
+    "lat": 32,
+    "name": "Iran",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": 2.05,
+    "url": "https://dailythepatriot.com/we-will-make-pakistan-an-economic-power-if-anyone-casts-an-evil-eye/",
+    "category": "GEOPOLITICAL_TENSION",
+    "themes": ";LEADER;TAX_FNCACT_PRIME_MINISTER;TAX_FNCACT_MINISTER;TAX_FNCACT_DEPUTY;TAX_ETHNICITY_AMERICAN;TERROR;UNGP_FORESTS_RIVERS_OCEANS;"
+  },
+  {
+    "id": "gdelt-58-2026-06-25T19:15:00Z",
+    "lng": -75.7,
+    "lat": 45.4167,
+    "name": "Ottawa, Ontario, Canada",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": -5.81,
+    "url": "https://www.aajsamaaj.com/after-41-years-canada-admits-khalistanis-carried-out-the-air-india-flight-blast/",
+    "category": "ARMED_CONFLICT",
+    "themes": ";CRISISLEX_CRISISLEXREC;CRISISLEX_CRISISLEXREC;TERROR;ARMEDCONFLICT;TERROR;ARMEDCONFLICT;TAX_WEAPONS_BOMB;EPU_CATS_MIGRATION_FEAR_FEAR;TAX_WEAPONS_BOMB;EPU_CATS_MIGRATION_FEAR_FEAR;MANMADE_DISASTER_IMPLIED;MANMADE_DISASTER_IMPLIED;MANMADE_DISASTER_IMPLIED;WB_2467_TERRORISM;WB_2433_CONFLICT_AND_VIOLENCE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;WB_2462_POLITICAL_VIOLENCE_AND_WAR;EPU_CATS_NATIONAL_SECURITY;"
+  },
+  {
+    "id": "gdelt-59-2026-06-25T19:15:00Z",
+    "lng": -96,
+    "lat": 60,
+    "name": "Canada",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": -5.81,
+    "url": "https://www.aajsamaaj.com/after-41-years-canada-admits-khalistanis-carried-out-the-air-india-flight-blast/",
+    "category": "ARMED_CONFLICT",
+    "themes": ";CRISISLEX_CRISISLEXREC;CRISISLEX_CRISISLEXREC;TERROR;ARMEDCONFLICT;TERROR;ARMEDCONFLICT;TAX_WEAPONS_BOMB;EPU_CATS_MIGRATION_FEAR_FEAR;TAX_WEAPONS_BOMB;EPU_CATS_MIGRATION_FEAR_FEAR;MANMADE_DISASTER_IMPLIED;MANMADE_DISASTER_IMPLIED;MANMADE_DISASTER_IMPLIED;WB_2467_TERRORISM;WB_2433_CONFLICT_AND_VIOLENCE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;WB_2462_POLITICAL_VIOLENCE_AND_WAR;EPU_CATS_NATIONAL_SECURITY;"
+  },
+  {
+    "id": "gdelt-63-2026-06-25T19:15:00Z",
+    "lng": 12.8333,
+    "lat": 42.8333,
+    "name": "Italy",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": -10.08,
+    "url": "https://askanews.it/2026/06/25/strage-viareggio-condanna-definitiva-per-moretti-andra-in-carcere/",
+    "category": "ARMED_CONFLICT",
+    "themes": ";TAX_ETHNICITY_ITALIAN;TAX_WORLDLANGUAGES_ITALIAN;TAX_FNCACT_JUDGES;ARREST;ARREST;MANMADE_DISASTER_IMPLIED;WB_135_TRANSPORT;WB_1803_TRANSPORT_INFRASTRUCTURE;WB_166_RAILWAYS;CRISISLEX_C04_LOGISTICS_TRANSPORT;TAX_FNCACT_DIRECTOR;TAX_FNCACT_MANAGING_DIRECTOR;TAX_DISEASE_WOUNDS;KILL;TERROR;ARMEDCONFLICT;KILL;TERROR;ARMEDCONFLICT;"
+  },
+  {
+    "id": "gdelt-67-2026-06-25T19:15:00Z",
+    "lng": 12.8333,
+    "lat": 42.8333,
+    "name": "Italy",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": -0.63,
+    "url": "https://www.haberler.com/guncel/roma-da-filistin-destekcilerinden-belediyeye-israil-isbirligini-sonlandirma-cagrisi-19989588-haberi/",
+    "category": "ARMED_CONFLICT",
+    "themes": ";TAX_FNCACT_SUPPORTERS;SELF_IDENTIFIED_ATROCITY;TERROR;ARMEDCONFLICT;WB_2507_HUMAN_RIGHTS_ABUSES_AND_VIOLATIONS;WB_2203_HUMAN_RIGHTS;WB_2509_GENOCIDE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;"
+  },
+  {
+    "id": "gdelt-69-2026-06-25T19:15:00Z",
+    "lng": 12.4833,
+    "lat": 41.9,
+    "name": "Rome, Lazio, Italy",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": -0.63,
+    "url": "https://www.haberler.com/guncel/roma-da-filistin-destekcilerinden-belediyeye-israil-isbirligini-sonlandirma-cagrisi-19989588-haberi/",
+    "category": "ARMED_CONFLICT",
+    "themes": ";TAX_FNCACT_SUPPORTERS;SELF_IDENTIFIED_ATROCITY;TERROR;ARMEDCONFLICT;WB_2507_HUMAN_RIGHTS_ABUSES_AND_VIOLATIONS;WB_2203_HUMAN_RIGHTS;WB_2509_GENOCIDE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;"
+  },
+  {
+    "id": "gdelt-71-2026-06-25T19:15:00Z",
+    "lng": 22,
+    "lat": 39,
+    "name": "Greece",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": -3.34,
+    "url": "https://www.arabnews.com/node/2648573/middle-east",
+    "category": "ARMED_CONFLICT",
+    "themes": ";TAX_ETHNICITY_GREEK;TAX_WORLDLANGUAGES_GREEK;TAX_FNCACT_GUIDE;TAX_FNCACT_TOUR_GUIDE;JIHAD;TERROR;ARMEDCONFLICT;CRISISLEX_CRISISLEXREC;"
+  },
+  {
+    "id": "gdelt-72-2026-06-25T19:15:00Z",
+    "lng": 21.964,
+    "lat": 32.8979,
+    "name": "Apollonia, Libya (General), Libya",
+    "pubDate": "2026-06-25T19:15:00Z",
+    "tone": -3.34,
+    "url": "https://www.arabnews.com/node/2648573/middle-east",
+    "category": "ARMED_CONFLICT",
+    "themes": ";TAX_ETHNICITY_GREEK;TAX_WORLDLANGUAGES_GREEK;TAX_FNCACT_GUIDE;TAX_FNCACT_TOUR_GUIDE;JIHAD;TERROR;ARMEDCONFLICT;CRISISLEX_CRISISLEXREC;"
+  },
+  {
+    "id": "gdelt-76-2026-06-25T19:00:00Z",
     "lng": 32,
     "lat": 49,
     "name": "Ukraine",
@@ -176,300 +539,14 @@
     "themes": ";TAX_ETHNICITY_IRANIAN;GENERAL_GOVERNMENT;TAX_ETHNICITY_AMERICAN;MILITARY;TAX_ETHNICITY_UKRAINIAN;TAX_WORLDLANGUAGES_UKRAINIAN;JIHAD;TERROR;"
   },
   {
-    "id": "gdelt-29-2026-06-25T19:00:00Z",
-    "lng": 10.2333,
-    "lat": 43.8667,
-    "name": "Viareggio, Toscana, Italy",
-    "pubDate": "2026-06-25T19:00:00Z",
-    "tone": -6.92,
-    "url": "https://www.targatocn.it/2026/06/25/leggi-notizia/argomenti/ultimora/articolo/strage-ferroviaria-di-viareggio-condanne-definitive-moretti-andra-in-carcere.html",
-    "category": "ARMED_CONFLICT",
-    "themes": ";TAX_FNCACT_CRIMINAL;TAX_DISEASE_WOUNDS;MANMADE_DISASTER_IMPLIED;WB_135_TRANSPORT;WB_1803_TRANSPORT_INFRASTRUCTURE;WB_166_RAILWAYS;CRISISLEX_C04_LOGISTICS_TRANSPORT;MANMADE_DISASTER_IMPLIED;WB_135_TRANSPORT;WB_1803_TRANSPORT_INFRASTRUCTURE;WB_166_RAILWAYS;CRISISLEX_C04_LOGISTICS_TRANSPORT;ARREST;TAX_FNCACT_JUDGES;KILL;TERROR;ARMEDCONFLICT;KILL;TERROR;ARMEDCONFLICT;"
-  },
-  {
-    "id": "gdelt-30-2026-06-25T19:00:00Z",
-    "lng": 32,
-    "lat": 49,
-    "name": "Ukraine",
-    "pubDate": "2026-06-25T19:00:00Z",
-    "tone": -7.87,
-    "url": "https://www.ostro.org/news/eks-nachalnyk-shtabu-antyterorystychnogo-tsentru-sbu-otrymav-dovichne-uv-yaznennya-za-derzhavnu-i560041",
-    "category": "ARMED_CONFLICT",
-    "themes": ";TERROR;WB_2467_TERRORISM;WB_2433_CONFLICT_AND_VIOLENCE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;WB_2462_POLITICAL_VIOLENCE_AND_WAR;TERROR;WB_2467_TERRORISM;WB_2433_CONFLICT_AND_VIOLENCE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;WB_2462_POLITICAL_VIOLENCE_AND_WAR;TERROR;WB_2467_TERRORISM;WB_2433_CONFLICT_AND_VIOLENCE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;WB_2462_POLITICAL_VIOLENCE_AND_WAR;TRIAL;TAX_FNCACT_PROSECUTOR;CRISISLEX_C07_SAFETY;TAX_FNCACT_CHIEF;TREASON;TREASON;SECURITY_SERVICES;WB_696_PUBLIC_SECTOR_MANAGEMENT;WB_840_JUSTICE;WB_1934_CIVILLIAN_POLICE_AND_SECURITY_SERVICES;WB_1014_CRIMINAL_JUSTICE;TAX_MILITARY_TITLE_OFFICER;TAX_FNCACT_OFFICER;ARMEDCONFLICT;EPU_CATS_NATIONAL_SECURITY;ARREST;TAX_FNCACT_OFFICIAL;TAX_WORLDMAMMALS_HUMAN;"
-  },
-  {
-    "id": "gdelt-31-2026-06-25T19:00:00Z",
-    "lng": 32,
-    "lat": 49,
-    "name": "Ukraine",
+    "id": "gdelt-78-2026-06-25T19:00:00Z",
+    "lng": 20,
+    "lat": 52,
+    "name": "Poland",
     "pubDate": "2026-06-25T19:00:00Z",
     "tone": -4.27,
     "url": "https://www.voachinese.com/a/eu-begins-disbursing-102-billion-loan-to-ukraine-as-russian-strikes-kill-several-across-the-country-20260625/8164782.html",
     "category": "ARMED_CONFLICT",
-    "themes": ";TAX_FNCACT_MINISTER;LEADER;TAX_FNCACT_PRIME_MINISTER;TAX_FNCACT_PRESIDENT;TAX_FNCACT_PRESIDENT;ARMEDCONFLICT;EPU_CATS_NATIONAL_SECURITY;KILL;TERROR;"
-  },
-  {
-    "id": "gdelt-34-2026-06-25T19:00:00Z",
-    "lng": 12.8333,
-    "lat": 42.8333,
-    "name": "Italy",
-    "pubDate": "2026-06-25T19:00:00Z",
-    "tone": -12.5,
-    "url": "https://www.zazoom.it/2026-06-25/condanne-definitive-per-la-strage-di-viareggio-lex-ad-di-ferrovie-mauro-moretti-andra-in-carcere-il-legale-sentenza-ingiusta-indignati/19389280/",
-    "category": "ARMED_CONFLICT",
-    "themes": ";SOC_GENERALCRIME;WB_135_TRANSPORT;WB_1803_TRANSPORT_INFRASTRUCTURE;WB_166_RAILWAYS;WB_135_TRANSPORT;WB_1803_TRANSPORT_INFRASTRUCTURE;WB_166_RAILWAYS;CRISISLEX_CRISISLEXREC;TAX_DISEASE_WOUNDS;TAX_FNCACT_DIRECTOR;TAX_FNCACT_MANAGING_DIRECTOR;TAX_ETHNICITY_ITALIAN;TAX_WORLDLANGUAGES_ITALIAN;ARREST;ARREST;MANMADE_DISASTER_IMPLIED;CRISISLEX_C04_LOGISTICS_TRANSPORT;KILL;TERROR;ARMEDCONFLICT;KILL;TERROR;ARMEDCONFLICT;"
-  },
-  {
-    "id": "gdelt-35-2026-06-25T19:00:00Z",
-    "lng": -96,
-    "lat": 60,
-    "name": "Canada",
-    "pubDate": "2026-06-25T19:00:00Z",
-    "tone": 1.67,
-    "url": "https://windsorstar.com:443/news/economy/carney-seeks-more-diplomatic-engagement-with-iran-and-venezuela",
-    "category": "ARMED_CONFLICT",
-    "themes": ";ARMEDCONFLICT;TAX_ETHNICITY_IRANIAN;TAX_ETHNICITY_CANADIANS;SOC_EXPRESSREGRET;TERROR;WB_2467_TERRORISM;WB_2433_CONFLICT_AND_VIOLENCE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;WB_2462_POLITICAL_VIOLENCE_AND_WAR;EPU_CATS_NATIONAL_SECURITY;"
-  },
-  {
-    "id": "gdelt-36-2026-06-25T19:00:00Z",
-    "lng": 53,
-    "lat": 32,
-    "name": "Iran",
-    "pubDate": "2026-06-25T19:00:00Z",
-    "tone": 1.67,
-    "url": "https://windsorstar.com:443/news/economy/carney-seeks-more-diplomatic-engagement-with-iran-and-venezuela",
-    "category": "ARMED_CONFLICT",
-    "themes": ";ARMEDCONFLICT;TAX_ETHNICITY_IRANIAN;TAX_ETHNICITY_CANADIANS;SOC_EXPRESSREGRET;TERROR;WB_2467_TERRORISM;WB_2433_CONFLICT_AND_VIOLENCE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;WB_2462_POLITICAL_VIOLENCE_AND_WAR;EPU_CATS_NATIONAL_SECURITY;"
-  },
-  {
-    "id": "gdelt-37-2026-06-25T19:00:00Z",
-    "lng": -5,
-    "lat": 32,
-    "name": "Morocco",
-    "pubDate": "2026-06-25T19:00:00Z",
-    "tone": -0.68,
-    "url": "https://www.moroccoworldnews.com/2026/06/325134/for-first-time-us-delegation-visits-moroccos-el-guerguerat-border-crossing/",
-    "category": "ARMED_CONFLICT",
-    "themes": ";TAX_ETHNICITY_MOROCCAN;TAX_ETHNICITY_MOROCCAN;WB_135_TRANSPORT;WB_1803_TRANSPORT_INFRASTRUCTURE;WB_167_PORTS;EPU_ECONOMY;EPU_ECONOMY_HISTORIC;TAX_ETHNICITY_AMERICAN;TERROR;ARMEDCONFLICT;"
-  },
-  {
-    "id": "gdelt-39-2026-06-25T19:00:00Z",
-    "lng": 10.2333,
-    "lat": 43.8667,
-    "name": "Viareggio, Toscana, Italy",
-    "pubDate": "2026-06-25T19:00:00Z",
-    "tone": -5.79,
-    "url": "https://tg24.sky.it/cronaca/2026/06/25/strage-viareggio-condanne-definitive-cassazione",
-    "category": "ARMED_CONFLICT",
-    "themes": ";SOC_GENERALCRIME;SOC_POINTSOFINTEREST_PRISON;WB_2495_DETENTION_PRISON_AND_CORRECTIONS_REFORM;WB_2470_PEACE_OPERATIONS_AND_CONFLICT_MANAGEMENT;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;WB_2490_NATIONAL_PROTECTION_AND_SECURITY;ARREST;KILL;TERROR;ARMEDCONFLICT;"
-  },
-  {
-    "id": "gdelt-44-2026-06-25T19:00:00Z",
-    "lng": 32,
-    "lat": 49,
-    "name": "Ukraine",
-    "pubDate": "2026-06-25T19:00:00Z",
-    "tone": -6.13,
-    "url": "https://www.radiosvoboda.org/a/news-nikopolskyi-raion-dvoie-postrazhdalykh/33788924.html",
-    "category": "ARMED_CONFLICT",
-    "themes": ";TAX_ETHNICITY_UKRAINIAN;TAX_WORLDLANGUAGES_UKRAINIAN;TAX_ETHNICITY_UKRAINIAN;TAX_WORLDLANGUAGES_UKRAINIAN;WB_470_EDUCATION;TAX_FNCACT_CHILDREN;TAX_FNCACT_CHILDREN;CRIME_COMMON_ROBBERY;KIDNAP;WB_840_JUSTICE;WB_1014_CRIMINAL_JUSTICE;WB_2024_ANTI_CORRUPTION_AUTHORITIES;WB_696_PUBLIC_SECTOR_MANAGEMENT;WB_831_GOVERNANCE;WB_832_ANTI_CORRUPTION;WB_2026_PREVENTION;SOC_GENERALCRIME;EPU_CATS_MIGRATION_FEAR_FEAR;TAX_WORLDLANGUAGES_RUSSIA;ARMEDCONFLICT;EPU_CATS_NATIONAL_SECURITY;SELF_IDENTIFIED_ATROCITY;TERROR;WB_2507_HUMAN_RIGHTS_ABUSES_AND_VIOLATIONS;WB_2203_HUMAN_RIGHTS;WB_2509_GENOCIDE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;SELF_IDENTIFIED_ATROCITY;TERROR;WB_2507_HUMAN_RIGHTS_ABUSES_AND_VIOLATIONS;WB_2203_HUMAN_RIGHTS;WB_2509_GENOCIDE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;SELF_IDENTIFIED_ATROCITY;TERROR;WB_2507_HUMAN_RIGHTS_ABUSES_AND_VIOLATIONS;WB_2203_HUMAN_RIGHTS;WB_2509_GENOCIDE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;"
-  },
-  {
-    "id": "gdelt-45-2026-06-25T19:00:00Z",
-    "lng": 32,
-    "lat": 49,
-    "name": "Ukraine",
-    "pubDate": "2026-06-25T19:00:00Z",
-    "tone": -6.64,
-    "url": "https://www.radiosvoboda.org/a/news-udar-balistyka-kyiv-ppo/33788946.html",
-    "category": "ARMED_CONFLICT",
-    "themes": ";WB_2024_ANTI_CORRUPTION_AUTHORITIES;WB_696_PUBLIC_SECTOR_MANAGEMENT;WB_831_GOVERNANCE;WB_832_ANTI_CORRUPTION;WB_2026_PREVENTION;WB_840_JUSTICE;WB_1014_CRIMINAL_JUSTICE;ARMEDCONFLICT;EPU_CATS_NATIONAL_SECURITY;SELF_IDENTIFIED_ATROCITY;TERROR;WB_2507_HUMAN_RIGHTS_ABUSES_AND_VIOLATIONS;WB_2203_HUMAN_RIGHTS;WB_2509_GENOCIDE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;SELF_IDENTIFIED_ATROCITY;TERROR;WB_2507_HUMAN_RIGHTS_ABUSES_AND_VIOLATIONS;WB_2203_HUMAN_RIGHTS;WB_2509_GENOCIDE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;SELF_IDENTIFIED_ATROCITY;TERROR;WB_2507_HUMAN_RIGHTS_ABUSES_AND_VIOLATIONS;WB_2203_HUMAN_RIGHTS;WB_2509_GENOCIDE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;SOC_GENERALCRIME;EPU_CATS_MIGRATION_FEAR_FEAR;TAX_WORLDLANGUAGES_RUSSIA;KIDNAP;TAX_FNCACT_CHILDREN;TAX_FNCACT_CHILDREN;EDUCATION;WB_470_EDUCATION;CRIME_COMMON_ROBBERY;TAX_ETHNICITY_UKRAINIAN;TAX_WORLDLANGUAGES_UKRAINIAN;TAX_ETHNICITY_UKRAINIAN;TAX_WORLDLANGUAGES_UKRAINIAN;"
-  },
-  {
-    "id": "gdelt-46-2026-06-25T19:00:00Z",
-    "lng": 35.8333,
-    "lat": 33.8333,
-    "name": "Lebanon",
-    "pubDate": "2026-06-25T19:00:00Z",
-    "tone": -0.25,
-    "url": "http://www.koreatimes.com/article/20260625/1618930",
-    "category": "GEOPOLITICAL_TENSION",
-    "themes": ";TERROR;WB_2467_TERRORISM;WB_2433_CONFLICT_AND_VIOLENCE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;WB_2462_POLITICAL_VIOLENCE_AND_WAR;GENERAL_GOVERNMENT;EPU_POLICY_GOVERNMENT;UNGP_FORESTS_RIVERS_OCEANS;MILITARY;TAX_FNCACT_OFFICIAL;TAX_FNCACT_TROOPS;"
-  },
-  {
-    "id": "gdelt-48-2026-06-25T19:00:00Z",
-    "lng": 35.8866,
-    "lat": 34.889,
-    "name": "Tartous, Tartus, Syria",
-    "pubDate": "2026-06-25T19:00:00Z",
-    "tone": -5.23,
-    "url": "https://www.jpost.com/middle-east/article-900551",
-    "category": "ARMED_CONFLICT",
-    "themes": ";EDUCATION;MANMADE_DISASTER_IMPLIED;SOC_POINTSOFINTEREST_SCHOOL;SOC_POINTSOFINTEREST_HIGH_SCHOOL;CRISISLEX_T03_DEAD;TAX_RELIGION_SUNNI;TAX_ETHNICITY_SUNNI;TAX_DISEASE_PLAGUE;KILL;TERROR;ARMEDCONFLICT;"
-  },
-  {
-    "id": "gdelt-49-2026-06-25T19:00:00Z",
-    "lng": 38,
-    "lat": 35,
-    "name": "Syria",
-    "pubDate": "2026-06-25T19:00:00Z",
-    "tone": -5.23,
-    "url": "https://www.jpost.com/middle-east/article-900551",
-    "category": "ARMED_CONFLICT",
-    "themes": ";EDUCATION;MANMADE_DISASTER_IMPLIED;SOC_POINTSOFINTEREST_SCHOOL;SOC_POINTSOFINTEREST_HIGH_SCHOOL;CRISISLEX_T03_DEAD;TAX_RELIGION_SUNNI;TAX_ETHNICITY_SUNNI;TAX_DISEASE_PLAGUE;KILL;TERROR;ARMEDCONFLICT;"
-  },
-  {
-    "id": "gdelt-50-2026-06-25T19:00:00Z",
-    "lng": 13,
-    "lat": 51,
-    "name": "Saxony, Sachsen, Germany",
-    "pubDate": "2026-06-25T19:00:00Z",
-    "tone": 1.1,
-    "url": "https://www.news4teachers.de/2026/06/afd-will-antideutscher-kultur-was-immer-das-auch-ist-foerderung-entziehen/",
-    "category": "GEOPOLITICAL_TENSION",
-    "themes": ";USPEC_POLITICS_GENERAL1;USPEC_POLITICS_GENERAL1;MEDIA_CENSORSHIP;TERROR;LEADER;TAX_FNCACT_POLITICIAN;LEADER;TAX_FNCACT_POLITICIAN;TAX_ETHNICITY_GERMAN;TAX_WORLDLANGUAGES_GERMAN;EXTREMISM;"
-  },
-  {
-    "id": "gdelt-55-2026-06-25T19:00:00Z",
-    "lng": 16.3667,
-    "lat": 48.2,
-    "name": "Vienna, Wien, Austria",
-    "pubDate": "2026-06-25T19:00:00Z",
-    "tone": -7.87,
-    "url": "https://www.ostro.org/news/eks-nachalnyk-shtabu-antyterorystychnogo-tsentru-sbu-otrymav-dovichne-uv-yaznennya-za-derzhavnu-i560041",
-    "category": "ARMED_CONFLICT",
-    "themes": ";TERROR;WB_2467_TERRORISM;WB_2433_CONFLICT_AND_VIOLENCE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;WB_2462_POLITICAL_VIOLENCE_AND_WAR;TERROR;WB_2467_TERRORISM;WB_2433_CONFLICT_AND_VIOLENCE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;WB_2462_POLITICAL_VIOLENCE_AND_WAR;TRIAL;TAX_FNCACT_PROSECUTOR;CRISISLEX_C07_SAFETY;SOC_USSECURITYAGENCIES;TREASON;SECURITY_SERVICES;WB_696_PUBLIC_SECTOR_MANAGEMENT;WB_840_JUSTICE;WB_1934_CIVILLIAN_POLICE_AND_SECURITY_SERVICES;WB_1014_CRIMINAL_JUSTICE;TAX_MILITARY_TITLE_OFFICER;TAX_FNCACT_OFFICER;ARMEDCONFLICT;EPU_CATS_NATIONAL_SECURITY;TAX_FNCACT_REPRESENTATIVES;TAX_FNCACT_AGENT;TAX_FNCACT_OFFICIAL;TAX_WORLDMAMMALS_HUMAN;"
-  },
-  {
-    "id": "gdelt-56-2026-06-25T19:00:00Z",
-    "lng": 10.5,
-    "lat": 51.5,
-    "name": "Germany",
-    "pubDate": "2026-06-25T19:00:00Z",
-    "tone": -2.58,
-    "url": "https://elpais.com/internacional/2026-06-25/un-informe-juridico-concluye-que-el-partido-de-ultraderecha-aleman-afd-es-inconstitucional.html",
-    "category": "ARMED_CONFLICT",
-    "themes": ";TERROR;ARMEDCONFLICT;TAX_ETHNICITY_GERMAN;TAX_WORLDLANGUAGES_GERMAN;USPEC_POLITICS_GENERAL1;USPEC_POLITICS_GENERAL1;USPEC_POLITICS_GENERAL1;REL_ISLAMOPHOBIA;DISCRIMINATION_RELIGION_ISLAMOPHOBIA;HARASSMENT;UNGP_CRIME_VIOLENCE;TAX_FNCACT_POLITICIANS;PERSECUTION;"
-  },
-  {
-    "id": "gdelt-58-2026-06-25T19:00:00Z",
-    "lng": -93.9196,
-    "lat": 45.7326,
-    "name": "Minnesota, United States",
-    "pubDate": "2026-06-25T19:00:00Z",
-    "tone": -3.04,
-    "url": "https://www.hometownregister.com/news/national/walz-files-for-information-on-trump-retribution-campaign/article_3bb29cce-7ee1-50f4-9793-504481b4f255.html",
-    "category": "GEOPOLITICAL_TENSION",
-    "themes": ";TAX_FNCACT_CITIZENS;MEDIA_SOCIAL;WB_652_ICT_APPLICATIONS;WB_662_SOCIAL_MEDIA;WB_658_ENTERPRISE_APPLICATIONS;WB_678_DIGITAL_GOVERNMENT;WB_694_BROADCAST_AND_MEDIA;WB_133_INFORMATION_AND_COMMUNICATION_TECHNOLOGIES;TAX_FNCACT_JUDGE;TAX_POLITICAL_PARTY_DEMOCRAT;USPEC_POLITICS_GENERAL1;TERROR;TAX_FNCACT_CHIEF;"
-  },
-  {
-    "id": "gdelt-61-2026-06-25T19:00:00Z",
-    "lng": 30.5167,
-    "lat": 50.4333,
-    "name": "Kiev, Ukraine (General), Ukraine",
-    "pubDate": "2026-06-25T19:00:00Z",
-    "tone": -3.78,
-    "url": "https://www.obozrevatel.com/novosti-obschestvo/zavershenyi-rabotyi-po-konservatsii-zelenskij-rasskazal-o-hode-restavratsii-lavryi-povrezhdennoj-v-rezultate-rossijskogo-obstrela.htm",
-    "category": "ARMED_CONFLICT",
-    "themes": ";TAX_FNCACT_AGGRESSOR;SECURITY_SERVICES;TAX_FNCACT_POLICE;TAX_WORLDLANGUAGES_RUSSIA;TERROR;ARMEDCONFLICT;MANMADE_DISASTER_IMPLIED;DRONES;BORDER;LEADER;TAX_FNCACT_PRESIDENT;USPEC_POLITICS_GENERAL1;CRISISLEX_C04_LOGISTICS_TRANSPORT;CRISISLEX_T01_CAUTION_ADVICE;"
-  },
-  {
-    "id": "gdelt-62-2026-06-25T19:00:00Z",
-    "lng": 32.8644,
-    "lat": 39.9272,
-    "name": "Ankara, Ankara, Turkey",
-    "pubDate": "2026-06-25T19:00:00Z",
-    "tone": -16.03,
-    "url": "https://www.haberler.com/3-sayfa/nato-zirvesi-oncesi-teror-operasyonu-103-tutuklama-19989581-haberi/",
-    "category": "GEOPOLITICAL_TENSION",
-    "themes": ";LEADER;TAX_FNCACT_GOVERNOR;TERROR;WB_2467_TERRORISM;WB_2433_CONFLICT_AND_VIOLENCE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;WB_2462_POLITICAL_VIOLENCE_AND_WAR;EPU_CATS_NATIONAL_SECURITY;ARREST;SOC_GENERALCRIME;CRISISLEX_C07_SAFETY;ARREST;SOC_GENERALCRIME;CRISISLEX_C07_SAFETY;"
-  },
-  {
-    "id": "gdelt-63-2026-06-25T19:00:00Z",
-    "lng": 35.7768,
-    "lat": 35.5148,
-    "name": "Latakia, Al Ladhiqiyah, Syria",
-    "pubDate": "2026-06-25T19:00:00Z",
-    "tone": -5.23,
-    "url": "https://www.jpost.com/middle-east/article-900551",
-    "category": "ARMED_CONFLICT",
-    "themes": ";EDUCATION;MANMADE_DISASTER_IMPLIED;SOC_POINTSOFINTEREST_SCHOOL;SOC_POINTSOFINTEREST_HIGH_SCHOOL;CRISISLEX_T03_DEAD;TAX_RELIGION_SUNNI;TAX_ETHNICITY_SUNNI;TAX_DISEASE_PLAGUE;KILL;TERROR;ARMEDCONFLICT;ORGANIZED_CRIME;WB_2452_GANGS;WB_2445_NON_STATE_SECURITY_ACTORS;"
-  },
-  {
-    "id": "gdelt-65-2026-06-25T19:00:00Z",
-    "lng": -4,
-    "lat": 54,
-    "name": "United Kingdom",
-    "pubDate": "2026-06-25T19:00:00Z",
-    "tone": -8.15,
-    "url": "https://alyaoum24.com/2030371.html",
-    "category": "ARMED_CONFLICT",
-    "themes": ";TAX_TERROR_GROUP_DAASH;TAX_TERROR_GROUP_DAASH;ARREST;CRISISLEX_CRISISLEXREC;ARREST;CRISISLEX_CRISISLEXREC;TAX_FNCACT_CITIZENS;CRISISLEX_C07_SAFETY;TERROR;SECURITY_SERVICES;TAX_FNCACT_POLICE;ARMEDCONFLICT;NATURAL_DISASTER_VOLCANO;NATURAL_DISASTER_VOLCANO;"
-  },
-  {
-    "id": "gdelt-66-2026-06-25T19:00:00Z",
-    "lng": 32,
-    "lat": 49,
-    "name": "Ukraine",
-    "pubDate": "2026-06-25T19:00:00Z",
-    "tone": -2.51,
-    "url": "http://www.malaysiasun.com/news/279147577/why-slavs-cant-stop-fighting-each-other",
-    "category": "GEOPOLITICAL_TENSION",
-    "themes": ";TERROR;TAX_FNCACT_INSURGENT;INSURGENCY;WB_2451_REBELS_GUERRILLAS_AND_INSURGENTS;WB_2445_NON_STATE_SECURITY_ACTORS;TAX_ETHNICITY_UKRAINIAN;TAX_WORLDLANGUAGES_UKRAINIAN;TAX_ETHNICITY_SLAVIC;TAX_WORLDLANGUAGES_SLAVIC;TAX_ETHNICITY_SLAVIC;TAX_WORLDLANGUAGES_SLAVIC;MILITARY;EXTREMISM;TAX_WORLDLANGUAGES_RUSSIA;"
-  },
-  {
-    "id": "gdelt-70-2026-06-25T19:00:00Z",
-    "lng": 32,
-    "lat": 49,
-    "name": "Ukraine",
-    "pubDate": "2026-06-25T19:00:00Z",
-    "tone": -3.78,
-    "url": "https://www.obozrevatel.com/novosti-obschestvo/zavershenyi-rabotyi-po-konservatsii-zelenskij-rasskazal-o-hode-restavratsii-lavryi-povrezhdennoj-v-rezultate-rossijskogo-obstrela.htm",
-    "category": "ARMED_CONFLICT",
-    "themes": ";TAX_FNCACT_AGGRESSOR;SECURITY_SERVICES;TAX_FNCACT_POLICE;TAX_WORLDLANGUAGES_RUSSIA;TERROR;ARMEDCONFLICT;MANMADE_DISASTER_IMPLIED;MANMADE_DISASTER_IMPLIED;DRONES;BORDER;LEADER;TAX_FNCACT_PRESIDENT;USPEC_POLITICS_GENERAL1;CRISISLEX_C04_LOGISTICS_TRANSPORT;CRISISLEX_T01_CAUTION_ADVICE;"
-  },
-  {
-    "id": "gdelt-71-2026-06-25T19:00:00Z",
-    "lng": 6.6613,
-    "lat": 12.1628,
-    "name": "Gusau, Zamfara, Nigeria",
-    "pubDate": "2026-06-25T19:00:00Z",
-    "tone": -4.58,
-    "url": "https://dailytrust.com/troops-rescue-kidnap-victims-recover-weapons-in-zamfara-sokoto/",
-    "category": "ARMED_CONFLICT",
-    "themes": ";TAX_FNCACT_TROOPS;KIDNAP;AFFECT;RELEASE_HOSTAGE;TAX_MILITARY_TITLE_OFFICER;TAX_FNCACT_OFFICER;TERROR;ARMEDCONFLICT;TAX_FNCACT_VICTIMS;CRISISLEX_CRISISLEXREC;CRISISLEX_T08_MISSINGFOUNDTRAPPEDPEOPLE;MEDIA_MSM;WB_678_DIGITAL_GOVERNMENT;WB_694_BROADCAST_AND_MEDIA;WB_133_INFORMATION_AND_COMMUNICATION_TECHNOLOGIES;"
-  },
-  {
-    "id": "gdelt-73-2026-06-25T19:00:00Z",
-    "lng": 51.5333,
-    "lat": 25.2867,
-    "name": "Doha, Ad Daw?Ah, Qatar",
-    "pubDate": "2026-06-25T19:00:00Z",
-    "tone": 4.1,
-    "url": "https://www.tanea.gr/2026/06/25/world/apokalypsi-apo-ton-vans-proetoimazetai-synantisi-aksiomatikon-tis-centcom-kai-frouron-tis-epanastasis-sto-katar/",
-    "category": "ARMED_CONFLICT",
-    "themes": ";TAX_FNCACT_REPRESENTATIVE;TERROR;ARMEDCONFLICT;TAX_FNCACT_SPOKESWOMAN;TAX_ETHNICITY_IRANIAN;TAX_ETHNICITY_IRANIAN;TAX_RELIGION_ISLAMIC;WB_2433_CONFLICT_AND_VIOLENCE;WB_2465_REVOLUTIONARY_VIOLENCE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;WB_2462_POLITICAL_VIOLENCE_AND_WAR;WB_2433_CONFLICT_AND_VIOLENCE;WB_2465_REVOLUTIONARY_VIOLENCE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;WB_2462_POLITICAL_VIOLENCE_AND_WAR;"
-  },
-  {
-    "id": "gdelt-77-2026-06-25T19:00:00Z",
-    "lng": -77.0364,
-    "lat": 38.8951,
-    "name": "Washington, Washington, United States",
-    "pubDate": "2026-06-25T19:00:00Z",
-    "tone": -0.68,
-    "url": "https://www.moroccoworldnews.com/2026/06/325134/for-first-time-us-delegation-visits-moroccos-el-guerguerat-border-crossing/",
-    "category": "ARMED_CONFLICT",
-    "themes": ";TAX_ETHNICITY_MOROCCAN;TAX_WORLDLANGUAGES_SAHRAWI;NEGOTIATIONS;WB_696_PUBLIC_SECTOR_MANAGEMENT;WB_840_JUSTICE;WB_2473_DIPLOMACY_AND_NEGOTIATIONS;WB_939_NEGOTIATION;WB_936_ALTERNATIVE_DISPUTE_RESOLUTION;WB_843_DISPUTE_RESOLUTION;WB_2471_PEACEKEEPING;TAX_TERROR_GROUP_POLISARIO_FRONT;TAX_POLITICAL_PARTY_POLISARIO_FRONT;DELAY;TERROR;ARMEDCONFLICT;UNGP_CRIME_VIOLENCE;"
-  },
-  {
-    "id": "gdelt-79-2026-06-25T19:00:00Z",
-    "lng": -74.4,
-    "lat": 4.6,
-    "name": "Antioquia, Cundinamarca, Colombia",
-    "pubDate": "2026-06-25T19:00:00Z",
-    "tone": 0,
-    "url": "https://www.semana.com/nacion/articulo/grupo-de-los-38-juristas-manifiesta-su-preocupacion-por-la-citacion-a-indagatoria-al-expresidente-alvaro-uribe-velez/202645/",
-    "category": "ARMED_CONFLICT",
-    "themes": ";TAX_FNCACT_CITIZEN;AFFECT;KILL;TERROR;ARMEDCONFLICT;TAX_FNCACT_GOVERNOR;WB_2024_ANTI_CORRUPTION_AUTHORITIES;WB_696_PUBLIC_SECTOR_MANAGEMENT;WB_840_JUSTICE;WB_2025_INVESTIGATION;WB_831_GOVERNANCE;WB_832_ANTI_CORRUPTION;WB_1014_CRIMINAL_JUSTICE;LEADER;TAX_FNCACT_PRESIDENT;USPEC_POLITICS_GENERAL1;"
+    "themes": ";TAX_FNCACT_PRESIDENT;TAX_FNCACT_PRESIDENT;ARMEDCONFLICT;EPU_CATS_NATIONAL_SECURITY;KILL;TERROR;WB_2433_CONFLICT_AND_VIOLENCE;WB_2432_FRAGILITY_CONFLICT_AND_VIOLENCE;"
   }
 ]
