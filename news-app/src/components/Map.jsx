@@ -486,8 +486,8 @@ const Map = ({
             onClose={() => onSelectConflict(null)}
             className="conflict-popup"
           >
-            <div className={`text-left p-1 text-xs font-semibold ${isDarkMode ? 'text-zinc-100 bg-zinc-950' : 'text-zinc-900 bg-white'}`}>
-              <div className="flex items-center justify-between gap-4 font-bold border-b pb-1 mb-1 border-zinc-200 dark:border-zinc-800">
+            <div className="text-left text-xs font-semibold select-none">
+              <div className="flex items-center justify-between gap-4 font-bold border-b pb-1.5 mb-1.5 border-zinc-200 dark:border-zinc-800">
                 <span className={
                   selectedConflict.category === 'ARMED_CONFLICT' ? 'text-red-500' :
                   selectedConflict.category === 'CIVIL_UNREST' ? 'text-orange-500' : 'text-yellow-500'
@@ -495,9 +495,9 @@ const Map = ({
                   {selectedConflict.category === 'ARMED_CONFLICT' ? 'Armed Conflict' :
                    selectedConflict.category === 'CIVIL_UNREST' ? 'Civil Unrest' : 'Geopolitical'}
                 </span>
-                <span>Tone: {selectedConflict.tone.toFixed(1)}</span>
+                <span className="text-[10px] opacity-80">Tone: {selectedConflict.tone.toFixed(1)}</span>
               </div>
-              <p className="font-bold my-1 text-sm">{selectedConflict.name}</p>
+              <p className="font-bold my-1 text-sm dark:text-zinc-100 text-zinc-900">{selectedConflict.name}</p>
               <p className="font-normal text-zinc-500 dark:text-zinc-400 mb-2 leading-relaxed">
                 Active security event detected. See the linked news source for full coverage.
               </p>
