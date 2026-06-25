@@ -82,16 +82,8 @@ function classifyThemes(themesStr) {
   if (!themesStr) return 'GEOPOLITICAL_TENSION';
   const upperThemes = themesStr.toUpperCase();
 
-  // 1. Armed Conflict / Clashes / Violence / Terror
-  const armedConflictKeywords = [
-    'ARMEDCONFLICT', 'TERROR', 'KILL', 'KIDNAP', 'ATTACK', 
-    'BOMBS', 'EXPLOSION', 'AIRSTRIKE', 'VIOLENCE', 'HOSTAGE'
-  ];
-  if (armedConflictKeywords.some(keyword => upperThemes.includes(keyword))) {
-    return 'ARMED_CONFLICT';
-  }
-
-  // 2. Civil Unrest / Protests / Riots / Rebellion
+  // 1. Civil Unrest / Protests / Riots / Rebellion
+  // Checked first because protest events often contain keywords like 'violence' or 'attack' in media reports
   const civilUnrestKeywords = [
     'PROTEST', 'RIOT', 'STRIKE', 'DEMONSTRATION', 'REBELLION', 'CIVIL_WAR', 'UNREST'
   ];
@@ -99,8 +91,26 @@ function classifyThemes(themesStr) {
     return 'CIVIL_UNREST';
   }
 
-  // 3. Geopolitical / Diplomatic Tension / Military
-  // Default fallback if not matched above is GEOPOLITICAL_TENSION
+  // 2. Armed Conflict / Active Clashes / Bombings / Hostages
+  // Focuses on active violence rather than general security/military policy
+  const armedConflictKeywords = [
+    'ARMEDCONFLICT', 'AIRSTRIKE', 'BOMBS', 'EXPLOSION', 'HOSTAGE', 'KIDNAP', 
+    'PEACEKEEPING', 'KILL', 'DEAD', 'VICTIM', 'ATTACK', 'CASUALTIES'
+  ];
+  if (armedConflictKeywords.some(keyword => upperThemes.includes(keyword))) {
+    return 'ARMED_CONFLICT';
+  }
+
+  // 3. Geopolitical / Diplomatic Tension / Military & Security Policies
+  // Includes themes related to boundary disputes, state military forces, treaties, and general security/terror alerts
+  const geopoliticalKeywords = [
+    'MILITARY', 'WAR', 'DIPLOMACY', 'SANCTIONS', 'TREATY', 'SOVEREIGNTY', 'BORDER', 
+    'SECURITY', 'TERROR', 'TERRORISM', 'HEZBOLLAH'
+  ];
+  if (geopoliticalKeywords.some(keyword => upperThemes.includes(keyword))) {
+    return 'GEOPOLITICAL_TENSION';
+  }
+
   return 'GEOPOLITICAL_TENSION';
 }
 
