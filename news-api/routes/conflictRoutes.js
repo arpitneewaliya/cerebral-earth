@@ -2,10 +2,11 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
 
-let cacheData = null;
-let cacheTime = 0;
-const CACHE_DURATION = 15 * 60 * 1000; // 15 minutes
+const cacheFilePath = path.join(__dirname, '../conflicts_cache.json');
+let memoryCache = null;
 
 // Static fallback data in case GDELT API fails, is rate-limited (429), or is slow
 const fallbackConflicts = [
@@ -103,20 +104,12 @@ function classifyThemes(themesStr) {
   return 'GEOPOLITICAL_TENSION';
 }
 
-router.get('/', async (req, res) => {
-  const currentTime = Date.now();
-
-  // If cache is fresh, return it
-  if (cacheData && (currentTime - cacheTime < CACHE_DURATION)) {
-    console.log('Serving conflicts from cache');
-    return res.json({ source: 'cache', conflicts: cacheData });
-  }
-
+// Background sync function
+async function syncConflicts() {
+  console.log('[Background Sync] Fetching live conflict data from GDELT API...');
   try {
-    console.log('Fetching live conflict data from GDELT API...');
     const gdeltUrl = 'https://api.gdeltproject.org/api/v1/gkg_geojson?QUERY=(theme:PROTEST%20OR%20theme:MILITARY%20OR%20theme:ARMEDCONFLICT%20OR%20theme:TERROR)&MAXROWS=80';
-    
-    const response = await axios.get(gdeltUrl, { timeout: 12000 });
+    const response = await axios.get(gdeltUrl, { timeout: 15000 });
     
     if (response.status === 200 && response.data && Array.isArray(response.data.features)) {
       const parsedConflicts = response.data.features
@@ -125,7 +118,6 @@ router.get('/', async (req, res) => {
           feature.geometry.type === 'Point' && 
           Array.isArray(feature.geometry.coordinates) && 
           feature.geometry.coordinates.length >= 2 &&
-          // Filter out obvious 0,0 locations
           !(feature.geometry.coordinates[0] === 0 && feature.geometry.coordinates[1] === 0)
         )
         .map((feature, idx) => {
@@ -155,25 +147,59 @@ router.get('/', async (req, res) => {
         return true;
       });
 
-      cacheData = uniqueConflicts;
-      cacheTime = currentTime;
-      console.log(`Successfully fetched and parsed ${uniqueConflicts.length} conflicts`);
-      return res.json({ source: 'live', conflicts: uniqueConflicts });
+      // Update memory cache
+      memoryCache = uniqueConflicts;
+
+      // Write to local disk cache
+      fs.writeFileSync(cacheFilePath, JSON.stringify(uniqueConflicts, null, 2), 'utf8');
+      console.log(`[Background Sync] Success: Cached ${uniqueConflicts.length} conflicts to disk.`);
     } else {
-      throw new Error(`GDELT responded with status: ${response.status}`);
+      console.error(`[Background Sync] Failed: GDELT API returned status ${response.status}`);
     }
   } catch (error) {
-    console.error('Error fetching live GDELT conflict data:', error.message);
-    
-    // Serve stale cache if available, otherwise serve fallback static data
-    if (cacheData) {
-      console.log('Serving stale cache due to error');
-      return res.json({ source: 'stale-cache', conflicts: cacheData });
+    console.error('[Background Sync] Error fetching GDELT data:', error.message);
+    // If memory cache is null, try to load existing cache from disk
+    if (!memoryCache && fs.existsSync(cacheFilePath)) {
+      try {
+        const fileContent = fs.readFileSync(cacheFilePath, 'utf8');
+        memoryCache = JSON.parse(fileContent);
+        console.log('[Background Sync] Loaded historical disk cache on failure');
+      } catch (e) {
+        console.error('[Background Sync] Failed to parse disk cache:', e.message);
+      }
     }
-
-    console.log('Serving fallback conflicts data');
-    return res.json({ source: 'fallback', conflicts: fallbackConflicts });
   }
+}
+
+// Initial Sync on server start (non-blocking)
+syncConflicts();
+
+// Set interval for periodic background syncs (every 15 minutes)
+const SYNC_INTERVAL = 15 * 60 * 1000;
+setInterval(syncConflicts, SYNC_INTERVAL);
+
+// GET /api/conflicts - responds instantly
+router.get('/', (req, res) => {
+  // 1. Serve memory cache if available (sub-1ms)
+  if (memoryCache) {
+    return res.json({ source: 'memory-cache', conflicts: memoryCache });
+  }
+
+  // 2. Serve disk cache if memory is not loaded yet (1-2ms)
+  if (fs.existsSync(cacheFilePath)) {
+    try {
+      const fileContent = fs.readFileSync(cacheFilePath, 'utf8');
+      memoryCache = JSON.parse(fileContent);
+      console.log('Serving conflicts from disk cache');
+      return res.json({ source: 'disk-cache', conflicts: memoryCache });
+    } catch (e) {
+      console.error('Failed to read disk cache:', e.message);
+    }
+  }
+
+  // 3. Fallback to static conflicts list if no cache is available yet
+  console.log('Serving fallback static conflicts');
+  return res.json({ source: 'fallback', conflicts: fallbackConflicts });
 });
 
 module.exports = router;
