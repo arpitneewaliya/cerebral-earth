@@ -19,6 +19,7 @@ const reverseGeocodeRoute = require('./routes/reverseGeocodeRoute');
 const reverseGeocodeCountryName = require('./routes/reverseGeocodeCountryName');
 const searchRoute = require('./routes/searchRoute');
 const videoNewsRoutes = require('./routes/videoNewsRoutes');
+const conflictRoutes = require('./routes/conflictRoutes');
 
 // Use routes
 app.use('/api/news', newsRoutes);
@@ -29,6 +30,7 @@ app.use('/api/reverse-geocode-country-code', reverseGeocodeRoute);
 app.use('/api/reverse-geocode-country-name', reverseGeocodeCountryName);
 app.use('/api/search', searchRoute);
 app.use('/api/news-videos', videoNewsRoutes);
+app.use('/api/conflicts', conflictRoutes);
 
 // Start server
 app.listen(PORT, () => {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Menu, X, Sun, Moon, Layers } from 'lucide-react';
+import { Menu, X, Sun, Moon, Layers, ShieldAlert } from 'lucide-react';
 
-const Header = ({ isDarkMode, toggleTheme, onActivateLayers }) => {
+const Header = ({ isDarkMode, toggleTheme, onActivateLayers, onActivateConflicts }) => {
   const [isDockOpen, setIsDockOpen] = useState(false);
   const panelRef = useRef(null);
 
@@ -89,6 +89,15 @@ const Header = ({ isDarkMode, toggleTheme, onActivateLayers }) => {
             isDarkMode={isDarkMode} 
             onClick={() => {
               onActivateLayers();
+              setIsDockOpen(false);
+            }} 
+          />
+          <NavLink 
+            icon={ShieldAlert} 
+            label="Conflict Tracker" 
+            isDarkMode={isDarkMode} 
+            onClick={() => {
+              onActivateConflicts();
               setIsDockOpen(false);
             }} 
           />

@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { MapContainer, TileLayer, useMapEvents, useMap, GeoJSON, Pane } from 'react-leaflet';
+import { MapContainer, TileLayer, useMapEvents, useMap, GeoJSON, Pane, Marker, Popup } from 'react-leaflet';
 import { Info, Layers, X, Coins, Users, Landmark, Flame, Briefcase, BookOpen, Map as MapIcon } from 'lucide-react';
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
 import Pin from './Pin';
 import SearchBox from './SearchBox.jsx';
 
@@ -233,6 +234,35 @@ const MapAutofocus = ({ region }) => {
   return null;
 };
 
+const MapConflictsAutofocus = ({ selectedConflict }) => {
+  const map = useMap();
+  useEffect(() => {
+    if (selectedConflict && typeof selectedConflict.lat === 'number' && typeof selectedConflict.lng === 'number') {
+      map.flyTo([selectedConflict.lat, selectedConflict.lng], 6, { animate: true, duration: 1.5 });
+    }
+  }, [selectedConflict, map]);
+  return null;
+};
+
+// Create custom pulsing marker for conflicts
+const createConflictIcon = (category) => {
+  let colorClass = 'yellow';
+  if (category === 'ARMED_CONFLICT') colorClass = 'red';
+  else if (category === 'CIVIL_UNREST') colorClass = 'orange';
+
+  return L.divIcon({
+    className: 'custom-conflict-icon',
+    html: `
+      <div class="conflict-marker-container">
+        <div class="conflict-marker-ring ${colorClass}"></div>
+        <div class="conflict-marker-dot ${colorClass}"></div>
+      </div>
+    `,
+    iconSize: [40, 40],
+    iconAnchor: [20, 20]
+  });
+};
+
 const MapClickHandler = ({ setRegion }) => {
   useMapEvents({
     click: (e) => {
@@ -242,7 +272,19 @@ const MapClickHandler = ({ setRegion }) => {
   return null;
 };
 
-const Map = ({ region, setRegion, pins, isDarkMode, selectedCountryId, showLayersControl, setShowLayersControl }) => {
+const Map = ({ 
+  region, 
+  setRegion, 
+  pins, 
+  isDarkMode, 
+  selectedCountryId, 
+  showLayersControl, 
+  setShowLayersControl,
+  conflicts = [],
+  showConflicts = false,
+  selectedConflict = null,
+  onSelectConflict
+}) => {
   const [geoJsonData, setGeoJsonData] = useState(null);
   const geoJsonRef = useRef(null);
 
@@ -394,6 +436,7 @@ const Map = ({ region, setRegion, pins, isDarkMode, selectedCountryId, showLayer
         />
         <MapClickHandler setRegion={setRegion} />
         <MapAutofocus region={region} />
+        <MapConflictsAutofocus selectedConflict={selectedConflict} />
         
         {geoJsonData && (
           <GeoJSON
@@ -423,6 +466,52 @@ const Map = ({ region, setRegion, pins, isDarkMode, selectedCountryId, showLayer
             category={pin.category}
           />
         ))}
+
+        {/* Pulsing Conflict Markers */}
+        {showConflicts && conflicts.map((conflict) => (
+          <Marker
+            key={conflict.id}
+            position={[conflict.lat, conflict.lng]}
+            icon={createConflictIcon(conflict.category)}
+            eventHandlers={{
+              click: () => onSelectConflict(conflict)
+            }}
+          />
+        ))}
+
+        {/* Global Conflict Popup */}
+        {showConflicts && selectedConflict && (
+          <Popup
+            position={[selectedConflict.lat, selectedConflict.lng]}
+            onClose={() => onSelectConflict(null)}
+            className="conflict-popup"
+          >
+            <div className={`text-left p-1 text-xs font-semibold ${isDarkMode ? 'text-zinc-100 bg-zinc-950' : 'text-zinc-900 bg-white'}`}>
+              <div className="flex items-center justify-between gap-4 font-bold border-b pb-1 mb-1 border-zinc-200 dark:border-zinc-800">
+                <span className={
+                  selectedConflict.category === 'ARMED_CONFLICT' ? 'text-red-500' :
+                  selectedConflict.category === 'CIVIL_UNREST' ? 'text-orange-500' : 'text-yellow-500'
+                }>
+                  {selectedConflict.category === 'ARMED_CONFLICT' ? 'Armed Conflict' :
+                   selectedConflict.category === 'CIVIL_UNREST' ? 'Civil Unrest' : 'Geopolitical'}
+                </span>
+                <span>Tone: {selectedConflict.tone.toFixed(1)}</span>
+              </div>
+              <p className="font-bold my-1 text-sm">{selectedConflict.name}</p>
+              <p className="font-normal text-zinc-500 dark:text-zinc-400 mb-2 leading-relaxed">
+                Active security event detected. See the linked news source for full coverage.
+              </p>
+              <a
+                href={selectedConflict.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 font-bold text-blue-500 hover:text-blue-600 transition-colors"
+              >
+                Read Source Article &rarr;
+              </a>
+            </div>
+          </Popup>
+        )}
       </MapContainer>
     </>
   );

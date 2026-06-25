@@ -144,4 +144,96 @@ html.dark .leaflet-control-zoom a {
   background: rgba(31, 41, 55, 0.85); /* gray-800 */
   color: #f3f4f6; /* gray-100 */
 }
+
+/* Pulsing Conflict Markers */
+.conflict-marker-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.conflict-marker-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+.conflict-marker-ring {
+  border-radius: 50%;
+  position: absolute;
+  animation: conflict-pulse 1.8s cubic-bezier(0.215, 0.610, 0.355, 1) infinite;
+  opacity: 0;
+}
+
+/* Red / Armed Conflict */
+.conflict-marker-dot.red {
+  background-color: #ef4444; /* red-500 */
+  box-shadow: 0 0 8px #ef4444;
+}
+.conflict-marker-ring.red {
+  border: 2px solid #ef4444;
+  background-color: rgba(239, 68, 68, 0.2);
+}
+
+/* Orange / Civil Unrest */
+.conflict-marker-dot.orange {
+  background-color: #f97316; /* orange-500 */
+  box-shadow: 0 0 8px #f97316;
+}
+.conflict-marker-ring.orange {
+  border: 2px solid #f97316;
+  background-color: rgba(249, 115, 22, 0.2);
+}
+
+/* Yellow / Geopolitical Tension */
+.conflict-marker-dot.yellow {
+  background-color: #eab308; /* yellow-500 */
+  box-shadow: 0 0 8px #eab308;
+}
+.conflict-marker-ring.yellow {
+  border: 2px solid #eab308;
+  background-color: rgba(234, 179, 8, 0.2);
+}
+
+@keyframes conflict-pulse {
+  0% {
+    width: 8px;
+    height: 8px;
+    opacity: 0.8;
+  }
+  100% {
+    width: 36px;
+    height: 36px;
+    opacity: 0;
+  }
+}
+
+/* Custom conflict popup styling */
+.leaflet-popup.conflict-popup .leaflet-popup-content-wrapper {
+  background: rgba(9, 9, 11, 0.95); /* zinc-950 */
+  color: #f4f4f5; /* zinc-100 */
+  border: 1px solid rgba(63, 63, 70, 0.5); /* zinc-700/50 */
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+  padding: 6px;
+}
+.leaflet-popup.conflict-popup .leaflet-popup-tip {
+  background: rgba(9, 9, 11, 0.95);
+  border: 1px solid rgba(63, 63, 70, 0.5);
+}
+html:not(.dark) .leaflet-popup.conflict-popup .leaflet-popup-content-wrapper {
+  background: rgba(255, 255, 255, 0.95);
+  color: #09090b; /* zinc-950 */
+  border: 1px solid rgba(228, 228, 231, 0.8); /* zinc-200/80 */
+}
+html:not(.dark) .leaflet-popup.conflict-popup .leaflet-popup-tip {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(228, 228, 231, 0.8);
+}
+
+
 
