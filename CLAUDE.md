@@ -37,6 +37,7 @@ PORT=5000
 NEWS_API_KEY=your_news_api_key
 GEMINI_API_KEY=your_google_gemini_api_key
 LOCATIONIQ_API_KEY=your_locationiq_api_key
+YOUTUBE_API_KEY=your_youtube_api_key_optional
 ```
 
 ### Frontend Environment Variables (`news-app/.env`)
@@ -59,3 +60,5 @@ VITE_API_URL=http://localhost:5000
 * **Express Routes:** Route files are grouped inside `routes/` and registered sequentially in `server.js`.
 * **Error Handling:** Always wrap async Route handlers in `try/catch` blocks and output clear console logs on backend errors before returning `500` status responses.
 * **Data Parsing:** JSON response structures should be parsed and sanitized on the backend to match the React components' expectations.
+* **Caching & Background Sync:** For slow third-party API fetches (e.g. World Bank, GDELT), implement background sync jobs or in-memory caches to update local disk and memory. Serve cached content instantly to achieve sub-10ms response times.
+

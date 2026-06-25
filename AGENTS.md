@@ -63,6 +63,20 @@ Our regional and global top headlines endpoints retrieve news via **NewsAPI** (`
 * **Top Headlines API (`/api/major-news`)**: Queries the `/v2/top-headlines` endpoint, parses the returned headlines using Gemini AI to extract cities, and resolves coordinates using forward-geocoding.
 * **Image Fields:** Use standard camelCase `urlToImage` for images, which is natively returned by NewsAPI. Do not map from `image` as was required by GNews.
 
+### 4. GDELT Conflict API & Background Sync Caching
+To bypass GDELT API latency and rate-limiting:
+* **Background Sync:** Implement a background sync loop in `news-api/routes/conflictRoutes.js` (`syncConflicts()`) running every 15 minutes. It fetches the GDELT GKG GeoJSON stream, removes coordinate/URL duplicates, and saves it to `news-api/conflicts_cache.json` on disk while updating `memoryCache`.
+* **Instant Responses:** The `/api/conflicts` endpoint must serve from `memoryCache` first, falling back to disk cache, and finally a static hardcoded array (`fallbackConflicts`) if both fail.
+* **Incident Classification:** Map incoming GDELT news mentioned themes into three categories:
+  * `ARMED_CONFLICT`: Triggered by active violence themes (`ARMEDCONFLICT`, `AIRSTRIKE`, `BOMBS`, `EXPLOSION`, `HOSTAGE`, `KILL`).
+  * `CIVIL_UNREST`: Triggered by public disorder themes (`PROTEST`, `RIOT`, `STRIKE`, `DEMONSTRATION`, `CIVIL_WAR`).
+  * `GEOPOLITICAL_TENSION`: Triggered by diplomacy/military state actions (`MILITARY`, `WAR`, `SANCTIONS`, `TREATY`, `BORDER`, `SECURITY`, `TERROR`).
+
+### 5. YouTube Video News Caching & Fallback
+* **Regional Resolution:** Resolve clicked map coordinates to a country/region using `reverseGeocode(lat, lng)`, then query YouTube using `<Region> news`.
+* **In-Memory Cache:** Cache responses in a Map keyed by lowercase region names with a 4-hour expiration TTL (`CACHE_DURATION = 14400000`).
+* **Mock Fallback:** If `YOUTUBE_API_KEY` is absent or the quota is depleted, dynamically generate structured mock videos with high-quality stock thumbnails (e.g. Unsplash) referencing the region name, preventing UI empty states.
+
 ---
 
 ## 🔄 State Coordination Flow
@@ -77,3 +91,13 @@ Managed in `ThemeContext.jsx`. The hook `useTheme()` yields:
 * State for rendering the MapLayerControl (`showLayersControl`) lives in `App.jsx`.
 * Passing toggles between `Header.jsx` ("Activate Layers" navigation) and the map overlay allows the selector panel to overlay correctly and be closed via the `X` button.
 * Mobile positioning relies on `left-16` to leave space for the left-aligned `+` and `-` zoom buttons.
+
+### 3. Conflict Tracker Panel Overlay & Autofocus
+* State for showing the panels (`showConflictsPanel`) lives in `App.jsx` and toggles off `showLayersControl` when activated.
+* **Coordination with Map:** When an incident is selected inside the `ConflictPanel` or the user clicks a pulsing map marker, the state `selectedConflict` is set.
+* **Autofocus Effect:** A map-nested child component `<MapConflictsAutofocus selectedConflict={selectedConflict} />` calls `map.flyTo([lat, lng], 6)` to center the map on the selected conflict location.
+* **Visual Style:** Pulsing markers use Leaflet `DivIcon` wrappers with nested CSS rings (`.conflict-marker-ring` and `.conflict-marker-dot`) styled according to categorization:
+  * Red: `ARMED_CONFLICT`
+  * Orange: `CIVIL_UNREST`
+  * Yellow: `GEOPOLITICAL_TENSION`
+

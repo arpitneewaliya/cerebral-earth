@@ -33,6 +33,17 @@ Cerebral Earth is a premium, interactive web application that bridges geography,
 * **Socio-Economic History:** Selecting any country opens a slide-over panel displaying interactive historical trend lines using `recharts` for the active indicator.
 * **Performance Caching:** Backend caches World Bank global datasets in-memory to provide instant transition speeds when selecting different heatmap layers.
 
+### 5. Video News Integration
+* **Regional Video Feeds:** Selecting a region allows the user to switch from text articles to localized video news reports.
+* **YouTube Data API Caching:** Queries the YouTube search API and caches video metadata for 4 hours to manage API quota limits.
+* **Resilient Fallback Mode:** In the absence of an API key or on rate limit triggers, the backend returns beautiful dynamically populated mock video feeds so the user experience is never broken.
+
+### 6. Conflict Tracker Map
+* **GDELT Live Event Feed:** Displays current global security events, protests, and armed conflicts by querying the GDELT Project GKG GeoJSON stream.
+* **Real-time Categorized Pins:** Map markers pulse color-coded rings based on severity: Red for Armed Conflicts, Orange for Civil Unrest, and Yellow for Geopolitical Tensions.
+* **Responsive Sub-Views & Bottom Sheets:** The Conflict Panel features full desktop resizability and dynamic mobile bottom-sheet adjustments, complete with click-to-fly map autofocus zoom transitions.
+* **Double-Layer Caching:** Fetches events in the background every 15 minutes, persisting updates to a local disk JSON file and in-memory cache to guarantee sub-1ms load times.
+
 ---
 
 ## 🛠️ Technology Stack
@@ -60,22 +71,24 @@ The repository is organized as a monorepo utilizing npm workspaces:
 ```text
 cerebral_earth/
 ├── news-api/                     # Node.js backend server
-│   ├── routes/                   # API routes (charts, news lookup, search)
+│   ├── routes/                   # API routes (charts, news lookup, search, conflicts, video news)
 │   ├── server.js                 # Entry point (Express server setup)
 │   ├── gemini_ai.js              # Google Gemini AI client configuration
 │   ├── geocoding.js              # Location geocoding utility functions
+│   ├── conflicts_cache.json      # Offline/local disk cache for GDELT incidents
 │   └── countries_db.json         # Static country coordinates database
 │
 ├── news-app/                     # React client application
 │   ├── public/                   # Static icons, GeoJSON map borders
 │   ├── src/                      # Source code
-│   │   ├── components/           # UI elements (Map, Header, SlideOverPanel, MapLayerControl, etc.)
+│   │   ├── components/           # UI components (Map, Header, SlideOverPanel, ConflictPanel, VideoNewsList, etc.)
 │   │   ├── contexts/             # ThemeContext (Dark/Light mode)
 │   │   ├── hooks/                # Custom React hooks (useAppState, useRegionData)
 │   │   ├── index.css             # Main styling configuration
 │   │   └── index.jsx             # React entry mount
 │   ├── vite.config.js            # Vite build configuration
 │   └── package.json              # Frontend scripts & modules
+
 │
 ├── package.json                  # Workspace workspace definition & monorepo script entry
 ├── README.md                     # General setup & details
@@ -93,6 +106,7 @@ cerebral_earth/
   * [NewsAPI](https://newsapi.org/) (for real-time news articles).
   * [Google Gemini API](https://ai.google.dev/) (for news text analysis).
   * [LocationIQ](https://locationiq.com/) (for geocoding).
+  * [YouTube Data API v3](https://developers.google.com/youtube/v3) (optional, for region-specific video searches; falls back to premium mock feeds if missing).
 
 ### Environment Configuration
 1. Create a `.env` file in the `news-api/` directory:
@@ -101,7 +115,9 @@ cerebral_earth/
    NEWS_API_KEY=your_news_api_key
    GEMINI_API_KEY=your_gemini_key
    LOCATIONIQ_API_KEY=your_locationiq_key
+   YOUTUBE_API_KEY=your_youtube_api_key_optional
    ```
+
 2. Create a `.env` file in the `news-app/` directory (if configuring custom URLs):
    ```env
    VITE_API_URL=http://localhost:5000
