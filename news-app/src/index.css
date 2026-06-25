@@ -235,5 +235,15 @@ html:not(.dark) .leaflet-popup.conflict-popup .leaflet-popup-tip {
   border: 1px solid rgba(228, 228, 231, 0.8);
 }
 
+/* Hide scrollbar utility */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+
 
 

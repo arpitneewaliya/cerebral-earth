@@ -109,7 +109,10 @@ const App = () => {
 
       <ConflictPanel
         isOpen={showConflictsPanel}
-        onClose={() => setShowConflictsPanel(false)}
+        onClose={() => {
+          setShowConflictsPanel(false);
+          setSelectedConflict(null);
+        }}
         conflicts={conflicts}
         loading={conflictsLoading}
         selectedConflict={selectedConflict}
