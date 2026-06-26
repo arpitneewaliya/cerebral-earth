@@ -16,6 +16,10 @@ const ConflictPanel = ({
   const [filter, setFilter] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
 
+  // Mobile drawer resizable states
+  const [mobileHeight, setMobileHeight] = useState(window.innerHeight * 0.4);
+  const [isDragging, setIsDragging] = useState(false);
+
   // Handle window resizing
   useEffect(() => {
     const handleResize = () => {
@@ -24,10 +28,70 @@ const ConflictPanel = ({
       if (!mobile && width > window.innerWidth - 32) {
         setWidth(window.innerWidth - 32);
       }
+      if (mobile) {
+        setMobileHeight(window.innerHeight * 0.4);
+      }
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [width]);
+
+  // Reset to middle height when the drawer opens
+  useEffect(() => {
+    if (isOpen && isMobile) {
+      setMobileHeight(window.innerHeight * 0.4);
+    }
+  }, [isOpen, isMobile]);
+
+  // Gesture drag handler for mobile bottom drawer resizing
+  const handleDragStart = (pointerDownEvent) => {
+    pointerDownEvent.preventDefault();
+    pointerDownEvent.stopPropagation();
+
+    setIsDragging(true);
+    const startY = pointerDownEvent.clientY;
+    const initialHeight = mobileHeight;
+
+    const handleDragMove = (moveEvent) => {
+      const currentY = moveEvent.clientY;
+      const deltaY = currentY - startY;
+      
+      let newHeight = initialHeight - deltaY;
+
+      // Bound between min (70px) and max (window.innerHeight - 50px)
+      const minHeight = 70;
+      const maxHeight = window.innerHeight - 50;
+
+      if (newHeight < minHeight) newHeight = minHeight;
+      if (newHeight > maxHeight) newHeight = maxHeight;
+
+      setMobileHeight(newHeight);
+    };
+
+    const handleDragEnd = () => {
+      setIsDragging(false);
+      document.removeEventListener('pointermove', handleDragMove);
+      document.removeEventListener('pointerup', handleDragEnd);
+
+      setMobileHeight((current) => {
+        const snapTop = window.innerHeight * 0.85;
+        const snapMid = window.innerHeight * 0.40;
+        const snapBot = 70;
+
+        const candidates = [
+          { val: snapBot, dist: Math.abs(current - snapBot) },
+          { val: snapMid, dist: Math.abs(current - snapMid) },
+          { val: snapTop, dist: Math.abs(current - snapTop) }
+        ];
+
+        candidates.sort((a, b) => a.dist - b.dist);
+        return candidates[0].val;
+      });
+    };
+
+    document.addEventListener('pointermove', handleDragMove);
+    document.addEventListener('pointerup', handleDragEnd);
+  };
 
   // Pointer handler for resizing from the right edge (desktop only)
   const handleResizeRight = (e) => {
@@ -138,9 +202,11 @@ const ConflictPanel = ({
 
   return (
     <div
-      className={`fixed z-[1001] flex flex-col transition-transform duration-300 ease-in-out ${
+      className={`fixed z-[1001] flex flex-col ${
+        isDragging ? 'transition-none' : 'transition-[transform,height] duration-300 ease-in-out'
+      }  ${
         isMobile
-          ? 'bottom-0 left-0 w-full h-[40vh] border-t rounded-t-[1.5rem]'
+          ? 'bottom-0 left-0 w-full border-t rounded-t-[1.5rem]'
           : 'top-0 left-0 h-screen border-r rounded-r-[1.2rem]'
       } ${
         isOpen
@@ -152,7 +218,8 @@ const ConflictPanel = ({
           : 'bg-white/90 backdrop-blur-xl border-zinc-200 text-zinc-900 shadow-2xl'
       }`}
       style={{
-        width: isMobile ? '100%' : `${width}px`
+        width: isMobile ? '100%' : `${width}px`,
+        height: isMobile ? `${mobileHeight}px` : '100%'
       }}
     >
       {/* Right Resize Handle (Desktop Only) */}
@@ -164,59 +231,115 @@ const ConflictPanel = ({
         />
       )}
 
-      {/* Swipe Indicator for Mobile Bottom Sheet */}
-      {isMobile && (
-        <div className="w-full flex justify-center pt-2.5 pb-1 flex-shrink-0">
-          <div className={`w-12 h-1 rounded-full ${isDarkMode ? 'bg-zinc-800' : 'bg-zinc-200'}`} />
+      {/* Drag handle area for mobile sheet */}
+      {isMobile ? (
+        <div 
+          onPointerDown={handleDragStart}
+          className="w-full flex-shrink-0 cursor-ns-resize select-none touch-none"
+        >
+          {/* Swipe Indicator */}
+          <div className="w-full flex justify-center pt-2.5 pb-1">
+            <div className={`w-12 h-1 rounded-full ${isDarkMode ? 'bg-zinc-850' : 'bg-zinc-200'}`} />
+          </div>
+          
+          {/* Integrated Header */}
+          <div className="flex items-center justify-between px-5 pt-2 pb-3">
+            <div className="flex items-center gap-2">
+              {/* Back to map/list button */}
+              {selectedConflict ? (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onSelectConflict(null);
+                  }}
+                  onPointerDown={(e) => e.stopPropagation()} // Stop dragging when clicking button
+                  className={`flex items-center gap-1.5 py-1 px-2.5 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
+                    isDarkMode ? 'hover:bg-zinc-900 text-zinc-300' : 'hover:bg-zinc-100 text-zinc-700'
+                  }`}
+                  title="Back to conflict list"
+                >
+                  <ArrowLeft className="w-4.5 h-4.5" />
+                  <span>List</span>
+                </button>
+              ) : (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onClose();
+                  }}
+                  onPointerDown={(e) => e.stopPropagation()} // Stop dragging when clicking button
+                  className={`flex items-center gap-1.5 py-1 px-2.5 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
+                    isDarkMode ? 'hover:bg-zinc-900 text-zinc-300' : 'hover:bg-zinc-100 text-zinc-700'
+                  }`}
+                  title="Back to standard map"
+                >
+                  <ChevronLeft className="w-4.5 h-4.5" />
+                  <span>Map</span>
+                </button>
+              )}
+
+              {/* Title */}
+              {!selectedConflict && (
+                <div className="flex items-center gap-1.5 ml-2">
+                  <ShieldAlert className="w-4 h-4 text-red-500" />
+                  <span className="font-bold text-xs sm:text-sm tracking-tight font-sans">Conflicts</span>
+                </div>
+              )}
+            </div>
+
+            {/* Live Indicator Badge */}
+            <div className="flex items-center gap-2">
+              <div className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+              </div>
+              <span className="text-[10px] font-bold uppercase tracking-wider text-red-500">Live</span>
+            </div>
+          </div>
         </div>
-      )}
+      ) : (
+        /* Standard Desktop Panel Header */
+        <div className="flex items-center justify-between px-5 pt-4 pb-3 flex-shrink-0">
+          <div className="flex items-center gap-2">
+            {selectedConflict ? (
+              <button
+                onClick={() => onSelectConflict(null)}
+                className={`flex items-center gap-1.5 py-1 px-2.5 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
+                  isDarkMode ? 'hover:bg-zinc-900 text-zinc-300' : 'hover:bg-zinc-100 text-zinc-700'
+                }`}
+                title="Back to conflict list"
+              >
+                <ArrowLeft className="w-4.5 h-4.5" />
+                <span>List</span>
+              </button>
+            ) : (
+              <button
+                onClick={onClose}
+                className={`flex items-center gap-1.5 py-1 px-2.5 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
+                  isDarkMode ? 'hover:bg-zinc-900 text-zinc-300' : 'hover:bg-zinc-100 text-zinc-700'
+                }`}
+                title="Back to standard map"
+              >
+                <ChevronLeft className="w-4.5 h-4.5" />
+                <span>Map</span>
+              </button>
+            )}
 
-      {/* Panel Header */}
-      <div className="flex items-center justify-between px-5 pt-4 pb-3 flex-shrink-0">
-        <div className="flex items-center gap-2">
-          {/* Back to map/list button */}
-          {selectedConflict ? (
-            <button
-              onClick={() => onSelectConflict(null)}
-              className={`flex items-center gap-1.5 py-1 px-2.5 rounded-lg text-xs font-bold transition-colors ${
-                isDarkMode ? 'hover:bg-zinc-900 text-zinc-300' : 'hover:bg-zinc-100 text-zinc-700'
-              }`}
-              title="Back to conflict list"
-            >
-              <ArrowLeft className="w-4.5 h-4.5" />
-              <span>List</span>
-            </button>
-          ) : (
-            <button
-              onClick={onClose}
-              className={`flex items-center gap-1.5 py-1 px-2.5 rounded-lg text-xs font-bold transition-colors ${
-                isDarkMode ? 'hover:bg-zinc-900 text-zinc-300' : 'hover:bg-zinc-100 text-zinc-700'
-              }`}
-              title="Back to standard map"
-            >
-              <ChevronLeft className="w-4.5 h-4.5" />
-              <span>Map</span>
-            </button>
-          )}
-
-          {/* Title */}
-          {(!isMobile || !selectedConflict) && (
             <div className="flex items-center gap-1.5 ml-2">
               <ShieldAlert className="w-4 h-4 text-red-500" />
-              <span className="font-bold text-xs sm:text-sm tracking-tight">Conflicts</span>
+              <span className="font-bold text-xs sm:text-sm tracking-tight font-sans">Conflicts</span>
             </div>
-          )}
-        </div>
-
-        {/* Live Indicator Badge */}
-        <div className="flex items-center gap-2">
-          <div className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
           </div>
-          <span className="text-[10px] font-bold uppercase tracking-wider text-red-500">Live</span>
+
+          <div className="flex items-center gap-2">
+            <div className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+            </div>
+            <span className="text-[10px] font-bold uppercase tracking-wider text-red-500">Live</span>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Detail Sub-View (When a specific conflict is selected) */}
       {selectedConflict ? (
