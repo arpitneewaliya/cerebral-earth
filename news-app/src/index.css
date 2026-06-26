@@ -112,6 +112,21 @@ body.dark *,
   animation: slideIn 0.3s ease-out;
 }
 
+@keyframes welcomeFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.welcome-animate {
+  animation: welcomeFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
 /* Focus styles */
 .focus-ring:focus {
   outline: none;
