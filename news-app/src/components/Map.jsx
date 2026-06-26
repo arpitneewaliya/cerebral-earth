@@ -487,7 +487,7 @@ const Map = ({
             className="conflict-popup"
           >
             <div className="text-left text-xs font-semibold select-none">
-              <div className="flex items-center justify-between gap-4 font-bold border-b pb-1.5 mb-1.5 border-zinc-200 dark:border-zinc-800">
+              <div className="flex items-center justify-between gap-4 font-bold border-b pb-1.5 mb-1.5 border-zinc-200 dark:border-zinc-800 pr-6">
                 <span className={
                   selectedConflict.category === 'ARMED_CONFLICT' ? 'text-red-500' :
                   selectedConflict.category === 'CIVIL_UNREST' ? 'text-orange-500' : 'text-yellow-500'
