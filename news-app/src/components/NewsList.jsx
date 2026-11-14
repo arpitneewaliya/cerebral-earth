@@ -1,12 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Newspaper, ExternalLink } from 'lucide-react';
+import { Newspaper, ExternalLink, Clock } from 'lucide-react';
 import { SkeletonList, ErrorMessage } from './LoadingComponents.jsx';
 import newsDefault from '../media/news-default.svg';
+import { useTheme } from '../contexts/ThemeContext.jsx';
 
 const API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:5000' : '');
 
-const NewsList = ({ region, category, isDarkMode }) => {
+const formatRelativeDate = (dateStr) => {
+  if (!dateStr) return null;
+  try {
+    const diffHours = Math.floor((new Date() - new Date(dateStr)) / (1000 * 60 * 60));
+    if (diffHours < 1) return 'Just now';
+    if (diffHours < 24) return `${diffHours}h ago`;
+    const diffDays = Math.floor(diffHours / 24);
+    return `${diffDays}d ago`;
+  } catch (e) {
+    return null;
+  }
+};
+
+const NewsList = ({ region, category }) => {
+  const { isDarkMode } = useTheme();
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -25,9 +40,9 @@ const NewsList = ({ region, category, isDarkMode }) => {
           category: category,
         },
       });
-      setNews(response.data);
+      setNews(Array.isArray(response.data) ? response.data : []);
     } catch (err) {
-      setError('Failed to fetch news. Please try again.');
+      setError('Failed to fetch regional news dispatches. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -38,81 +53,124 @@ const NewsList = ({ region, category, isDarkMode }) => {
   }, [region, category]);
 
   if (loading) {
-    return <SkeletonList count={6} isDarkMode={isDarkMode} />;
+    return <SkeletonList count={5} />;
   }
 
   if (error) {
     return (
-      <div className="p-5">
-        <ErrorMessage message={error} onRetry={fetchNews} isDarkMode={isDarkMode} />
+      <div className="p-4">
+        <ErrorMessage message={error} onRetry={fetchNews} />
       </div>
     );
   }
 
   return (
-    <div className="p-5">
+    <div className="p-4">
       {news.length > 0 ? (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          {news.map((article, index) => (
-            <div
-              key={index}
-              className={`rounded-xl overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:shadow-md group flex flex-col border ${isDarkMode ? 'bg-zinc-950 border-zinc-800 shadow-none' : 'bg-white border-zinc-200 shadow-sm'
+        <div className="grid grid-cols-1 gap-3.5">
+          {news.map((article, index) => {
+            const relTime = formatRelativeDate(article.publishedAt);
+            return (
+              <a
+                key={index}
+                href={article.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`rounded-2xl overflow-hidden transition-all duration-200 hover:-translate-y-0.5 group flex flex-col border text-left ${
+                  isDarkMode
+                    ? 'bg-zinc-900/75 border-zinc-800/90 hover:border-cyan-500/40 hover:bg-zinc-900'
+                    : 'bg-white border-zinc-200 hover:border-blue-300 shadow-xs hover:shadow-md'
                 }`}
-            >
-              <div className={`relative overflow-hidden border-b ${isDarkMode ? 'border-zinc-800' : 'border-zinc-100'}`}>
-                <img
-                  src={article.urlToImage || newsDefault}
-                  alt="News"
-                  className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105"
-                  onError={(e) => {
-                    e.target.src = newsDefault;
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </div>
+              >
+                <div className="flex gap-3.5 p-3.5">
+                  {/* Thumbnail */}
+                  <div className="relative w-24 h-24 rounded-xl overflow-hidden flex-shrink-0 border border-zinc-500/20 bg-zinc-900">
+                    <img
+                      src={article.urlToImage || newsDefault}
+                      alt={article.title || 'News'}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      onError={(e) => {
+                        e.target.src = newsDefault;
+                      }}
+                    />
+                  </div>
 
-              <div className="p-5 flex-1 flex flex-col gap-3">
-                <h3 className={`font-semibold text-base leading-tight line-clamp-2 transition-colors ${isDarkMode ? 'text-zinc-50 group-hover:text-zinc-300' : 'text-zinc-950 group-hover:text-zinc-600'
-                  }`}>
-                  {article.title}
-                </h3>
+                  {/* Content */}
+                  <div className="flex-1 min-w-0 flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center justify-between gap-2 mb-1">
+                        {article.source?.name ? (
+                          <span
+                            className={`text-[10px] font-mono font-bold uppercase tracking-wider truncate px-1.5 py-0.2 rounded ${
+                              isDarkMode
+                                ? 'bg-cyan-500/15 text-cyan-300'
+                                : 'bg-blue-50 text-blue-700'
+                            }`}
+                          >
+                            {article.source.name}
+                          </span>
+                        ) : (
+                          <span />
+                        )}
+                        {relTime && (
+                          <span
+                            className={`inline-flex items-center gap-1 text-[10px] font-mono flex-shrink-0 ${
+                              isDarkMode ? 'text-zinc-500' : 'text-zinc-400'
+                            }`}
+                          >
+                            <Clock className="w-2.5 h-2.5" />
+                            {relTime}
+                          </span>
+                        )}
+                      </div>
 
-                <p className={`text-sm leading-relaxed line-clamp-3 ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
-                  }`}>
-                  {article.summarizedText || article.description || 'No description available.'}
-                </p>
+                      <h3
+                        className={`font-bold text-xs sm:text-sm leading-snug line-clamp-2 transition-colors ${
+                          isDarkMode
+                            ? 'text-zinc-100 group-hover:text-cyan-300'
+                            : 'text-zinc-900 group-hover:text-blue-600'
+                        }`}
+                      >
+                        {article.title}
+                      </h3>
+                    </div>
 
-                <div className="flex items-center justify-between pt-2 mt-auto">
-                  <a
-                    href={article.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`inline-flex items-center gap-1.5 text-sm font-medium transition-colors group/link ${isDarkMode ? 'text-zinc-50 hover:text-zinc-300' : 'text-zinc-900 hover:text-zinc-600'
-                      }`}
-                  >
-                    Read article
-                    <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
-                  </a>
-
-                  {article.source?.name && (
-                    <span className={`text-xs px-2 py-0.5 rounded-md font-medium border ${isDarkMode ? 'bg-zinc-900 border-zinc-800 text-zinc-300' : 'bg-zinc-50 border-zinc-200 text-zinc-600'
-                      }`}>
-                      {article.source.name}
-                    </span>
-                  )}
+                    <div className="flex items-center justify-between pt-2 mt-1">
+                      <span
+                        className={`inline-flex items-center gap-1 text-[11px] font-mono font-semibold ${
+                          isDarkMode ? 'text-cyan-400' : 'text-blue-600'
+                        }`}
+                      >
+                        Read Dispatch
+                        <ExternalLink className="w-3 h-3 transition-transform group-hover:translate-x-0.5" />
+                      </span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          ))}
+
+                {(article.summarizedText || article.description) && (
+                  <div
+                    className={`px-3.5 pb-3 pt-0 text-xs leading-relaxed line-clamp-2 ${
+                      isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
+                    }`}
+                  >
+                    {article.summarizedText || article.description}
+                  </div>
+                )}
+              </a>
+            );
+          })}
         </div>
       ) : (
-        <div className="text-center py-16 flex flex-col items-center">
-          <Newspaper className={`w-12 h-12 mb-4 stroke-1 ${isDarkMode ? 'text-zinc-600' : 'text-zinc-400'}`} />
-          <h3 className={`text-base font-semibold tracking-tight mb-1 ${isDarkMode ? 'text-zinc-50' : 'text-zinc-900'}`}>
-            No news found
-          </h3>
-          <p className={`text-sm ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
-            No news articles available for this region and category.
+        <div
+          className={`text-center py-12 rounded-2xl border ${
+            isDarkMode ? 'bg-zinc-900/40 border-zinc-800' : 'bg-zinc-50 border-zinc-200'
+          }`}
+        >
+          <Newspaper className="w-8 h-8 mx-auto mb-2.5 opacity-40 text-cyan-400" />
+          <h3 className="text-sm font-bold mb-1">No Active Dispatches</h3>
+          <p className={`text-xs ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
+            No recent articles found for this sector and category.
           </p>
         </div>
       )}

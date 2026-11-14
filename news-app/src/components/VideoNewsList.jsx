@@ -3,10 +3,12 @@ import axios from 'axios';
 import { Play, AlertTriangle, Calendar, User } from 'lucide-react';
 import { FaYoutube } from 'react-icons/fa';
 import { ErrorMessage } from './LoadingComponents.jsx';
+import { useTheme } from '../contexts/ThemeContext.jsx';
 
 const API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:5000' : '');
 
-const VideoNewsList = ({ region, isDarkMode }) => {
+const VideoNewsList = ({ region }) => {
+  const { isDarkMode } = useTheme();
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -26,10 +28,10 @@ const VideoNewsList = ({ region, isDarkMode }) => {
           lng: region.lng,
         },
       });
-      setVideos(response.data);
+      setVideos(Array.isArray(response.data) ? response.data : []);
     } catch (err) {
       console.error('Error in VideoNewsList:', err);
-      setError('Failed to load news videos. Please try again.');
+      setError('Failed to load broadcast video feeds. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -62,18 +64,26 @@ const VideoNewsList = ({ region, isDarkMode }) => {
 
   if (loading) {
     return (
-      <div className="p-5 grid grid-cols-1 gap-6">
-        {Array.from({ length: 4 }).map((_, index) => (
+      <div className="p-4 grid grid-cols-1 gap-4">
+        {Array.from({ length: 3 }).map((_, index) => (
           <div
             key={index}
-            className={`rounded-xl overflow-hidden border p-4 space-y-4 animate-pulse ${
-              isDarkMode ? 'bg-zinc-950 border-zinc-800' : 'bg-white border-zinc-200 shadow-sm'
+            className={`rounded-2xl overflow-hidden border p-3.5 space-y-3 animate-pulse ${
+              isDarkMode ? 'bg-zinc-900/70 border-zinc-800' : 'bg-white border-zinc-200'
             }`}
           >
-            <div className={`aspect-video w-full rounded-lg ${isDarkMode ? 'bg-zinc-800' : 'bg-zinc-100'}`} />
-            <div className="space-y-3">
-              <div className={`h-4 w-3/4 rounded ${isDarkMode ? 'bg-zinc-800' : 'bg-zinc-100'}`} />
-              <div className={`h-3 w-1/2 rounded ${isDarkMode ? 'bg-zinc-800' : 'bg-zinc-100'}`} />
+            <div
+              className={`aspect-video w-full rounded-xl ${
+                isDarkMode ? 'bg-zinc-800' : 'bg-zinc-100'
+              }`}
+            />
+            <div className="space-y-2">
+              <div
+                className={`h-3.5 w-3/4 rounded ${isDarkMode ? 'bg-zinc-800' : 'bg-zinc-100'}`}
+              />
+              <div
+                className={`h-3 w-1/2 rounded ${isDarkMode ? 'bg-zinc-800' : 'bg-zinc-100'}`}
+              />
             </div>
           </div>
         ))}
@@ -83,25 +93,25 @@ const VideoNewsList = ({ region, isDarkMode }) => {
 
   if (error) {
     return (
-      <div className="p-5">
-        <ErrorMessage message={error} onRetry={fetchVideos} isDarkMode={isDarkMode} />
+      <div className="p-4">
+        <ErrorMessage message={error} onRetry={fetchVideos} />
       </div>
     );
   }
 
   return (
-    <div className="p-5">
+    <div className="p-4">
       {videos.length > 0 ? (
-        <div className="grid grid-cols-1 gap-6">
+        <div className="grid grid-cols-1 gap-4">
           {videos.map((video) => {
             const isPlaying = activeVideoId === video.videoId;
             return (
               <div
                 key={video.videoId}
-                className={`rounded-xl overflow-hidden border transition-all duration-300 flex flex-col ${
+                className={`rounded-2xl overflow-hidden border transition-all duration-300 flex flex-col text-left ${
                   isDarkMode
-                    ? 'bg-zinc-950 border-zinc-800 hover:border-zinc-700 shadow-none'
-                    : 'bg-white border-zinc-200 hover:border-zinc-300 shadow-sm hover:shadow-md'
+                    ? 'bg-zinc-900/80 border-zinc-800 hover:border-cyan-500/40'
+                    : 'bg-white border-zinc-200 hover:border-zinc-300 shadow-xs hover:shadow-md'
                 }`}
               >
                 {/* Video / Player Container */}
@@ -117,7 +127,7 @@ const VideoNewsList = ({ region, isDarkMode }) => {
                   ) : (
                     <button
                       onClick={() => setActiveVideoId(video.videoId)}
-                      className="absolute inset-0 w-full h-full group/btn focus:outline-none"
+                      className="absolute inset-0 w-full h-full group/btn focus:outline-none cursor-pointer"
                       aria-label={`Play video: ${video.title}`}
                     >
                       <img
@@ -126,53 +136,60 @@ const VideoNewsList = ({ region, isDarkMode }) => {
                         className="w-full h-full object-cover transition-opacity duration-300 group-hover/btn:opacity-90"
                         loading="lazy"
                         onError={(e) => {
-                          e.target.src = 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=640&q=80';
+                          e.target.src =
+                            'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=640&q=80';
                         }}
                       />
                       {/* Play Button Overlay */}
-                      <div className="absolute inset-0 flex items-center justify-center bg-black/10 transition-colors group-hover/btn:bg-black/35">
-                        <div className="w-14 h-14 rounded-full bg-red-600 flex items-center justify-center shadow-lg transition-transform duration-300 group-hover/btn:scale-110 group-hover/btn:bg-red-700">
-                          <Play className="w-7 h-7 fill-white text-white ml-0.5" />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/20 transition-colors group-hover/btn:bg-black/45">
+                        <div className="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center shadow-lg transition-transform duration-300 group-hover/btn:scale-110 group-hover/btn:bg-red-500">
+                          <Play className="w-5 h-5 fill-white text-white ml-0.5" />
                         </div>
                       </div>
-                      
+
                       {/* YouTube Brand Tag */}
-                      <span className="absolute bottom-3 right-3 inline-flex items-center gap-1 px-2 py-1 rounded bg-black/80 text-xs font-semibold text-white tracking-wider">
-                        <FaYoutube className="w-4 h-4 text-red-500 fill-red-500" />
-                        YOUTUBE
+                      <span className="absolute bottom-2.5 right-2.5 inline-flex items-center gap-1 px-2 py-0.5 rounded bg-black/80 text-[10px] font-mono font-bold text-white tracking-wider">
+                        <FaYoutube className="w-3.5 h-3.5 text-red-500 fill-red-500" />
+                        BROADCAST
                       </span>
                     </button>
                   )}
                 </div>
 
                 {/* Video Info Panel */}
-                <div className="p-4 flex flex-col gap-2.5">
-                  <h4 className={`font-semibold text-sm leading-snug line-clamp-2 ${
-                    isDarkMode ? 'text-zinc-50' : 'text-zinc-950'
-                  }`}>
+                <div className="p-3.5 flex flex-col gap-2">
+                  <h4
+                    className={`font-bold text-xs sm:text-sm leading-snug line-clamp-2 ${
+                      isDarkMode ? 'text-zinc-100' : 'text-zinc-950'
+                    }`}
+                  >
                     {video.title}
                   </h4>
-                  
+
                   {video.description && (
-                    <p className={`text-xs leading-relaxed line-clamp-2 ${
-                      isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
-                    }`}>
+                    <p
+                      className={`text-xs leading-relaxed line-clamp-2 ${
+                        isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
+                      }`}
+                    >
                       {video.description}
                     </p>
                   )}
 
-                  <div className="flex items-center justify-between pt-2 border-t border-dashed border-zinc-800/10 dark:border-zinc-800">
-                    <span className={`inline-flex items-center gap-1 text-xs font-medium ${
-                      isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
-                    }`}>
-                      <User className="w-3.5 h-3.5" />
-                      <span className="truncate max-w-[150px]">{video.channelTitle}</span>
+                  {/* Channel & Time Meta */}
+                  <div
+                    className={`flex items-center justify-between pt-2 mt-auto border-t text-[11px] font-mono ${
+                      isDarkMode
+                        ? 'border-zinc-800 text-zinc-400'
+                        : 'border-zinc-100 text-zinc-500'
+                    }`}
+                  >
+                    <span className="inline-flex items-center gap-1.5 font-semibold truncate max-w-[65%]">
+                      <User className="w-3 h-3 shrink-0 text-cyan-400" />
+                      <span className="truncate">{video.channelTitle}</span>
                     </span>
-
-                    <span className={`inline-flex items-center gap-1 text-xs font-medium ${
-                      isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
-                    }`}>
-                      <Calendar className="w-3.5 h-3.5" />
+                    <span className="inline-flex items-center gap-1 shrink-0">
+                      <Calendar className="w-3 h-3" />
                       {getRelativeTime(video.publishedAt)}
                     </span>
                   </div>
@@ -182,13 +199,15 @@ const VideoNewsList = ({ region, isDarkMode }) => {
           })}
         </div>
       ) : (
-        <div className="text-center py-16 flex flex-col items-center">
-          <FaYoutube className={`w-12 h-12 mb-4 text-red-600`} />
-          <h3 className={`text-base font-semibold tracking-tight mb-1 ${isDarkMode ? 'text-zinc-50' : 'text-zinc-900'}`}>
-            No videos found
-          </h3>
-          <p className={`text-sm ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
-            No news videos found for this region.
+        <div
+          className={`text-center py-12 rounded-2xl border ${
+            isDarkMode ? 'bg-zinc-900/40 border-zinc-800' : 'bg-zinc-50 border-zinc-200'
+          }`}
+        >
+          <AlertTriangle className="w-8 h-8 mx-auto mb-2.5 opacity-40 text-amber-400" />
+          <h3 className="text-sm font-bold mb-1">No Video Broadcasts</h3>
+          <p className={`text-xs ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
+            No regional broadcast streams found for this sector.
           </p>
         </div>
       )}

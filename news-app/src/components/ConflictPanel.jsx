@@ -1,26 +1,34 @@
-// components/ConflictPanel.jsx
 import React, { useState, useEffect } from 'react';
-import { ShieldAlert, ChevronLeft, ArrowLeft, Flame, Landmark, Users, Search, ExternalLink } from 'lucide-react';
+import {
+  ShieldAlert,
+  ArrowLeft,
+  Flame,
+  Landmark,
+  Users,
+  Search,
+  ExternalLink,
+  X,
+} from 'lucide-react';
+import { useTheme } from '../contexts/ThemeContext.jsx';
 
 const ConflictPanel = ({
   isOpen,
   onClose,
-  conflicts,
+  conflicts = [],
   loading,
   selectedConflict,
   onSelectConflict,
-  isDarkMode
 }) => {
-  const [width, setWidth] = useState(420); // Wider default desktop width (420px)
+  const { isDarkMode } = useTheme();
+  const [width, setWidth] = useState(400);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [filter, setFilter] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
 
   // Mobile drawer resizable states
-  const [mobileHeight, setMobileHeight] = useState(window.innerHeight * 0.4);
+  const [mobileHeight, setMobileHeight] = useState(window.innerHeight * 0.45);
   const [isDragging, setIsDragging] = useState(false);
 
-  // Handle window resizing
   useEffect(() => {
     const handleResize = () => {
       const mobile = window.innerWidth < 768;
@@ -29,21 +37,19 @@ const ConflictPanel = ({
         setWidth(window.innerWidth - 32);
       }
       if (mobile) {
-        setMobileHeight(window.innerHeight * 0.4);
+        setMobileHeight(window.innerHeight * 0.45);
       }
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [width]);
 
-  // Reset to middle height when the drawer opens
   useEffect(() => {
     if (isOpen && isMobile) {
-      setMobileHeight(window.innerHeight * 0.4);
+      setMobileHeight(window.innerHeight * 0.45);
     }
   }, [isOpen, isMobile]);
 
-  // Gesture drag handler for mobile bottom drawer resizing
   const handleDragStart = (pointerDownEvent) => {
     pointerDownEvent.preventDefault();
     pointerDownEvent.stopPropagation();
@@ -55,12 +61,10 @@ const ConflictPanel = ({
     const handleDragMove = (moveEvent) => {
       const currentY = moveEvent.clientY;
       const deltaY = currentY - startY;
-      
       let newHeight = initialHeight - deltaY;
 
-      // Bound between min (70px) and max (window.innerHeight - 50px)
-      const minHeight = 70;
-      const maxHeight = window.innerHeight - 50;
+      const minHeight = 100;
+      const maxHeight = window.innerHeight - 60;
 
       if (newHeight < minHeight) newHeight = minHeight;
       if (newHeight > maxHeight) newHeight = maxHeight;
@@ -75,13 +79,13 @@ const ConflictPanel = ({
 
       setMobileHeight((current) => {
         const snapTop = window.innerHeight * 0.85;
-        const snapMid = window.innerHeight * 0.40;
-        const snapBot = 70;
+        const snapMid = window.innerHeight * 0.45;
+        const snapBot = 100;
 
         const candidates = [
           { val: snapBot, dist: Math.abs(current - snapBot) },
           { val: snapMid, dist: Math.abs(current - snapMid) },
-          { val: snapTop, dist: Math.abs(current - snapTop) }
+          { val: snapTop, dist: Math.abs(current - snapTop) },
         ];
 
         candidates.sort((a, b) => a.dist - b.dist);
@@ -93,7 +97,6 @@ const ConflictPanel = ({
     document.addEventListener('pointerup', handleDragEnd);
   };
 
-  // Pointer handler for resizing from the right edge (desktop only)
   const handleResizeRight = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -105,8 +108,8 @@ const ConflictPanel = ({
       const deltaX = moveEvent.clientX - startX;
       let newWidth = initialWidth + deltaX;
 
-      const minWidth = 360; // Wider minimum width
-      const maxWidth = Math.min(700, window.innerWidth - 32);
+      const minWidth = 340;
+      const maxWidth = Math.min(680, window.innerWidth - 32);
 
       if (newWidth < minWidth) newWidth = minWidth;
       if (newWidth > maxWidth) newWidth = maxWidth;
@@ -125,23 +128,23 @@ const ConflictPanel = ({
     document.addEventListener('pointerup', handlePointerUp);
   };
 
-  // Filter & Search logic
-  const filteredConflicts = conflicts.filter(c => {
+  const filteredConflicts = conflicts.filter((c) => {
     const matchesFilter = filter === 'ALL' || c.category === filter;
-    const matchesSearch = c.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          (c.themes && c.themes.toLowerCase().includes(searchQuery.toLowerCase()));
+    const matchesSearch =
+      c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (c.themes && c.themes.toLowerCase().includes(searchQuery.toLowerCase()));
     return matchesFilter && matchesSearch;
   });
 
   const getCategoryIcon = (category) => {
     switch (category) {
       case 'ARMED_CONFLICT':
-        return <Flame className="w-4 h-4 text-red-500" />;
+        return <Flame className="w-3.5 h-3.5 text-red-500" />;
       case 'CIVIL_UNREST':
-        return <Users className="w-4 h-4 text-orange-500" />;
+        return <Users className="w-3.5 h-3.5 text-orange-500" />;
       case 'GEOPOLITICAL_TENSION':
       default:
-        return <Landmark className="w-4 h-4 text-yellow-500" />;
+        return <Landmark className="w-3.5 h-3.5 text-amber-400" />;
     }
   };
 
@@ -161,13 +164,13 @@ const ConflictPanel = ({
   const getCategoryColor = (category) => {
     switch (category) {
       case 'ARMED_CONFLICT':
-        return 'bg-red-500/15 text-red-500 border-red-500/30';
+        return 'bg-red-500/15 text-red-400 border-red-500/30';
       case 'CIVIL_UNREST':
-        return 'bg-orange-500/15 text-orange-500 border-orange-500/30';
+        return 'bg-orange-500/15 text-orange-400 border-orange-500/30';
       case 'GEOPOLITICAL_TENSION':
-        return 'bg-yellow-500/15 text-yellow-500 border-yellow-500/30';
+        return 'bg-amber-500/15 text-amber-400 border-amber-500/30';
       default:
-        return 'bg-zinc-500/15 text-zinc-500 border-zinc-500/30';
+        return 'bg-zinc-500/15 text-zinc-400 border-zinc-500/30';
     }
   };
 
@@ -196,30 +199,34 @@ const ConflictPanel = ({
     if (!themesStr) return [];
     return themesStr
       .split(';')
-      .map(t => t.trim())
-      .filter(t => t && !t.startsWith('WB_') && t.length > 2);
+      .map((t) => t.trim())
+      .filter((t) => t && !t.startsWith('WB_') && t.length > 2);
   };
 
   return (
     <div
-      className={`fixed z-[1001] flex flex-col ${
+      className={`fixed z-[1002] flex flex-col ${
         isDragging ? 'transition-none' : 'transition-[transform,height] duration-300 ease-in-out'
-      }  ${
+      } ${
         isMobile
-          ? 'bottom-0 left-0 w-full border-t rounded-t-[1.5rem]'
-          : 'top-0 left-0 h-screen border-r rounded-r-[1.2rem]'
+          ? 'bottom-0 left-0 w-full border-t rounded-t-3xl'
+          : 'top-0 left-0 h-screen border-r'
       } ${
         isOpen
-          ? isMobile ? 'translate-y-0' : 'translate-x-0'
-          : isMobile ? 'translate-y-full' : '-translate-x-full'
+          ? isMobile
+            ? 'translate-y-0'
+            : 'translate-x-0'
+          : isMobile
+          ? 'translate-y-full'
+          : '-translate-x-full'
       } ${
         isDarkMode
-          ? 'bg-zinc-950/90 backdrop-blur-xl border-zinc-800 text-zinc-50 shadow-2xl'
-          : 'bg-white/90 backdrop-blur-xl border-zinc-200 text-zinc-900 shadow-2xl'
-      }`}
+          ? 'bg-zinc-950/92 backdrop-blur-2xl border-zinc-800/90 text-zinc-100 shadow-black/90'
+          : 'bg-white/95 backdrop-blur-2xl border-zinc-200 text-zinc-900'
+      } shadow-2xl`}
       style={{
         width: isMobile ? '100%' : `${width}px`,
-        height: isMobile ? `${mobileHeight}px` : '100%'
+        height: isMobile ? `${mobileHeight}px` : '100%',
       }}
     >
       {/* Right Resize Handle (Desktop Only) */}
@@ -231,177 +238,168 @@ const ConflictPanel = ({
         />
       )}
 
-      {/* Drag handle area for mobile sheet */}
-      {isMobile ? (
-        <div 
-          onPointerDown={handleDragStart}
-          className="w-full flex-shrink-0 cursor-ns-resize select-none touch-none"
-        >
-          {/* Swipe Indicator */}
-          <div className="w-full flex justify-center pt-2.5 pb-1">
-            <div className={`w-12 h-1 rounded-full ${isDarkMode ? 'bg-zinc-850' : 'bg-zinc-200'}`} />
+      {/* Header */}
+      <div
+        onPointerDown={isMobile ? handleDragStart : undefined}
+        className={`flex-shrink-0 px-5 pt-4 pb-3 border-b ${
+          isMobile ? 'cursor-ns-resize select-none touch-none' : ''
+        } ${isDarkMode ? 'border-zinc-800/80' : 'border-zinc-200'}`}
+      >
+        {isMobile && (
+          <div className="w-full flex justify-center pb-2">
+            <div
+              className={`w-12 h-1 rounded-full ${
+                isDarkMode ? 'bg-zinc-800' : 'bg-zinc-200'
+              }`}
+            />
           </div>
-          
-          {/* Integrated Header */}
-          <div className="flex items-center justify-between px-5 pt-2 pb-3">
-            <div className="flex items-center gap-2">
-              {/* Back to map/list button */}
-              {selectedConflict ? (
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onSelectConflict(null);
-                  }}
-                  onPointerDown={(e) => e.stopPropagation()} // Stop dragging when clicking button
-                  className={`flex items-center gap-1.5 py-1 px-2.5 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
-                    isDarkMode ? 'hover:bg-zinc-900 text-zinc-300' : 'hover:bg-zinc-100 text-zinc-700'
-                  }`}
-                  title="Back to conflict list"
-                >
-                  <ArrowLeft className="w-4.5 h-4.5" />
-                  <span>List</span>
-                </button>
-              ) : (
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onClose();
-                  }}
-                  onPointerDown={(e) => e.stopPropagation()} // Stop dragging when clicking button
-                  className={`flex items-center gap-1.5 py-1 px-2.5 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
-                    isDarkMode ? 'hover:bg-zinc-900 text-zinc-300' : 'hover:bg-zinc-100 text-zinc-700'
-                  }`}
-                  title="Back to standard map"
-                >
-                  <ChevronLeft className="w-4.5 h-4.5" />
-                  <span>Map</span>
-                </button>
-              )}
+        )}
 
-              {/* Title */}
-              {!selectedConflict && (
-                <div className="flex items-center gap-1.5 ml-2">
-                  <ShieldAlert className="w-4 h-4 text-red-500" />
-                  <span className="font-bold text-xs sm:text-sm tracking-tight font-sans">Conflicts</span>
-                </div>
-              )}
-            </div>
-
-            {/* Live Indicator Badge */}
-            <div className="flex items-center gap-2">
-              <div className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-              </div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-red-500">Live</span>
-            </div>
-          </div>
-        </div>
-      ) : (
-        /* Standard Desktop Panel Header */
-        <div className="flex items-center justify-between px-5 pt-4 pb-3 flex-shrink-0">
+        <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            {selectedConflict ? (
+            {selectedConflict && (
               <button
-                onClick={() => onSelectConflict(null)}
-                className={`flex items-center gap-1.5 py-1 px-2.5 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
-                  isDarkMode ? 'hover:bg-zinc-900 text-zinc-300' : 'hover:bg-zinc-100 text-zinc-700'
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onSelectConflict(null);
+                }}
+                onPointerDown={(e) => e.stopPropagation()}
+                className={`flex items-center gap-1.5 py-1 px-2.5 rounded-lg text-xs font-bold border transition-colors cursor-pointer ${
+                  isDarkMode
+                    ? 'bg-zinc-900 border-zinc-800 text-zinc-300 hover:bg-zinc-800'
+                    : 'bg-zinc-100 border-zinc-200 text-zinc-700 hover:bg-zinc-200'
                 }`}
                 title="Back to conflict list"
               >
-                <ArrowLeft className="w-4.5 h-4.5" />
-                <span>List</span>
-              </button>
-            ) : (
-              <button
-                onClick={onClose}
-                className={`flex items-center gap-1.5 py-1 px-2.5 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
-                  isDarkMode ? 'hover:bg-zinc-900 text-zinc-300' : 'hover:bg-zinc-100 text-zinc-700'
-                }`}
-                title="Back to standard map"
-              >
-                <ChevronLeft className="w-4.5 h-4.5" />
-                <span>Map</span>
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>All Incidents</span>
               </button>
             )}
 
-            <div className="flex items-center gap-1.5 ml-2">
-              <ShieldAlert className="w-4 h-4 text-red-500" />
-              <span className="font-bold text-xs sm:text-sm tracking-tight font-sans">Conflicts</span>
+            <div className="flex items-center gap-2">
+              <div className="p-1.5 rounded-lg bg-red-500/15 border border-red-500/30 text-red-400">
+                <ShieldAlert className="w-4 h-4" />
+              </div>
+              <div className="text-left">
+                <div className="flex items-center gap-1.5">
+                  <span className="font-extrabold text-sm tracking-tight">
+                    Conflict Monitor
+                  </span>
+                  <span className="inline-flex items-center gap-1 px-1.5 py-0.2 rounded text-[9px] font-mono font-bold uppercase bg-red-500/15 text-red-400 border border-red-500/30">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping" />
+                    GDELT LIVE
+                  </span>
+                </div>
+                <p
+                  className={`text-[10px] font-mono ${
+                    isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
+                  }`}
+                >
+                  {conflicts.length} ACTIVE SECURITY HOTSPOTS
+                </p>
+              </div>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            <div className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-            </div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-red-500">Live</span>
-          </div>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onClose();
+            }}
+            onPointerDown={(e) => e.stopPropagation()}
+            className={`p-1.5 rounded-xl border transition-colors cursor-pointer ${
+              isDarkMode
+                ? 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800'
+                : 'bg-zinc-100 border-zinc-200 text-zinc-500 hover:text-zinc-900'
+            }`}
+            title="Close Conflict Monitor"
+          >
+            <X className="w-4 h-4" />
+          </button>
         </div>
-      )}
+      </div>
 
       {/* Detail Sub-View (When a specific conflict is selected) */}
       {selectedConflict ? (
-        <div
-          className="flex-1 overflow-y-auto p-5 text-left space-y-4"
-          style={{
-            scrollbarWidth: 'thin',
-            scrollbarColor: isDarkMode ? '#27272a transparent' : '#e4e4e7 transparent'
-          }}
-        >
-          {/* Category Badge & Sentiment */}
+        <div className="flex-1 overflow-y-auto p-5 text-left space-y-4 pb-16">
           <div className="flex items-center justify-between">
-            <div className={`flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[10px] font-bold border ${getCategoryColor(selectedConflict.category)}`}>
+            <div
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold uppercase border ${getCategoryColor(
+                selectedConflict.category
+              )}`}
+            >
               {getCategoryIcon(selectedConflict.category)}
               <span>{getCategoryLabel(selectedConflict.category)}</span>
             </div>
-            <span className={`text-[10px] font-bold ${
-              selectedConflict.tone < -5
-                ? 'text-red-500'
-                : selectedConflict.tone < 0
-                ? 'text-orange-500'
-                : 'text-green-500'
-            }`}>
-              Tone: {selectedConflict.tone.toFixed(1)}
+            <span
+              className={`text-xs font-mono font-bold ${
+                selectedConflict.tone < -5
+                  ? 'text-red-400'
+                  : selectedConflict.tone < 0
+                  ? 'text-orange-400'
+                  : 'text-emerald-400'
+              }`}
+            >
+              TONE: {selectedConflict.tone.toFixed(1)}
             </span>
           </div>
 
-          {/* Location Title */}
           <div>
-            <h3 className="text-lg font-bold tracking-tight">{selectedConflict.name}</h3>
-            <p className={`text-[10px] mt-0.5 ${isDarkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>
-              Reported: {new Date(selectedConflict.pubDate).toLocaleString()}
+            <h3 className="text-lg font-extrabold tracking-tight">
+              {selectedConflict.name}
+            </h3>
+            <p
+              className={`text-[11px] font-mono mt-1 ${
+                isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
+              }`}
+            >
+              COORDS: {selectedConflict.lat?.toFixed(3)}°N, {selectedConflict.lng?.toFixed(3)}°E •{' '}
+              {new Date(selectedConflict.pubDate).toLocaleString()}
             </p>
           </div>
 
-          {/* Divider */}
-          <div className={`border-t ${isDarkMode ? 'border-zinc-900' : 'border-zinc-100'}`} />
+          <div
+            className={`border-t ${
+              isDarkMode ? 'border-zinc-800' : 'border-zinc-200'
+            }`}
+          />
 
-          {/* Description */}
           <div className="space-y-1.5">
-            <h4 className={`text-[10px] font-bold uppercase tracking-wider ${isDarkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>
-              Description
+            <h4
+              className={`text-[10px] font-mono font-bold uppercase tracking-wider ${
+                isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
+              }`}
+            >
+              Intelligence Assessment
             </h4>
-            <p className={`text-xs leading-relaxed ${isDarkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>
-              Active security event or unrest alert detected in {selectedConflict.name}. This indicator is flagged due to themes in global media coverage. Refer to the original news publisher for granular reports.
+            <p
+              className={`text-xs leading-relaxed ${
+                isDarkMode ? 'text-zinc-300' : 'text-zinc-600'
+              }`}
+            >
+              Active security event or civil unrest alert detected in{' '}
+              <strong>{selectedConflict.name}</strong>. Flagged via automated GDELT global media
+              theme extraction.
             </p>
           </div>
 
-          {/* Key Themes List */}
           {getThemesArray(selectedConflict.themes).length > 0 && (
             <div className="space-y-2">
-              <h4 className={`text-[10px] font-bold uppercase tracking-wider ${isDarkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>
-                Associated Themes
+              <h4
+                className={`text-[10px] font-mono font-bold uppercase tracking-wider ${
+                  isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
+                }`}
+              >
+                Extracted GDELT Themes
               </h4>
-              <div className="flex flex-wrap gap-1.5 max-h-[80px] overflow-y-auto">
+              <div className="flex flex-wrap gap-1.5">
                 {getThemesArray(selectedConflict.themes).map((theme, i) => (
                   <span
                     key={i}
-                    className={`px-2 py-0.5 rounded text-[9px] font-medium border ${
+                    className={`px-2 py-0.5 rounded text-[10px] font-mono border ${
                       isDarkMode
-                        ? 'bg-zinc-900 border-zinc-800 text-zinc-400'
-                        : 'bg-zinc-50 border-zinc-200 text-zinc-500'
+                        ? 'bg-zinc-900 border-zinc-800 text-zinc-300'
+                        : 'bg-zinc-100 border-zinc-200 text-zinc-600'
                     }`}
                   >
                     {theme}
@@ -411,91 +409,79 @@ const ConflictPanel = ({
             </div>
           )}
 
-          {/* Action Button */}
           <div className="pt-2">
             <a
               href={selectedConflict.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white transition-colors duration-200 shadow-md shadow-blue-500/10"
+              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs font-mono font-bold uppercase tracking-wider bg-red-600 hover:bg-red-500 text-white transition-colors duration-200 shadow-lg shadow-red-500/20"
             >
-              <span>Read Full Source Article</span>
+              <span>Open Primary Source Dispatch</span>
               <ExternalLink className="w-3.5 h-3.5" />
             </a>
           </div>
         </div>
       ) : (
-        /* Full List View (Standard Search + Filter + Cards) */
         <>
-          {/* Description (Hide on mobile to save vertical height) */}
-          {!isMobile && (
-            <p className={`text-xs px-5 pb-3 text-left ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
-              Live-monitored geopolitical events, security incidents, and civil unrest parsed from global media.
-            </p>
-          )}
-
           {/* Search Input */}
-          <div className="px-4 pb-2.5 flex-shrink-0">
+          <div className="px-4 pt-3 pb-2.5 flex-shrink-0">
             <div className="relative">
-              <Search className={`absolute left-3 top-2 w-3.5 h-3.5 ${isDarkMode ? 'text-zinc-500' : 'text-zinc-400'}`} />
+              <Search className="absolute left-3 top-2.5 w-3.5 h-3.5 text-zinc-400" />
               <input
                 type="text"
-                placeholder="Search location or theme..."
+                placeholder="Filter by sector, city, or GDELT theme..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className={`w-full text-xs pl-8.5 pr-4 py-1.5 rounded-lg border focus:outline-none transition-colors ${
+                className={`w-full text-xs pl-8.5 pr-4 py-2 rounded-xl border focus:outline-none transition-colors ${
                   isDarkMode
-                    ? 'bg-zinc-900 border-zinc-800 focus:border-zinc-700 text-zinc-100'
-                    : 'bg-zinc-50 border-zinc-200 focus:border-zinc-300 text-zinc-900'
+                    ? 'bg-zinc-900 border-zinc-800 focus:border-red-500/50 text-zinc-100 placeholder-zinc-500'
+                    : 'bg-zinc-50 border-zinc-200 focus:border-zinc-400 text-zinc-900'
                 }`}
               />
             </div>
           </div>
 
           {/* Category Filter Tabs */}
-          <div className="flex gap-1 px-4 pb-3 overflow-x-auto scrollbar-none flex-shrink-0">
+          <div className="flex gap-1.5 px-4 pb-3 overflow-x-auto scrollbar-none flex-shrink-0">
             {['ALL', 'ARMED_CONFLICT', 'CIVIL_UNREST', 'GEOPOLITICAL_TENSION'].map((cat) => (
               <button
                 key={cat}
                 onClick={() => setFilter(cat)}
-                className={`px-2.5 py-1 rounded-lg text-[10px] font-semibold whitespace-nowrap border transition-all duration-200 ${
+                className={`px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold uppercase whitespace-nowrap border transition-all duration-150 cursor-pointer ${
                   filter === cat
                     ? isDarkMode
-                      ? 'bg-zinc-100 text-zinc-950 border-zinc-100'
+                      ? 'bg-red-500/20 text-red-300 border-red-500/50'
                       : 'bg-zinc-900 text-white border-zinc-900'
                     : isDarkMode
-                    ? 'bg-zinc-900/50 border-zinc-800 text-zinc-400 hover:text-zinc-200'
+                    ? 'bg-zinc-900/60 border-zinc-800 text-zinc-400 hover:text-zinc-200'
                     : 'bg-zinc-50 border-zinc-200 text-zinc-600 hover:text-zinc-900'
                 }`}
               >
-                {cat === 'ALL' ? 'All' : getCategoryLabel(cat)}
+                {cat === 'ALL' ? 'All Events' : getCategoryLabel(cat)}
               </button>
             ))}
           </div>
 
-          {/* Divider */}
-          <div className={`mx-4 border-t flex-shrink-0 ${isDarkMode ? 'border-zinc-800' : 'border-zinc-200'}`} />
+          <div
+            className={`mx-4 border-t flex-shrink-0 ${
+              isDarkMode ? 'border-zinc-800' : 'border-zinc-200'
+            }`}
+          />
 
           {/* Conflicts List */}
-          <div
-            className="flex-1 overflow-y-auto p-4 space-y-2.5"
-            style={{
-              scrollbarWidth: 'thin',
-              scrollbarColor: isDarkMode ? '#27272a transparent' : '#e4e4e7 transparent'
-            }}
-          >
+          <div className="flex-1 overflow-y-auto p-4 space-y-2.5 pb-16">
             {loading ? (
-              <div className="flex flex-col items-center justify-center py-8 space-y-2.5">
-                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-red-500"></div>
-                <span className={`text-[10px] ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
-                  Parsing global media reports...
+              <div className="flex flex-col items-center justify-center py-10 space-y-2.5">
+                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-red-500" />
+                <span className="text-[11px] font-mono text-zinc-400">
+                  SYNCHRONIZING GDELT SECURITY STREAM...
                 </span>
               </div>
             ) : filteredConflicts.length === 0 ? (
-              <div className="text-center py-8">
-                <ShieldAlert className={`w-6 h-6 mx-auto mb-1.5 opacity-40 ${isDarkMode ? 'text-zinc-500' : 'text-zinc-400'}`} />
-                <p className={`text-[10px] ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
-                  No active conflict alerts found matching criteria.
+              <div className="text-center py-10">
+                <ShieldAlert className="w-6 h-6 mx-auto mb-2 opacity-40 text-zinc-400" />
+                <p className="text-xs font-mono text-zinc-400">
+                  No active conflict alerts matching filter.
                 </p>
               </div>
             ) : (
@@ -505,41 +491,45 @@ const ConflictPanel = ({
                   <div
                     key={conflict.id}
                     onClick={() => onSelectConflict(conflict)}
-                    className={`p-3 rounded-xl border text-left cursor-pointer transition-all duration-200 hover:-translate-y-0.5 ${
+                    className={`p-3 rounded-xl border text-left cursor-pointer transition-all duration-150 hover:-translate-y-0.5 ${
                       isSelected
                         ? isDarkMode
-                          ? 'bg-zinc-900 border-zinc-700 shadow-md ring-1 ring-zinc-700'
-                          : 'bg-zinc-100 border-zinc-300 shadow-md ring-1 ring-zinc-300'
+                          ? 'bg-zinc-900 border-red-500/50 shadow-md ring-1 ring-red-500/30'
+                          : 'bg-zinc-100 border-zinc-300 shadow-md'
                         : isDarkMode
-                        ? 'bg-zinc-900/40 border-zinc-900 hover:bg-zinc-900/80 hover:border-zinc-800'
-                        : 'bg-zinc-50/50 border-zinc-100 hover:bg-zinc-100/50 hover:border-zinc-200'
+                        ? 'bg-zinc-900/50 border-zinc-800/80 hover:bg-zinc-900 hover:border-zinc-700'
+                        : 'bg-zinc-50/70 border-zinc-200/80 hover:bg-zinc-100'
                     }`}
                   >
-                    {/* Location and Date */}
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="font-bold text-xs truncate max-w-[160px] sm:max-w-[200px]">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="font-bold text-xs truncate max-w-[220px]">
                         {conflict.name}
                       </span>
-                      <span className={`text-[9px] ${isDarkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>
+                      <span className="text-[10px] font-mono text-zinc-400">
                         {formatPubDate(conflict.pubDate)}
                       </span>
                     </div>
 
-                    {/* Category Badge & Sentiment */}
                     <div className="flex items-center justify-between">
-                      <div className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-bold border ${getCategoryColor(conflict.category)}`}>
+                      <div
+                        className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-mono font-bold uppercase border ${getCategoryColor(
+                          conflict.category
+                        )}`}
+                      >
                         {getCategoryIcon(conflict.category)}
                         <span>{getCategoryLabel(conflict.category)}</span>
                       </div>
                       {conflict.tone !== 0 && (
-                        <span className={`text-[9px] font-bold ${
-                          conflict.tone < -5
-                            ? 'text-red-500'
-                            : conflict.tone < 0
-                            ? 'text-orange-500'
-                            : 'text-green-500'
-                        }`}>
-                          Tone: {conflict.tone > 0 ? `+${conflict.tone.toFixed(1)}` : conflict.tone.toFixed(1)}
+                        <span
+                          className={`text-[10px] font-mono font-bold ${
+                            conflict.tone < -5
+                              ? 'text-red-400'
+                              : conflict.tone < 0
+                              ? 'text-orange-400'
+                              : 'text-emerald-400'
+                          }`}
+                        >
+                          TONE: {conflict.tone > 0 ? `+${conflict.tone.toFixed(1)}` : conflict.tone.toFixed(1)}
                         </span>
                       )}
                     </div>

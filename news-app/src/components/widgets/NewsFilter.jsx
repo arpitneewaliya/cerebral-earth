@@ -1,48 +1,48 @@
 import React from 'react';
 import { Newspaper, Cpu, Briefcase, HeartPulse, FlaskConical, Trophy, Film } from 'lucide-react';
+import { useTheme } from '../../contexts/ThemeContext.jsx';
 
-const NewsFilter = ({ selectedCategory, onFilterChange, isDarkMode }) => {
+const NewsFilter = ({ selectedCategory, onFilterChange }) => {
+  const { isDarkMode } = useTheme();
+
   const categories = [
-    { value: 'All', icon: <Newspaper size={16} />, label: 'All News' },
-    { value: 'Technology', icon: <Cpu size={16} />, label: 'Technology' },
-    { value: 'Business', icon: <Briefcase size={16} />, label: 'Business' },
-    { value: 'Health', icon: <HeartPulse size={16} />, label: 'Health' },
-    { value: 'Science', icon: <FlaskConical size={16} />, label: 'Science' },
-    { value: 'Sports', icon: <Trophy size={16} />, label: 'Sports' },
-    { value: 'Entertainment', icon: <Film size={16} />, label: 'Entertainment' }
+    { value: 'All', icon: <Newspaper size={13} />, label: 'All Feed' },
+    { value: 'Technology', icon: <Cpu size={13} />, label: 'Tech' },
+    { value: 'Business', icon: <Briefcase size={13} />, label: 'Business' },
+    { value: 'Health', icon: <HeartPulse size={13} />, label: 'Health' },
+    { value: 'Science', icon: <FlaskConical size={13} />, label: 'Science' },
+    { value: 'Sports', icon: <Trophy size={13} />, label: 'Sports' },
+    { value: 'Entertainment', icon: <Film size={13} />, label: 'Culture' },
   ];
 
   return (
-    <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-      <div className="mb-3">
-        <h4 className={`font-semibold ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
-          News Category
-        </h4>
-        <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-          Filter news by category
-        </p>
-      </div>
-      
-      <div className="flex flex-wrap gap-2">
-        {categories.map((cat) => (
-          <button
-            key={cat.value}
-            onClick={() => onFilterChange(cat.value)}
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-1 ${
-              selectedCategory === cat.value
-                ? isDarkMode
-                  ? 'bg-blue-600 text-white shadow-lg'
-                  : 'bg-blue-600 text-white shadow-lg'
-                : isDarkMode
-                  ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-            }`}
-          >
-            <span className="text-xs">{cat.icon}</span>
-            <span className="hidden sm:inline">{cat.label}</span>
-            <span className="sm:hidden">{cat.value}</span>
-          </button>
-        ))}
+    <div
+      className={`px-4 py-3 border-b ${
+        isDarkMode ? 'border-zinc-800/80' : 'border-zinc-200'
+      }`}
+    >
+      <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none">
+        {categories.map((cat) => {
+          const isSelected = selectedCategory === cat.value;
+          return (
+            <button
+              key={cat.value}
+              onClick={() => onFilterChange(cat.value)}
+              className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 flex items-center gap-1.5 whitespace-nowrap border cursor-pointer ${
+                isSelected
+                  ? isDarkMode
+                    ? 'bg-cyan-500/20 border-cyan-500/50 text-cyan-300 shadow-xs'
+                    : 'bg-blue-600 border-blue-600 text-white shadow-xs'
+                  : isDarkMode
+                  ? 'bg-zinc-900/70 border-zinc-800 text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200'
+                  : 'bg-zinc-100 border-zinc-200 text-zinc-600 hover:bg-zinc-200'
+              }`}
+            >
+              <span>{cat.icon}</span>
+              <span>{cat.label}</span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
