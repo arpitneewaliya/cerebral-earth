@@ -133,35 +133,35 @@ const MapLayerControl = ({
 
   return (
     <div
-      className={`fixed top-28 right-3 left-14 sm:left-auto sm:top-16 sm:right-3 sm:w-80 z-[1000] p-4 rounded-2xl border shadow-2xl backdrop-blur-xl transition-all duration-300 ${
+      className={`fixed top-32 right-4 left-16 sm:left-auto sm:top-20 sm:right-4 sm:w-96 z-[1000] p-5 rounded-2xl border shadow-2xl backdrop-blur-xl transition-all duration-300 ${
         isDarkMode
-          ? 'bg-zinc-950/90 border-zinc-800 text-zinc-100 shadow-black/80'
+          ? 'bg-zinc-950/92 border-zinc-800 text-zinc-100 shadow-black/80'
           : 'bg-white/95 border-zinc-200 text-zinc-950'
       }`}
     >
       {/* Header */}
-      <div className="flex items-center justify-between mb-3 pb-2.5 border-b border-zinc-500/20">
-        <div className="flex items-center gap-2">
-          <Layers className="w-4 h-4 text-cyan-400" />
-          <h3 className="font-bold text-xs uppercase tracking-wider font-mono">
+      <div className="flex items-center justify-between mb-4 pb-3 border-b border-zinc-500/20">
+        <div className="flex items-center gap-2.5">
+          <Layers className="w-5 h-5 text-cyan-400" />
+          <h3 className="font-bold text-sm uppercase tracking-wider font-mono">
             Macro Choropleth Overlays
           </h3>
         </div>
         <button
           onClick={() => setShowLayersControl(false)}
-          className={`p-1 rounded-lg transition-colors cursor-pointer ${
+          className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
             isDarkMode
               ? 'hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200'
               : 'hover:bg-zinc-100 text-zinc-500 hover:text-zinc-800'
           }`}
           title="Close layers panel"
         >
-          <X className="w-4 h-4" />
+          <X className="w-4.5 h-4.5" />
         </button>
       </div>
 
       {/* Layers List */}
-      <div className="flex flex-col gap-1 max-h-[360px] overflow-y-auto pr-1">
+      <div className="flex flex-col gap-1.5 max-h-[400px] overflow-y-auto pr-1">
         {layers.map((layer) => {
           const IconComponent = layer.icon;
           const isActive = selectedLayer === layer.id;
@@ -169,7 +169,7 @@ const MapLayerControl = ({
             <button
               key={layer.id}
               onClick={() => setSelectedLayer(layer.id)}
-              className={`flex items-center text-left gap-3 p-2 rounded-xl transition-all duration-150 border w-full group cursor-pointer ${
+              className={`flex items-center text-left gap-3.5 p-3 rounded-xl transition-all duration-150 border w-full group cursor-pointer ${
                 isActive
                   ? isDarkMode
                     ? 'bg-zinc-900 border-cyan-500/40 shadow-inner'
@@ -180,7 +180,7 @@ const MapLayerControl = ({
               }`}
             >
               <div
-                className="p-2 rounded-lg flex items-center justify-center transition-transform group-hover:scale-105"
+                className="p-2.5 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105"
                 style={{
                   backgroundColor: isActive
                     ? `${layer.color}25`
@@ -190,19 +190,19 @@ const MapLayerControl = ({
                   color: layer.color,
                 }}
               >
-                <IconComponent className="w-4 h-4" />
+                <IconComponent className="w-5 h-5" />
               </div>
 
               <div className="flex-1 min-w-0">
                 <p
-                  className={`text-xs font-bold truncate leading-tight ${
+                  className={`text-sm font-bold truncate leading-tight ${
                     isActive ? (isDarkMode ? 'text-cyan-300' : 'text-blue-600') : ''
                   }`}
                 >
                   {layer.name}
                 </p>
                 <p
-                  className={`text-[11px] truncate mt-0.5 ${
+                  className={`text-xs truncate mt-1 ${
                     isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
                   }`}
                 >
@@ -212,7 +212,7 @@ const MapLayerControl = ({
 
               {isActive && (
                 <div
-                  className="w-2 h-2 rounded-full ring-4"
+                  className="w-2.5 h-2.5 rounded-full ring-4"
                   style={{
                     backgroundColor: layer.color,
                     '--tw-ring-color': `${layer.color}30`,
@@ -250,40 +250,40 @@ const MapLegend = ({ selectedLayer, layerStats, isDarkMode }) => {
   ];
 
   return (
-    <div className="fixed bottom-16 left-3 z-[998] flex flex-col gap-2 items-start">
+    <div className="fixed bottom-20 left-4 z-[998] flex flex-col gap-2 items-start">
       {isOpen ? (
         <div
-          className={`p-3 rounded-2xl border shadow-2xl backdrop-blur-xl text-xs min-w-[200px] transition-all duration-200 ${
+          className={`p-4 rounded-2xl border shadow-2xl backdrop-blur-xl text-xs min-w-[230px] transition-all duration-200 ${
             isDarkMode
-              ? 'bg-zinc-950/90 border-zinc-800 text-zinc-100'
+              ? 'bg-zinc-950/92 border-zinc-800 text-zinc-100'
               : 'bg-white/95 border-zinc-200 text-zinc-900'
           }`}
         >
-          <div className="flex items-center justify-between gap-4 mb-2 pb-1.5 border-b border-zinc-500/20">
-            <span className="font-mono font-bold text-[10px] uppercase tracking-wider text-cyan-400">
+          <div className="flex items-center justify-between gap-4 mb-3 pb-2 border-b border-zinc-500/20">
+            <span className="font-mono font-bold text-xs uppercase tracking-wider text-cyan-400">
               {LAYER_META[selectedLayer]?.label || selectedLayer} SCALE
             </span>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-zinc-400 hover:text-zinc-200 cursor-pointer"
+              className="text-zinc-400 hover:text-zinc-200 cursor-pointer p-0.5"
               title="Minimize legend"
             >
-              <X className="w-3.5 h-3.5" />
+              <X className="w-4 h-4" />
             </button>
           </div>
-          <div className="flex flex-col gap-1.5">
+          <div className="flex flex-col gap-2">
             {palette.map((color, idx) => (
-              <div key={color} className="flex items-center gap-2.5">
+              <div key={color} className="flex items-center gap-3">
                 <div
-                  className="w-4 h-3 rounded-sm border"
+                  className="w-5 h-4 rounded border"
                   style={{
                     backgroundColor: color,
-                    borderColor: isDarkMode ? 'rgba(255,255,255,0.15)' : '#e4e4e7',
+                    borderColor: isDarkMode ? 'rgba(255,255,255,0.18)' : '#e4e4e7',
                   }}
                 />
                 <span
-                  className={`text-[11px] font-mono ${
-                    isDarkMode ? 'text-zinc-300' : 'text-zinc-600'
+                  className={`text-xs font-mono font-medium ${
+                    isDarkMode ? 'text-zinc-200' : 'text-zinc-700'
                   }`}
                 >
                   {ranges[idx]}
@@ -295,14 +295,14 @@ const MapLegend = ({ selectedLayer, layerStats, isDarkMode }) => {
       ) : (
         <button
           onClick={() => setIsOpen(true)}
-          className={`px-3 py-2 rounded-xl shadow-lg border transition-colors flex items-center gap-1.5 text-xs font-mono font-bold cursor-pointer ${
+          className={`px-4 py-2.5 rounded-xl shadow-lg border transition-colors flex items-center gap-2 text-xs sm:text-sm font-mono font-bold cursor-pointer ${
             isDarkMode
-              ? 'bg-zinc-950/90 border-zinc-800 text-cyan-400 hover:bg-zinc-900'
+              ? 'bg-zinc-950/92 border-zinc-800 text-cyan-400 hover:bg-zinc-900'
               : 'bg-white border-zinc-200 text-zinc-700 hover:bg-zinc-50'
           }`}
           title="Show Choropleth Scale"
         >
-          <Info className="w-3.5 h-3.5" />
+          <Info className="w-4 h-4" />
           <span>SCALE</span>
         </button>
       )}
@@ -331,17 +331,17 @@ const CountryHoverHUD = ({ hoveredCountry, selectedLayer, layerData, layerStats,
 
   return (
     <div
-      className={`fixed top-28 sm:top-[76px] left-14 z-[998] pointer-events-none px-3.5 py-2.5 rounded-2xl border backdrop-blur-xl shadow-2xl transition-all duration-150 ${
+      className={`fixed top-32 sm:top-[88px] left-16 z-[998] pointer-events-none px-4 py-3 rounded-2xl border backdrop-blur-xl shadow-2xl transition-all duration-150 ${
         isDarkMode
-          ? 'bg-zinc-950/90 border-cyan-500/30 text-zinc-100 shadow-black/80'
+          ? 'bg-zinc-950/92 border-cyan-500/35 text-zinc-100 shadow-black/80'
           : 'bg-white/95 border-zinc-200 text-zinc-900 shadow-lg'
       }`}
     >
-      <div className="flex items-center gap-2">
-        <Crosshair className="w-3.5 h-3.5 text-cyan-400 flex-shrink-0" />
-        <span className="font-bold text-xs tracking-tight">{hoveredCountry.name}</span>
+      <div className="flex items-center gap-2.5">
+        <Crosshair className="w-4 h-4 text-cyan-400 flex-shrink-0" />
+        <span className="font-bold text-sm sm:text-base tracking-tight">{hoveredCountry.name}</span>
         <span
-          className={`text-[10px] font-mono px-1.5 py-0.2 rounded border font-semibold ${
+          className={`text-xs font-mono px-2 py-0.5 rounded-md border font-semibold ${
             isDarkMode
               ? 'bg-zinc-900 border-zinc-700 text-cyan-300'
               : 'bg-zinc-100 border-zinc-300 text-zinc-700'
@@ -352,16 +352,16 @@ const CountryHoverHUD = ({ hoveredCountry, selectedLayer, layerData, layerStats,
       </div>
 
       {selectedLayer !== 'none' && (
-        <div className="mt-1.5 pt-1.5 border-t border-zinc-500/20 flex items-center justify-between gap-4 text-[11px] font-mono">
+        <div className="mt-2 pt-2 border-t border-zinc-500/20 flex items-center justify-between gap-5 text-xs sm:text-sm font-mono">
           <span className={isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}>
             {LAYER_META[selectedLayer]?.label || selectedLayer.toUpperCase()}:
           </span>
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-2">
             <span className="font-bold text-cyan-400">
               {formatValue(rawValue, selectedLayer)}
             </span>
             {percentileRank !== null && (
-              <span className="text-[9px] px-1 rounded bg-cyan-500/15 text-cyan-300">
+              <span className="text-xs px-1.5 py-0.5 rounded bg-cyan-500/15 text-cyan-300">
                 P{percentileRank}
               </span>
             )}
@@ -370,8 +370,8 @@ const CountryHoverHUD = ({ hoveredCountry, selectedLayer, layerData, layerStats,
       )}
 
       <p
-        className={`text-[9px] font-mono uppercase tracking-wider mt-1 ${
-          isDarkMode ? 'text-zinc-500' : 'text-zinc-400'
+        className={`text-[11px] font-mono uppercase tracking-wider mt-1.5 ${
+          isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
         }`}
       >
         Click sector to open intelligence dossier
@@ -432,8 +432,8 @@ const createConflictIcon = (category) => {
         <div class="conflict-marker-dot ${colorClass}"></div>
       </div>
     `,
-    iconSize: [40, 40],
-    iconAnchor: [20, 20],
+    iconSize: [44, 44],
+    iconAnchor: [22, 22],
   });
 };
 
@@ -745,10 +745,10 @@ const Map = ({
             onClose={() => onSelectConflict(null)}
             className="conflict-popup"
           >
-            <div className="text-left text-xs font-semibold select-none min-w-[220px]">
-              <div className="flex items-center justify-between gap-4 font-bold border-b pb-1.5 mb-2 border-zinc-500/20 pr-5">
+            <div className="text-left text-xs sm:text-sm font-semibold select-none min-w-[260px]">
+              <div className="flex items-center justify-between gap-4 font-bold border-b pb-2 mb-2.5 border-zinc-500/20 pr-6">
                 <span
-                  className={`font-mono text-[10px] uppercase tracking-wider ${
+                  className={`font-mono text-xs uppercase tracking-wider ${
                     selectedConflict.category === 'ARMED_CONFLICT'
                       ? 'text-red-500'
                       : selectedConflict.category === 'CIVIL_UNREST'
@@ -762,19 +762,19 @@ const Map = ({
                     ? 'Civil Unrest'
                     : 'Geopolitical Alert'}
                 </span>
-                <span className="text-[10px] font-mono opacity-80">
+                <span className="text-xs font-mono opacity-80">
                   Tone: {selectedConflict.tone.toFixed(1)}
                 </span>
               </div>
-              <p className="font-bold my-1 text-sm">{selectedConflict.name}</p>
-              <p className="font-normal opacity-75 mb-2.5 leading-relaxed text-[11px]">
+              <p className="font-bold my-1.5 text-base">{selectedConflict.name}</p>
+              <p className="font-normal opacity-80 mb-3 leading-relaxed text-xs sm:text-sm">
                 Active security incident flagged via GDELT telemetry stream.
               </p>
               <a
                 href={selectedConflict.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 font-bold text-cyan-400 hover:text-cyan-300 transition-colors"
+                className="inline-flex items-center gap-1.5 font-bold text-xs sm:text-sm text-cyan-400 hover:text-cyan-300 transition-colors"
               >
                 Open Source Dispatch &rarr;
               </a>

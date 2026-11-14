@@ -37,15 +37,15 @@ const CustomTooltip = ({ active, payload, label, unit, isDarkMode }) => {
 
     return (
       <div
-        className={`p-3 rounded-xl border shadow-xl text-left backdrop-blur-md ${
+        className={`p-3.5 rounded-xl border shadow-xl text-left backdrop-blur-md ${
           isDarkMode
             ? 'bg-zinc-950/95 border-cyan-500/30 text-zinc-100'
             : 'bg-white/95 border-zinc-200 text-zinc-950'
         }`}
       >
-        <p className="text-[11px] font-mono font-bold mb-1 text-cyan-400">YEAR {label}</p>
-        <p className="text-xs font-semibold flex items-center gap-1.5">
-          <span className="w-2 h-2 rounded-full bg-cyan-400 inline-block" />
+        <p className="text-xs font-mono font-bold mb-1 text-cyan-400">YEAR {label}</p>
+        <p className="text-sm font-semibold flex items-center gap-2">
+          <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 inline-block" />
           <span className="font-mono font-bold">{formattedVal}</span>
         </p>
       </div>
@@ -60,11 +60,11 @@ const InteractiveChart = ({ data, type = 'line', name = 'Value', unit = '' }) =>
   if (!data || data.length === 0) {
     return (
       <div
-        className={`flex items-center justify-center h-64 border border-dashed rounded-xl ${
+        className={`flex items-center justify-center h-72 border border-dashed rounded-xl ${
           isDarkMode ? 'border-zinc-800 text-zinc-500' : 'border-zinc-200 text-zinc-400'
         }`}
       >
-        <p className="text-xs font-mono uppercase">No historical telemetry available</p>
+        <p className="text-sm font-mono uppercase">No historical telemetry available</p>
       </div>
     );
   }
@@ -78,7 +78,7 @@ const InteractiveChart = ({ data, type = 'line', name = 'Value', unit = '' }) =>
     switch (type) {
       case 'area':
         return (
-          <AreaChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+          <AreaChart data={data} margin={{ top: 10, right: 10, left: -12, bottom: 0 }}>
             <defs>
               <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor={strokeColor} stopOpacity={0.45} />
@@ -89,14 +89,14 @@ const InteractiveChart = ({ data, type = 'line', name = 'Value', unit = '' }) =>
             <XAxis
               dataKey="year"
               stroke={axisColor}
-              tick={{ fontSize: 10 }}
+              tick={{ fontSize: 12 }}
               dy={8}
               tickLine={false}
             />
             <YAxis
               stroke={axisColor}
               tickFormatter={(v) => formatYAxis(v, unit)}
-              tick={{ fontSize: 10 }}
+              tick={{ fontSize: 12 }}
               tickLine={false}
               axisLine={false}
             />
@@ -106,7 +106,7 @@ const InteractiveChart = ({ data, type = 'line', name = 'Value', unit = '' }) =>
               dataKey="value"
               name={name}
               stroke={strokeColor}
-              strokeWidth={2}
+              strokeWidth={2.5}
               fill={fillColor}
             />
           </AreaChart>
@@ -114,19 +114,19 @@ const InteractiveChart = ({ data, type = 'line', name = 'Value', unit = '' }) =>
 
       case 'bar':
         return (
-          <BarChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+          <BarChart data={data} margin={{ top: 10, right: 10, left: -12, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={gridColor} />
             <XAxis
               dataKey="year"
               stroke={axisColor}
-              tick={{ fontSize: 10 }}
+              tick={{ fontSize: 12 }}
               dy={8}
               tickLine={false}
             />
             <YAxis
               stroke={axisColor}
               tickFormatter={(v) => formatYAxis(v, unit)}
-              tick={{ fontSize: 10 }}
+              tick={{ fontSize: 12 }}
               tickLine={false}
               axisLine={false}
             />
@@ -141,19 +141,19 @@ const InteractiveChart = ({ data, type = 'line', name = 'Value', unit = '' }) =>
       case 'line':
       default:
         return (
-          <LineChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+          <LineChart data={data} margin={{ top: 10, right: 10, left: -12, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={gridColor} />
             <XAxis
               dataKey="year"
               stroke={axisColor}
-              tick={{ fontSize: 10 }}
+              tick={{ fontSize: 12 }}
               dy={8}
               tickLine={false}
             />
             <YAxis
               stroke={axisColor}
               tickFormatter={(v) => formatYAxis(v, unit)}
-              tick={{ fontSize: 10 }}
+              tick={{ fontSize: 12 }}
               tickLine={false}
               axisLine={false}
             />
@@ -173,7 +173,7 @@ const InteractiveChart = ({ data, type = 'line', name = 'Value', unit = '' }) =>
   };
 
   return (
-    <div className="w-full h-72 pt-2">
+    <div className="w-full h-80 pt-2">
       <ResponsiveContainer width="100%" height="100%">
         {renderChartContent()}
       </ResponsiveContainer>

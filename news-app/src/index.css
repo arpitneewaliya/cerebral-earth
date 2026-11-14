@@ -124,13 +124,13 @@ body.dark .leaflet-container {
 
 /* Position Leaflet zoom controls cleanly below top Command Bar */
 .leaflet-container .leaflet-top.leaflet-left {
-  top: 76px !important;
-  left: 12px !important;
+  top: 88px !important;
+  left: 16px !important;
 }
 
 .leaflet-container .leaflet-bottom.leaflet-right {
-  bottom: 56px !important;
-  right: 12px !important;
+  bottom: 68px !important;
+  right: 16px !important;
 }
 
 .leaflet-container .leaflet-control-attribution {
@@ -138,9 +138,9 @@ body.dark .leaflet-container {
   color: rgba(161, 161, 170, 0.7) !important;
   backdrop-filter: blur(6px);
   border-radius: 6px 0 0 0;
-  font-size: 9px !important;
-  padding: 2px 6px !important;
-  margin-bottom: 48px !important;
+  font-size: 10px !important;
+  padding: 3px 8px !important;
+  margin-bottom: 58px !important;
 }
 
 .leaflet-container .leaflet-control-attribution a {
@@ -151,7 +151,7 @@ body.dark .leaflet-container {
 .leaflet-touch .leaflet-bar,
 .leaflet-bar {
   border: 1px solid rgba(228, 228, 231, 0.8) !important;
-  border-radius: 12px !important;
+  border-radius: 14px !important;
   overflow: hidden;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15) !important;
 }
@@ -166,10 +166,10 @@ body.dark .leaflet-bar {
   background: rgba(255, 255, 255, 0.9) !important;
   color: #18181b !important;
   backdrop-filter: blur(10px);
-  width: 34px !important;
-  height: 34px !important;
-  line-height: 34px !important;
-  font-size: 16px !important;
+  width: 38px !important;
+  height: 38px !important;
+  line-height: 38px !important;
+  font-size: 18px !important;
   border-bottom: 1px solid rgba(228, 228, 231, 0.8) !important;
   transition: all 0.15s ease;
 }
@@ -317,10 +317,10 @@ body.dark .leaflet-control-zoom a:hover {
   background: rgba(255, 255, 255, 0.96) !important;
   color: #09090b !important;
   border: 1px solid rgba(228, 228, 231, 0.9) !important;
-  border-radius: 14px !important;
+  border-radius: 16px !important;
   backdrop-filter: blur(16px) !important;
   -webkit-backdrop-filter: blur(16px) !important;
-  padding: 12px 14px !important;
+  padding: 16px 18px !important;
   box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.25) !important;
 }
 

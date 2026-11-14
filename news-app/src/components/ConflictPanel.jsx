@@ -20,7 +20,7 @@ const ConflictPanel = ({
   onSelectConflict,
 }) => {
   const { isDarkMode } = useTheme();
-  const [width, setWidth] = useState(400);
+  const [width, setWidth] = useState(460);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [filter, setFilter] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
@@ -108,8 +108,8 @@ const ConflictPanel = ({
       const deltaX = moveEvent.clientX - startX;
       let newWidth = initialWidth + deltaX;
 
-      const minWidth = 340;
-      const maxWidth = Math.min(680, window.innerWidth - 32);
+      const minWidth = 380;
+      const maxWidth = Math.min(720, window.innerWidth - 32);
 
       if (newWidth < minWidth) newWidth = minWidth;
       if (newWidth > maxWidth) newWidth = maxWidth;
@@ -139,12 +139,12 @@ const ConflictPanel = ({
   const getCategoryIcon = (category) => {
     switch (category) {
       case 'ARMED_CONFLICT':
-        return <Flame className="w-3.5 h-3.5 text-red-500" />;
+        return <Flame className="w-4 h-4 text-red-500" />;
       case 'CIVIL_UNREST':
-        return <Users className="w-3.5 h-3.5 text-orange-500" />;
+        return <Users className="w-4 h-4 text-orange-500" />;
       case 'GEOPOLITICAL_TENSION':
       default:
-        return <Landmark className="w-3.5 h-3.5 text-amber-400" />;
+        return <Landmark className="w-4 h-4 text-amber-400" />;
     }
   };
 
@@ -233,7 +233,7 @@ const ConflictPanel = ({
       {!isMobile && (
         <div
           onPointerDown={handleResizeRight}
-          className="absolute right-0 top-0 bottom-0 w-1.5 cursor-ew-resize hover:bg-red-500/50 active:bg-red-500/70 transition-colors z-[1003]"
+          className="absolute right-0 top-0 bottom-0 w-2 cursor-ew-resize hover:bg-red-500/50 active:bg-red-500/70 transition-colors z-[1003]"
           title="Drag to resize width"
         />
       )}
@@ -241,14 +241,14 @@ const ConflictPanel = ({
       {/* Header */}
       <div
         onPointerDown={isMobile ? handleDragStart : undefined}
-        className={`flex-shrink-0 px-5 pt-4 pb-3 border-b ${
+        className={`flex-shrink-0 px-6 pt-5 pb-4 border-b ${
           isMobile ? 'cursor-ns-resize select-none touch-none' : ''
         } ${isDarkMode ? 'border-zinc-800/80' : 'border-zinc-200'}`}
       >
         {isMobile && (
-          <div className="w-full flex justify-center pb-2">
+          <div className="w-full flex justify-center pb-2.5">
             <div
-              className={`w-12 h-1 rounded-full ${
+              className={`w-12 h-1.5 rounded-full ${
                 isDarkMode ? 'bg-zinc-800' : 'bg-zinc-200'
               }`}
             />
@@ -256,7 +256,7 @@ const ConflictPanel = ({
         )}
 
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             {selectedConflict && (
               <button
                 onClick={(e) => {
@@ -264,34 +264,34 @@ const ConflictPanel = ({
                   onSelectConflict(null);
                 }}
                 onPointerDown={(e) => e.stopPropagation()}
-                className={`flex items-center gap-1.5 py-1 px-2.5 rounded-lg text-xs font-bold border transition-colors cursor-pointer ${
+                className={`flex items-center gap-1.5 py-1.5 px-3 rounded-xl text-xs sm:text-sm font-bold border transition-colors cursor-pointer ${
                   isDarkMode
                     ? 'bg-zinc-900 border-zinc-800 text-zinc-300 hover:bg-zinc-800'
                     : 'bg-zinc-100 border-zinc-200 text-zinc-700 hover:bg-zinc-200'
                 }`}
                 title="Back to conflict list"
               >
-                <ArrowLeft className="w-3.5 h-3.5" />
+                <ArrowLeft className="w-4 h-4" />
                 <span>All Incidents</span>
               </button>
             )}
 
-            <div className="flex items-center gap-2">
-              <div className="p-1.5 rounded-lg bg-red-500/15 border border-red-500/30 text-red-400">
-                <ShieldAlert className="w-4 h-4" />
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-xl bg-red-500/15 border border-red-500/30 text-red-400">
+                <ShieldAlert className="w-5 h-5" />
               </div>
               <div className="text-left">
-                <div className="flex items-center gap-1.5">
-                  <span className="font-extrabold text-sm tracking-tight">
+                <div className="flex items-center gap-2">
+                  <span className="font-extrabold text-base sm:text-lg tracking-tight">
                     Conflict Monitor
                   </span>
-                  <span className="inline-flex items-center gap-1 px-1.5 py-0.2 rounded text-[9px] font-mono font-bold uppercase bg-red-500/15 text-red-400 border border-red-500/30">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping" />
+                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase bg-red-500/15 text-red-400 border border-red-500/30">
+                    <span className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
                     GDELT LIVE
                   </span>
                 </div>
                 <p
-                  className={`text-[10px] font-mono ${
+                  className={`text-xs font-mono mt-0.5 ${
                     isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
                   }`}
                 >
@@ -307,24 +307,24 @@ const ConflictPanel = ({
               onClose();
             }}
             onPointerDown={(e) => e.stopPropagation()}
-            className={`p-1.5 rounded-xl border transition-colors cursor-pointer ${
+            className={`p-2 rounded-xl border transition-colors cursor-pointer ${
               isDarkMode
                 ? 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800'
                 : 'bg-zinc-100 border-zinc-200 text-zinc-500 hover:text-zinc-900'
             }`}
             title="Close Conflict Monitor"
           >
-            <X className="w-4 h-4" />
+            <X className="w-5 h-5" />
           </button>
         </div>
       </div>
 
       {/* Detail Sub-View (When a specific conflict is selected) */}
       {selectedConflict ? (
-        <div className="flex-1 overflow-y-auto p-5 text-left space-y-4 pb-16">
+        <div className="flex-1 overflow-y-auto p-6 text-left space-y-5 pb-20">
           <div className="flex items-center justify-between">
             <div
-              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold uppercase border ${getCategoryColor(
+              className={`flex items-center gap-2 px-3 py-1 rounded-xl text-xs font-mono font-bold uppercase border ${getCategoryColor(
                 selectedConflict.category
               )}`}
             >
@@ -332,7 +332,7 @@ const ConflictPanel = ({
               <span>{getCategoryLabel(selectedConflict.category)}</span>
             </div>
             <span
-              className={`text-xs font-mono font-bold ${
+              className={`text-sm font-mono font-bold ${
                 selectedConflict.tone < -5
                   ? 'text-red-400'
                   : selectedConflict.tone < 0
@@ -345,11 +345,11 @@ const ConflictPanel = ({
           </div>
 
           <div>
-            <h3 className="text-lg font-extrabold tracking-tight">
+            <h3 className="text-xl font-extrabold tracking-tight">
               {selectedConflict.name}
             </h3>
             <p
-              className={`text-[11px] font-mono mt-1 ${
+              className={`text-xs font-mono mt-1.5 ${
                 isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
               }`}
             >
@@ -364,16 +364,16 @@ const ConflictPanel = ({
             }`}
           />
 
-          <div className="space-y-1.5">
+          <div className="space-y-2">
             <h4
-              className={`text-[10px] font-mono font-bold uppercase tracking-wider ${
+              className={`text-xs font-mono font-bold uppercase tracking-wider ${
                 isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
               }`}
             >
               Intelligence Assessment
             </h4>
             <p
-              className={`text-xs leading-relaxed ${
+              className={`text-sm leading-relaxed ${
                 isDarkMode ? 'text-zinc-300' : 'text-zinc-600'
               }`}
             >
@@ -384,19 +384,19 @@ const ConflictPanel = ({
           </div>
 
           {getThemesArray(selectedConflict.themes).length > 0 && (
-            <div className="space-y-2">
+            <div className="space-y-2.5">
               <h4
-                className={`text-[10px] font-mono font-bold uppercase tracking-wider ${
+                className={`text-xs font-mono font-bold uppercase tracking-wider ${
                   isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
                 }`}
               >
                 Extracted GDELT Themes
               </h4>
-              <div className="flex flex-wrap gap-1.5">
+              <div className="flex flex-wrap gap-2">
                 {getThemesArray(selectedConflict.themes).map((theme, i) => (
                   <span
                     key={i}
-                    className={`px-2 py-0.5 rounded text-[10px] font-mono border ${
+                    className={`px-2.5 py-1 rounded-lg text-xs font-mono border ${
                       isDarkMode
                         ? 'bg-zinc-900 border-zinc-800 text-zinc-300'
                         : 'bg-zinc-100 border-zinc-200 text-zinc-600'
@@ -409,30 +409,30 @@ const ConflictPanel = ({
             </div>
           )}
 
-          <div className="pt-2">
+          <div className="pt-3">
             <a
               href={selectedConflict.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs font-mono font-bold uppercase tracking-wider bg-red-600 hover:bg-red-500 text-white transition-colors duration-200 shadow-lg shadow-red-500/20"
+              className="w-full flex items-center justify-center gap-2 py-3 px-5 rounded-xl text-xs sm:text-sm font-mono font-bold uppercase tracking-wider bg-red-600 hover:bg-red-500 text-white transition-colors duration-200 shadow-lg shadow-red-500/20"
             >
               <span>Open Primary Source Dispatch</span>
-              <ExternalLink className="w-3.5 h-3.5" />
+              <ExternalLink className="w-4 h-4" />
             </a>
           </div>
         </div>
       ) : (
         <>
           {/* Search Input */}
-          <div className="px-4 pt-3 pb-2.5 flex-shrink-0">
+          <div className="px-5 pt-4 pb-3 flex-shrink-0">
             <div className="relative">
-              <Search className="absolute left-3 top-2.5 w-3.5 h-3.5 text-zinc-400" />
+              <Search className="absolute left-3.5 top-3 w-4 h-4 text-zinc-400" />
               <input
                 type="text"
                 placeholder="Filter by sector, city, or GDELT theme..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className={`w-full text-xs pl-8.5 pr-4 py-2 rounded-xl border focus:outline-none transition-colors ${
+                className={`w-full text-sm pl-10 pr-4 py-2.5 rounded-xl border focus:outline-none transition-colors ${
                   isDarkMode
                     ? 'bg-zinc-900 border-zinc-800 focus:border-red-500/50 text-zinc-100 placeholder-zinc-500'
                     : 'bg-zinc-50 border-zinc-200 focus:border-zinc-400 text-zinc-900'
@@ -442,12 +442,12 @@ const ConflictPanel = ({
           </div>
 
           {/* Category Filter Tabs */}
-          <div className="flex gap-1.5 px-4 pb-3 overflow-x-auto scrollbar-none flex-shrink-0">
+          <div className="flex gap-2 px-5 pb-3.5 overflow-x-auto scrollbar-none flex-shrink-0">
             {['ALL', 'ARMED_CONFLICT', 'CIVIL_UNREST', 'GEOPOLITICAL_TENSION'].map((cat) => (
               <button
                 key={cat}
                 onClick={() => setFilter(cat)}
-                className={`px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold uppercase whitespace-nowrap border transition-all duration-150 cursor-pointer ${
+                className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold uppercase whitespace-nowrap border transition-all duration-150 cursor-pointer ${
                   filter === cat
                     ? isDarkMode
                       ? 'bg-red-500/20 text-red-300 border-red-500/50'
@@ -463,24 +463,24 @@ const ConflictPanel = ({
           </div>
 
           <div
-            className={`mx-4 border-t flex-shrink-0 ${
+            className={`mx-5 border-t flex-shrink-0 ${
               isDarkMode ? 'border-zinc-800' : 'border-zinc-200'
             }`}
           />
 
           {/* Conflicts List */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-2.5 pb-16">
+          <div className="flex-1 overflow-y-auto p-5 space-y-3 pb-20">
             {loading ? (
-              <div className="flex flex-col items-center justify-center py-10 space-y-2.5">
-                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-red-500" />
-                <span className="text-[11px] font-mono text-zinc-400">
+              <div className="flex flex-col items-center justify-center py-12 space-y-3">
+                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-red-500" />
+                <span className="text-xs font-mono text-zinc-400">
                   SYNCHRONIZING GDELT SECURITY STREAM...
                 </span>
               </div>
             ) : filteredConflicts.length === 0 ? (
-              <div className="text-center py-10">
-                <ShieldAlert className="w-6 h-6 mx-auto mb-2 opacity-40 text-zinc-400" />
-                <p className="text-xs font-mono text-zinc-400">
+              <div className="text-center py-12">
+                <ShieldAlert className="w-8 h-8 mx-auto mb-2.5 opacity-40 text-zinc-400" />
+                <p className="text-sm font-mono text-zinc-400">
                   No active conflict alerts matching filter.
                 </p>
               </div>
@@ -491,7 +491,7 @@ const ConflictPanel = ({
                   <div
                     key={conflict.id}
                     onClick={() => onSelectConflict(conflict)}
-                    className={`p-3 rounded-xl border text-left cursor-pointer transition-all duration-150 hover:-translate-y-0.5 ${
+                    className={`p-4 rounded-xl border text-left cursor-pointer transition-all duration-150 hover:-translate-y-0.5 ${
                       isSelected
                         ? isDarkMode
                           ? 'bg-zinc-900 border-red-500/50 shadow-md ring-1 ring-red-500/30'
@@ -501,18 +501,18 @@ const ConflictPanel = ({
                         : 'bg-zinc-50/70 border-zinc-200/80 hover:bg-zinc-100'
                     }`}
                   >
-                    <div className="flex items-center justify-between mb-1.5">
-                      <span className="font-bold text-xs truncate max-w-[220px]">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-bold text-sm truncate max-w-[260px]">
                         {conflict.name}
                       </span>
-                      <span className="text-[10px] font-mono text-zinc-400">
+                      <span className="text-xs font-mono text-zinc-400">
                         {formatPubDate(conflict.pubDate)}
                       </span>
                     </div>
 
                     <div className="flex items-center justify-between">
                       <div
-                        className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-mono font-bold uppercase border ${getCategoryColor(
+                        className={`flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg text-[11px] font-mono font-bold uppercase border ${getCategoryColor(
                           conflict.category
                         )}`}
                       >
@@ -521,7 +521,7 @@ const ConflictPanel = ({
                       </div>
                       {conflict.tone !== 0 && (
                         <span
-                          className={`text-[10px] font-mono font-bold ${
+                          className={`text-xs font-mono font-bold ${
                             conflict.tone < -5
                               ? 'text-red-400'
                               : conflict.tone < 0

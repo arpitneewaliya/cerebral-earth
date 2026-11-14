@@ -82,12 +82,12 @@ const IndicatorChart = ({
   }
 
   return (
-    <div className="space-y-4 text-left">
+    <div className="space-y-5 text-left">
       <div className="flex items-baseline justify-between gap-2">
         <div>
-          <h3 className="text-base font-bold tracking-tight">{title}</h3>
+          <h3 className="text-lg sm:text-xl font-bold tracking-tight">{title}</h3>
           <p
-            className={`text-xs font-mono mt-0.5 ${
+            className={`text-xs sm:text-sm font-mono mt-1 ${
               isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
             }`}
           >
@@ -98,55 +98,55 @@ const IndicatorChart = ({
 
       {/* KPI Summary Cards */}
       {stats && (
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-3 gap-3">
           <div
-            className={`p-3 rounded-xl border ${
+            className={`p-4 rounded-xl border ${
               isDarkMode ? 'bg-zinc-900/80 border-zinc-800' : 'bg-zinc-50 border-zinc-200'
             }`}
           >
             <p
-              className={`text-[10px] font-mono uppercase ${
+              className={`text-xs font-mono uppercase ${
                 isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
               }`}
             >
               Latest ({stats.latest.year})
             </p>
-            <p className="text-sm font-mono font-bold mt-1 text-cyan-400">
+            <p className="text-base sm:text-lg font-mono font-bold mt-1.5 text-cyan-400">
               {formatMetric(stats.latest.value, unit)}
             </p>
           </div>
 
           <div
-            className={`p-3 rounded-xl border ${
+            className={`p-4 rounded-xl border ${
               isDarkMode ? 'bg-zinc-900/80 border-zinc-800' : 'bg-zinc-50 border-zinc-200'
             }`}
           >
             <p
-              className={`text-[10px] font-mono uppercase ${
+              className={`text-xs font-mono uppercase ${
                 isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
               }`}
             >
               Peak ({stats.peak.year})
             </p>
-            <p className="text-sm font-mono font-bold mt-1">
+            <p className="text-base sm:text-lg font-mono font-bold mt-1.5">
               {formatMetric(stats.peak.value, unit)}
             </p>
           </div>
 
           <div
-            className={`p-3 rounded-xl border ${
+            className={`p-4 rounded-xl border ${
               isDarkMode ? 'bg-zinc-900/80 border-zinc-800' : 'bg-zinc-50 border-zinc-200'
             }`}
           >
             <p
-              className={`text-[10px] font-mono uppercase ${
+              className={`text-xs font-mono uppercase ${
                 isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
               }`}
             >
               Period Shift
             </p>
             <p
-              className={`text-sm font-mono font-bold mt-1 ${
+              className={`text-base sm:text-lg font-mono font-bold mt-1.5 ${
                 stats.deltaPct === null
                   ? ''
                   : stats.deltaPct >= 0
@@ -163,7 +163,7 @@ const IndicatorChart = ({
       )}
 
       <div
-        className={`p-4 rounded-2xl border ${
+        className={`p-5 rounded-2xl border ${
           isDarkMode ? 'bg-zinc-900/60 border-zinc-800' : 'bg-white border-zinc-200 shadow-xs'
         }`}
       >

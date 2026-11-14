@@ -17,9 +17,9 @@ const NewsContainer = ({ region }) => {
   return (
     <div>
       {/* View Mode Toggle Tabs */}
-      <div className="px-4 pt-4 pb-1">
+      <div className="px-5 pt-5 pb-2">
         <div
-          className={`flex p-1 rounded-xl border ${
+          className={`flex p-1.5 rounded-xl border ${
             isDarkMode
               ? 'bg-zinc-900/80 border-zinc-800'
               : 'bg-zinc-100/90 border-zinc-200'
@@ -27,7 +27,7 @@ const NewsContainer = ({ region }) => {
         >
           <button
             onClick={() => setViewMode('articles')}
-            className={`flex-1 flex items-center justify-center gap-2 py-1.5 rounded-lg text-xs font-bold transition-all focus:outline-none cursor-pointer ${
+            className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-all focus:outline-none cursor-pointer ${
               viewMode === 'articles'
                 ? isDarkMode
                   ? 'bg-zinc-800 text-cyan-300 border border-cyan-500/30 shadow-xs'
@@ -37,12 +37,12 @@ const NewsContainer = ({ region }) => {
                 : 'text-zinc-500 hover:text-zinc-800'
             }`}
           >
-            <Newspaper className="w-3.5 h-3.5" />
+            <Newspaper className="w-4 h-4" />
             <span>Dispatches &amp; Articles</span>
           </button>
           <button
             onClick={() => setViewMode('videos')}
-            className={`flex-1 flex items-center justify-center gap-2 py-1.5 rounded-lg text-xs font-bold transition-all focus:outline-none cursor-pointer ${
+            className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-all focus:outline-none cursor-pointer ${
               viewMode === 'videos'
                 ? isDarkMode
                   ? 'bg-zinc-800 text-cyan-300 border border-cyan-500/30 shadow-xs'
@@ -52,7 +52,7 @@ const NewsContainer = ({ region }) => {
                 : 'text-zinc-500 hover:text-zinc-800'
             }`}
           >
-            <PlayCircle className="w-3.5 h-3.5" />
+            <PlayCircle className="w-4 h-4" />
             <span>Broadcast Feeds</span>
           </button>
         </div>

@@ -58,16 +58,16 @@ const NewsList = ({ region, category }) => {
 
   if (error) {
     return (
-      <div className="p-4">
+      <div className="p-5">
         <ErrorMessage message={error} onRetry={fetchNews} />
       </div>
     );
   }
 
   return (
-    <div className="p-4">
+    <div className="p-5">
       {news.length > 0 ? (
-        <div className="grid grid-cols-1 gap-3.5">
+        <div className="grid grid-cols-1 gap-4">
           {news.map((article, index) => {
             const relTime = formatRelativeDate(article.publishedAt);
             return (
@@ -82,9 +82,9 @@ const NewsList = ({ region, category }) => {
                     : 'bg-white border-zinc-200 hover:border-blue-300 shadow-xs hover:shadow-md'
                 }`}
               >
-                <div className="flex gap-3.5 p-3.5">
+                <div className="flex gap-4 p-4">
                   {/* Thumbnail */}
-                  <div className="relative w-24 h-24 rounded-xl overflow-hidden flex-shrink-0 border border-zinc-500/20 bg-zinc-900">
+                  <div className="relative w-28 h-28 rounded-xl overflow-hidden flex-shrink-0 border border-zinc-500/20 bg-zinc-900">
                     <img
                       src={article.urlToImage || newsDefault}
                       alt={article.title || 'News'}
@@ -98,10 +98,10 @@ const NewsList = ({ region, category }) => {
                   {/* Content */}
                   <div className="flex-1 min-w-0 flex flex-col justify-between">
                     <div>
-                      <div className="flex items-center justify-between gap-2 mb-1">
+                      <div className="flex items-center justify-between gap-2 mb-1.5">
                         {article.source?.name ? (
                           <span
-                            className={`text-[10px] font-mono font-bold uppercase tracking-wider truncate px-1.5 py-0.2 rounded ${
+                            className={`text-[11px] font-mono font-bold uppercase tracking-wider truncate px-2 py-0.5 rounded-md ${
                               isDarkMode
                                 ? 'bg-cyan-500/15 text-cyan-300'
                                 : 'bg-blue-50 text-blue-700'
@@ -114,18 +114,18 @@ const NewsList = ({ region, category }) => {
                         )}
                         {relTime && (
                           <span
-                            className={`inline-flex items-center gap-1 text-[10px] font-mono flex-shrink-0 ${
-                              isDarkMode ? 'text-zinc-500' : 'text-zinc-400'
+                            className={`inline-flex items-center gap-1 text-xs font-mono flex-shrink-0 ${
+                              isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
                             }`}
                           >
-                            <Clock className="w-2.5 h-2.5" />
+                            <Clock className="w-3 h-3" />
                             {relTime}
                           </span>
                         )}
                       </div>
 
                       <h3
-                        className={`font-bold text-xs sm:text-sm leading-snug line-clamp-2 transition-colors ${
+                        className={`font-bold text-sm sm:text-base leading-snug line-clamp-2 transition-colors ${
                           isDarkMode
                             ? 'text-zinc-100 group-hover:text-cyan-300'
                             : 'text-zinc-900 group-hover:text-blue-600'
@@ -135,14 +135,14 @@ const NewsList = ({ region, category }) => {
                       </h3>
                     </div>
 
-                    <div className="flex items-center justify-between pt-2 mt-1">
+                    <div className="flex items-center justify-between pt-2.5 mt-1">
                       <span
-                        className={`inline-flex items-center gap-1 text-[11px] font-mono font-semibold ${
+                        className={`inline-flex items-center gap-1.5 text-xs font-mono font-bold ${
                           isDarkMode ? 'text-cyan-400' : 'text-blue-600'
                         }`}
                       >
                         Read Dispatch
-                        <ExternalLink className="w-3 h-3 transition-transform group-hover:translate-x-0.5" />
+                        <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
                       </span>
                     </div>
                   </div>
@@ -150,8 +150,8 @@ const NewsList = ({ region, category }) => {
 
                 {(article.summarizedText || article.description) && (
                   <div
-                    className={`px-3.5 pb-3 pt-0 text-xs leading-relaxed line-clamp-2 ${
-                      isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
+                    className={`px-4 pb-4 pt-0 text-xs sm:text-sm leading-relaxed line-clamp-2 ${
+                      isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
                     }`}
                   >
                     {article.summarizedText || article.description}
@@ -163,13 +163,13 @@ const NewsList = ({ region, category }) => {
         </div>
       ) : (
         <div
-          className={`text-center py-12 rounded-2xl border ${
+          className={`text-center py-14 rounded-2xl border ${
             isDarkMode ? 'bg-zinc-900/40 border-zinc-800' : 'bg-zinc-50 border-zinc-200'
           }`}
         >
-          <Newspaper className="w-8 h-8 mx-auto mb-2.5 opacity-40 text-cyan-400" />
-          <h3 className="text-sm font-bold mb-1">No Active Dispatches</h3>
-          <p className={`text-xs ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
+          <Newspaper className="w-10 h-10 mx-auto mb-3 opacity-40 text-cyan-400" />
+          <h3 className="text-base font-bold mb-1">No Active Dispatches</h3>
+          <p className={`text-sm ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
             No recent articles found for this sector and category.
           </p>
         </div>

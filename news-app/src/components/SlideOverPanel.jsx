@@ -16,7 +16,7 @@ const SlideOverPanel = ({
   countryName,
 }) => {
   const { isDarkMode } = useTheme();
-  const [width, setWidth] = useState(460);
+  const [width, setWidth] = useState(520);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
 
   useEffect(() => {
@@ -41,8 +41,8 @@ const SlideOverPanel = ({
       const deltaX = moveEvent.clientX - startX;
       let newWidth = initialWidth - deltaX;
 
-      const minWidth = 360;
-      const maxWidth = Math.min(820, window.innerWidth - 32);
+      const minWidth = 400;
+      const maxWidth = Math.min(860, window.innerWidth - 32);
 
       if (newWidth < minWidth) newWidth = minWidth;
       if (newWidth > maxWidth) newWidth = maxWidth;
@@ -90,46 +90,46 @@ const SlideOverPanel = ({
       {!isMobile && (
         <div
           onPointerDown={handleResizeLeft}
-          className="absolute left-0 top-0 bottom-0 w-1.5 cursor-ew-resize hover:bg-cyan-500/50 active:bg-cyan-500/80 transition-colors z-[1003]"
+          className="absolute left-0 top-0 bottom-0 w-2 cursor-ew-resize hover:bg-cyan-500/50 active:bg-cyan-500/80 transition-colors z-[1003]"
           title="Drag to resize dossier width"
         />
       )}
 
       {/* Dossier Header */}
       <div
-        className={`flex-shrink-0 px-5 pt-5 pb-3 border-b ${
+        className={`flex-shrink-0 px-6 pt-6 pb-4 border-b ${
           isDarkMode ? 'border-zinc-800/80 bg-zinc-950/60' : 'border-zinc-200 bg-zinc-50/70'
         }`}
       >
-        <div className="flex items-start justify-between gap-3">
-          <div className="flex items-center gap-3 min-w-0">
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex items-center gap-3.5 min-w-0">
             {countryCode ? (
               <img
                 src={`https://flagcdn.com/w80/${countryCode.toLowerCase()}.png`}
                 alt={countryName || 'Flag'}
-                className="w-10 h-7 object-cover rounded-md border border-zinc-500/30 shadow-sm flex-shrink-0"
+                className="w-12 h-8 object-cover rounded-lg border border-zinc-500/30 shadow-sm flex-shrink-0"
                 onError={(e) => {
                   e.target.style.display = 'none';
                 }}
               />
             ) : (
               <div
-                className={`w-10 h-7 rounded-md border flex items-center justify-center flex-shrink-0 ${
+                className={`w-12 h-8 rounded-lg border flex items-center justify-center flex-shrink-0 ${
                   isDarkMode ? 'bg-zinc-900 border-zinc-800 text-cyan-400' : 'bg-zinc-100 border-zinc-200 text-blue-600'
                 }`}
               >
-                <Crosshair className="w-4 h-4" />
+                <Crosshair className="w-5 h-5" />
               </div>
             )}
 
             <div className="text-left min-w-0">
-              <div className="flex items-center gap-2">
-                <h2 className="text-lg font-extrabold tracking-tight truncate">
+              <div className="flex items-center gap-2.5">
+                <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight truncate">
                   {countryName || 'Sector Dossier'}
                 </h2>
                 {(alpha3Code || countryCode) && (
                   <span
-                    className={`text-[10px] font-mono px-1.5 py-0.5 rounded border font-bold flex-shrink-0 ${
+                    className={`text-xs font-mono px-2 py-0.5 rounded-md border font-bold flex-shrink-0 ${
                       isDarkMode
                         ? 'bg-cyan-500/15 border-cyan-500/30 text-cyan-300'
                         : 'bg-blue-50 border-blue-200 text-blue-700'
@@ -142,7 +142,7 @@ const SlideOverPanel = ({
 
               {region && typeof region.lat === 'number' && typeof region.lng === 'number' && (
                 <p
-                  className={`text-[11px] font-mono mt-0.5 ${
+                  className={`text-xs font-mono mt-1 ${
                     isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
                   }`}
                 >
@@ -153,7 +153,7 @@ const SlideOverPanel = ({
           </div>
 
           <button
-            className={`p-2 rounded-xl border transition-colors cursor-pointer flex-shrink-0 ${
+            className={`p-2.5 rounded-xl border transition-colors cursor-pointer flex-shrink-0 ${
               isDarkMode
                 ? 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800'
                 : 'bg-white border-zinc-200 text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
@@ -161,13 +161,13 @@ const SlideOverPanel = ({
             onClick={onClose}
             aria-label="Close dossier panel"
           >
-            <X className="w-4 h-4" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Persistent Dossier Tab Bar */}
         <div
-          className={`grid grid-cols-3 gap-1 p-1 mt-4 rounded-xl border ${
+          className={`grid grid-cols-3 gap-1.5 p-1.5 mt-5 rounded-xl border ${
             isDarkMode ? 'bg-zinc-900/90 border-zinc-800' : 'bg-zinc-200/60 border-zinc-200'
           }`}
         >
@@ -178,7 +178,7 @@ const SlideOverPanel = ({
               <button
                 key={tab.id}
                 onClick={() => setSelectedOption(tab.id)}
-                className={`flex items-center justify-center gap-1.5 py-2 px-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                className={`flex items-center justify-center gap-2 py-2.5 px-3 rounded-lg text-xs sm:text-sm font-bold transition-all cursor-pointer ${
                   isActive
                     ? isDarkMode
                       ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-sm'
@@ -188,7 +188,7 @@ const SlideOverPanel = ({
                     : 'text-zinc-600 hover:text-zinc-900'
                 }`}
               >
-                <Icon className="w-3.5 h-3.5 flex-shrink-0" />
+                <Icon className="w-4 h-4 flex-shrink-0" />
                 <span className="truncate">{tab.label}</span>
               </button>
             );
@@ -197,11 +197,11 @@ const SlideOverPanel = ({
       </div>
 
       {/* Scrollable Dossier Content Area */}
-      <div className="flex-1 min-h-0 overflow-y-auto relative pb-16">
+      <div className="flex-1 min-h-0 overflow-y-auto relative pb-20">
         {!region ? (
-          <div className="flex flex-col items-center justify-center h-64 p-6 text-center space-y-3">
-            <MapPin className="w-10 h-10 opacity-40 text-cyan-400" />
-            <p className="text-sm font-medium text-zinc-400">
+          <div className="flex flex-col items-center justify-center h-72 p-8 text-center space-y-3.5">
+            <MapPin className="w-12 h-12 opacity-40 text-cyan-400" />
+            <p className="text-base font-medium text-zinc-400">
               Select any country or sector on the globe to inspect live intelligence.
             </p>
           </div>

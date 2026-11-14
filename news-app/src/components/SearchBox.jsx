@@ -93,7 +93,7 @@ const SearchBox = ({ onSelectLocation, embedded = false }) => {
       ref={containerRef}
       className={
         embedded
-          ? 'relative w-full sm:w-64 md:w-72 lg:w-80'
+          ? 'relative w-full sm:w-72 md:w-80 lg:w-96'
           : 'absolute top-4 left-16 z-[1000] w-80 max-w-[calc(100vw-5rem)]'
       }
     >
@@ -106,7 +106,7 @@ const SearchBox = ({ onSelectLocation, embedded = false }) => {
         }`}
       >
         <Search
-          className={`w-3.5 h-3.5 ml-3 flex-shrink-0 ${
+          className={`w-4 h-4 ml-3.5 flex-shrink-0 ${
             isDarkMode ? 'text-cyan-400/80' : 'text-zinc-500'
           }`}
         />
@@ -120,27 +120,27 @@ const SearchBox = ({ onSelectLocation, embedded = false }) => {
             setIsOpen(true);
           }}
           onFocus={() => setIsOpen(true)}
-          className={`w-full px-2.5 py-1.5 text-xs font-medium bg-transparent outline-none border-none ${
+          className={`w-full px-3 py-2 text-sm font-medium bg-transparent outline-none border-none ${
             isDarkMode ? 'placeholder-zinc-500 text-zinc-100' : 'placeholder-zinc-400 text-zinc-900'
           }`}
         />
         {loading ? (
-          <Loader2 className="w-3.5 h-3.5 mr-2.5 animate-spin text-cyan-400 flex-shrink-0" />
+          <Loader2 className="w-4 h-4 mr-3 animate-spin text-cyan-400 flex-shrink-0" />
         ) : query ? (
           <button
             onClick={handleClear}
-            className={`p-1 mr-1.5 rounded-md flex-shrink-0 transition-colors ${
+            className={`p-1.5 mr-2 rounded-lg flex-shrink-0 transition-colors cursor-pointer ${
               isDarkMode ? 'hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200' : 'hover:bg-zinc-200 text-zinc-500'
             }`}
             aria-label="Clear search"
           >
-            <X className="w-3.5 h-3.5" />
+            <X className="w-4 h-4" />
           </button>
         ) : (
           <kbd
-            className={`hidden sm:inline-flex items-center justify-center px-1.5 py-0.5 mr-2 text-[10px] font-mono rounded border ${
+            className={`hidden sm:inline-flex items-center justify-center px-2 py-0.5 mr-2.5 text-xs font-mono rounded-md border ${
               isDarkMode
-                ? 'bg-zinc-950/80 border-zinc-800 text-zinc-500'
+                ? 'bg-zinc-950/80 border-zinc-800 text-zinc-400'
                 : 'bg-white border-zinc-200 text-zinc-400'
             }`}
           >
@@ -152,7 +152,7 @@ const SearchBox = ({ onSelectLocation, embedded = false }) => {
       {/* Suggestions Dropdown */}
       {isOpen && suggestions.length > 0 && (
         <ul
-          className={`absolute left-0 right-0 mt-2 rounded-xl border shadow-2xl max-h-64 overflow-y-auto backdrop-blur-xl py-1.5 z-[1100] transition-all duration-200 ${
+          className={`absolute left-0 right-0 mt-2 rounded-2xl border shadow-2xl max-h-72 overflow-y-auto backdrop-blur-xl py-2 z-[1100] transition-all duration-200 ${
             isDarkMode
               ? 'bg-zinc-950/95 border-zinc-800 text-zinc-100 shadow-black/80'
               : 'bg-white/95 border-zinc-200 text-zinc-900'
@@ -162,19 +162,19 @@ const SearchBox = ({ onSelectLocation, embedded = false }) => {
             <li
               key={index}
               onClick={() => handleSelect(item)}
-              className={`px-3.5 py-2.5 text-xs cursor-pointer text-left transition-colors duration-150 flex items-start justify-between gap-2 border-b last:border-b-0 ${
+              className={`px-4 py-3 text-sm cursor-pointer text-left transition-colors duration-150 flex items-start justify-between gap-3 border-b last:border-b-0 ${
                 isDarkMode
                   ? 'border-zinc-900 hover:bg-cyan-500/10'
                   : 'border-zinc-100 hover:bg-zinc-100'
               }`}
             >
-              <div className="flex items-start gap-2 min-w-0">
-                <MapPin className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-cyan-400" />
+              <div className="flex items-start gap-2.5 min-w-0">
+                <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 text-cyan-400" />
                 <span className="line-clamp-2 font-medium leading-snug">{item.display_name}</span>
               </div>
               {item.lat && item.lon && (
                 <span
-                  className={`text-[10px] font-mono flex-shrink-0 px-1.5 py-0.5 rounded ${
+                  className={`text-xs font-mono flex-shrink-0 px-2 py-0.5 rounded-md ${
                     isDarkMode ? 'bg-zinc-900 text-zinc-400' : 'bg-zinc-100 text-zinc-500'
                   }`}
                 >

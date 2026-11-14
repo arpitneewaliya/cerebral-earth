@@ -6,29 +6,29 @@ const NewsFilter = ({ selectedCategory, onFilterChange }) => {
   const { isDarkMode } = useTheme();
 
   const categories = [
-    { value: 'All', icon: <Newspaper size={13} />, label: 'All Feed' },
-    { value: 'Technology', icon: <Cpu size={13} />, label: 'Tech' },
-    { value: 'Business', icon: <Briefcase size={13} />, label: 'Business' },
-    { value: 'Health', icon: <HeartPulse size={13} />, label: 'Health' },
-    { value: 'Science', icon: <FlaskConical size={13} />, label: 'Science' },
-    { value: 'Sports', icon: <Trophy size={13} />, label: 'Sports' },
-    { value: 'Entertainment', icon: <Film size={13} />, label: 'Culture' },
+    { value: 'All', icon: <Newspaper size={15} />, label: 'All Feed' },
+    { value: 'Technology', icon: <Cpu size={15} />, label: 'Tech' },
+    { value: 'Business', icon: <Briefcase size={15} />, label: 'Business' },
+    { value: 'Health', icon: <HeartPulse size={15} />, label: 'Health' },
+    { value: 'Science', icon: <FlaskConical size={15} />, label: 'Science' },
+    { value: 'Sports', icon: <Trophy size={15} />, label: 'Sports' },
+    { value: 'Entertainment', icon: <Film size={15} />, label: 'Culture' },
   ];
 
   return (
     <div
-      className={`px-4 py-3 border-b ${
+      className={`px-5 py-3.5 border-b ${
         isDarkMode ? 'border-zinc-800/80' : 'border-zinc-200'
       }`}
     >
-      <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none">
+      <div className="flex items-center gap-2 overflow-x-auto scrollbar-none">
         {categories.map((cat) => {
           const isSelected = selectedCategory === cat.value;
           return (
             <button
               key={cat.value}
               onClick={() => onFilterChange(cat.value)}
-              className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 flex items-center gap-1.5 whitespace-nowrap border cursor-pointer ${
+              className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-150 flex items-center gap-2 whitespace-nowrap border cursor-pointer ${
                 isSelected
                   ? isDarkMode
                     ? 'bg-cyan-500/20 border-cyan-500/50 text-cyan-300 shadow-xs'
