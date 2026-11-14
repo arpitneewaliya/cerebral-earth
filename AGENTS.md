@@ -6,15 +6,16 @@ This file provides architectural context, state mapping, and coding patterns to 
 
 ## 🗺️ Leaflet Integration & React-Leaflet Quirks
 
-### 1. TileLayer Re-renders require Keys
-React-Leaflet does not automatically hook into React state updates for the `url` prop of `<TileLayer>`. If the URL shifts (e.g., when the user toggles dark mode), the underlying tiles will remain unchanged.
+### 1. TileLayer Re-renders require Keys & Keyless Basemaps
+React-Leaflet does not automatically hook into React state updates for the `url` prop of `<TileLayer>`. If the URL shifts (e.g., when the user toggles dark mode or switches basemaps), the underlying tiles will remain unchanged.
 * **Pattern:** Always apply a dynamic, state-dependent `key` to `<TileLayer>` elements when their URLs are dynamic:
   ```jsx
   <TileLayer
-    key={isDarkMode ? 'dark' : 'light'}
-    url={tileUrl}
+    key={`base-${basemap}-${isDarkMode ? 'dark' : 'light'}`}
+    url={activeTiles.base}
   />
   ```
+* **Keyless Basemap Provider:** `Map.jsx` uses keyless **Esri ArcGIS** MapServer tile endpoints across all three modes (`dark` via `World_Dark_Gray_Base`/`Reference`, `satellite` via `World_Imagery`/`World_Boundaries_and_Places`, and `light` via `World_Light_Gray_Base`/`Reference`). Avoid CARTO `basemaps.cartocdn.com` URLs without an API key, as they serve `"API KEY REQUIRED"` watermarks.
 
 ### 2. Labels Visibility (Split-Tile Rendering)
 To allow vector layers (like GeoJSON overlays) to be rendered under map names and labels:
@@ -87,23 +88,34 @@ To bypass GDELT API latency and rate-limiting across environments:
 
 ## 🔄 State Coordination Flow
 
-### 1. Theme State
-Managed in `ThemeContext.jsx`. The hook `useTheme()` yields:
-* `isDarkMode`: Boolean representing current theme.
+### 1. Theme State & Basemap Sync
+Managed in `news-app/src/contexts/ThemeContext.jsx`. The hook `useTheme()` yields:
+* `isDarkMode`: Boolean representing current theme (defaults to `true` for Dark Tactical mode).
 * `toggleTheme`: Toggle function.
-* On change, it sets `localStorage` and appends/removes class `.dark` to the `document.body` element to handle dark mode styling.
+* On change, it persists to `localStorage` (`cerebral_theme` and `darkMode`) and appends/removes `.dark` on both `document.body` and `document.documentElement`.
+* `App.jsx` automatically syncs `basemap` between `'dark'` and `'light'` when `isDarkMode` changes (unless the user explicitly selected `'satellite'`).
 
-### 2. Map Control Cards Overlay
-* State for rendering the MapLayerControl (`showLayersControl`) lives in `App.jsx`.
-* Passing toggles between `Header.jsx` ("Activate Layers" navigation) and the map overlay allows the selector panel to overlay correctly and be closed via the `X` button.
-* Mobile positioning relies on `left-16` to leave space for the left-aligned `+` and `-` zoom buttons.
+### 2. Unified Top Command Bar HUD (`Header.jsx`)
+* `Header.jsx` renders a unified dual-island floating HUD bar at the top of the viewport:
+  * **Left Island:** Branding + embedded `SearchBox.jsx` (supports `/` keyboard shortcut to focus).
+  * **Right Island:** Segmented basemap switcher (`Dark`, `Sat`, `Light`), `Layers` choropleth toggle (`showLayersControl` + active layer badge), `Conflicts` drawer toggle (`showConflictsPanel`) + marker visibility eye toggle (`showConflictPins`), `Beacons` news marker toggle (`showNewsPins`), and UI theme toggle.
 
-### 3. Conflict Tracker Panel Overlay & Autofocus
-* State for showing the panels (`showConflictsPanel`) lives in `App.jsx` and toggles off `showLayersControl` when activated.
-* **Coordination with Map:** When an incident is selected inside the `ConflictPanel` or the user clicks a pulsing map marker, the state `selectedConflict` is set.
-* **Autofocus Effect:** A map-nested child component `<MapConflictsAutofocus selectedConflict={selectedConflict} />` calls `map.flyTo([lat, lng], 6)` to center the map on the selected conflict location.
-* **Visual Style:** Pulsing markers use Leaflet `DivIcon` wrappers with nested CSS rings (`.conflict-marker-ring` and `.conflict-marker-dot`) styled according to categorization:
-  * Red: `ARMED_CONFLICT`
-  * Orange: `CIVIL_UNREST`
-  * Yellow: `GEOPOLITICAL_TENSION`
+### 3. Map Overlay Controls & Country Hover Telemetry (`Map.jsx`)
+* `MapLayerControl` (`showLayersControl`), `MapLegend`, and `CountryHoverHUD` render as theme-aware glassmorphic overlays.
+* `onEachFeature` tracks `hoveredCountry` (`mouseover`/`mouseout`) to highlight country borders and display ISO-3 code, active choropleth value, and global percentile rank in `CountryHoverHUD`.
+* `MapTelemetryEvents` reports live cursor `lat`, `lng`, and `zoom` to `App.jsx` for the bottom `TelemetryBar`.
+
+### 4. Persistent 3-Tab Country Intelligence Dossier (`SlideOverPanel.jsx`)
+* `useAppState.js` manages `region`, `selectedOption` (defaults to `'news'`), and `isOptionsOpen`.
+* `SlideOverPanel.jsx` renders a resizable right-side dossier with a country flag/ISO/coordinates header and a persistent 3-tab bar: `Intel & News` (`'news'`), `Macro Telemetry` (`'macro'`), and `Country Profile` (`'country'`).
+* `ContentRenderer.jsx` provides a 6-pill indicator switcher (`GDP`, `Population`, `FDI`, `Inflation`, `Unemployment`, `Literacy`) inside `Macro Telemetry`, backed by `IndicatorChart.jsx` KPI summary cards (`Latest`, `Peak`, `Period Shift`).
+
+### 5. Conflict Tracker, Preloading & Bottom Telemetry Bar
+* `App.jsx` preloads `/api/conflicts` on mount (falling back to `FALLBACK_CONFLICTS` if the backend is offline) so conflict hotspots and the bottom ticker populate immediately.
+* `showConflictsPanel` toggles the left-side `ConflictPanel` drawer and toggles off `showLayersControl`.
+* **Coordination with Map:** Selecting an incident in `ConflictPanel`, clicking a pulsing map marker, or clicking a ticker item sets `selectedConflict`, triggering `<MapConflictsAutofocus selectedConflict={selectedConflict} />` (`map.flyTo([lat, lng], 6)`).
+* **Visual Style:**
+  * Conflict markers use `DivIcon` wrappers (`.conflict-marker-ring` and `.conflict-marker-dot`) styled by category: Red (`ARMED_CONFLICT`), Orange (`CIVIL_UNREST`), Yellow (`GEOPOLITICAL_TENSION`).
+  * News beacons (`Pin.jsx`) use diamond `DivIcon` wrappers (`.news-marker-core` and `.news-marker-ring`) with glassmorphic `.news-popup` popups.
+* `TelemetryBar.jsx` displays live hotspot/beacon counts, a clickable breaking intelligence ticker, and live cursor `LAT / LNG / ZOOM` coordinates along the bottom edge.
 

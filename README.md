@@ -1,48 +1,44 @@
-# Cerebral Earth — Interactive News & Data Map
+# Cerebral Earth — Global Geoint & Telemetry Command Center
 
-Cerebral Earth is a premium, interactive web application that bridges geography, global news, and socio-economic data visualization. By combining custom-layered map views, location-aware news feeds, and dynamic charts, the app provides a highly visual, analytical interface to explore the state of the world.
+Cerebral Earth is an interactive, dark-first geospatial intelligence (GEOINT) and socio-economic telemetry platform. By combining split-tile basemaps, live GDELT conflict monitoring, AI-geocoded news beacons, and World Bank macro indicators inside a unified glassmorphic HUD, it provides a real-time analytical interface to explore global events and national metrics.
 
 ---
 
 ## 🌟 Key Features
 
-### 1. Interactive Leaflet Map & Split-Tile Rendering
-* **Split Basemaps for Text Legibility:** To prevent coloring or overlay layers from covering map text labels (country names, cities, and borders), the basemap is split into two layers:
-  * **Base Map Tiles:** A label-free base layer (`dark_nolabels` / `light_nolabels`) sitting underneath.
-  * **Interactive GeoJSON:** Vector country boundaries and heatmap layers render on top of the base.
-  * **Labels Pane Overlay:** A transparent, high z-index overlay layer (`dark_only_labels` / `light_only_labels`) rendering printed names on top of everything, ensuring country names remain crisp and readable without capturing hover or click events.
-* **Seamless Dark Mode:** Natively integrates CARTO's light and dark tile sets, updating dynamically via React state and context.
+### 1. Tactical Multi-Basemap Engine & Split-Tile Rendering
+* **Three Keyless Basemap Modes:** Switch seamlessly from the Top Command Bar between **Dark Tactical** (`Esri World_Dark_Gray`), **Satellite Hybrid** (`Esri World_Imagery` + boundaries), and **Clean Light** (`Esri World_Light_Gray`).
+* **Split Basemaps for Text Legibility:** To prevent choropleth coloring from obscuring geographic labels, the basemap is split into two layers:
+  * **Base Map Tiles:** A label-free base layer sitting underneath.
+  * **Interactive GeoJSON:** Vector country boundaries and heatmap layers render on top of the base with hover glow.
+  * **Labels Pane Overlay:** A transparent, high z-index overlay pane (`zIndex: 450`, `pointerEvents: 'none'`) rendering crisp place names above vector layers without blocking clicks or hovers.
+* **Dark-First Theme System:** Managed via `ThemeContext.jsx`, syncing UI glassmorphism, charts, popups, and basemaps between Dark Tactical (default) and Clean Light modes.
 
-### 2. Custom Choropleth Data Layers (Heatmaps)
-* **Visual Global Indicators:** Turn on layers to color-code the entire globe based on World Bank database indicators:
+### 2. Unified Top Command Bar & Country Hover Telemetry
+* **Floating Command HUD:** Consolidates branding, `/` keyboard-focusable global search (`SearchBox.jsx`) with coordinate badges, basemap switcher, choropleth layer controls, conflict monitor & marker toggles, news beacon toggle, and theme switcher into one unified top bar.
+* **Country Hover HUD:** Hovering over any country highlights its border and displays a floating telemetry card with its name, ISO-3 code, and active World Bank indicator value + global percentile rank.
+
+### 3. Custom Choropleth Data Layers (Heatmaps)
+* **Visual Global Indicators:** Color-code the globe using World Bank database indicators with theme-adapted dark and light palettes:
   * **GDP Heatmap:** Gross Domestic Product in USD (Greens).
   * **Population Heatmap:** Total population count (Purples).
   * **FDI Heatmap:** Foreign Direct Investment inflows (Oranges).
   * **Inflation Heatmap:** Consumer price inflation rate (Reds).
   * **Unemployment Heatmap:** Unemployment percentage of labor force (Yellows).
   * **Literacy Heatmap:** Adult literacy rates (Blues).
-* **Quantile Percentile Styling:** Map coloring dynamically calculates values based on percentiles (e.g., top 20% dark shades, bottom 20% light shades) rather than linear values to maintain high visual contrast regardless of extreme outliers.
-* **Interactive Legend Panel:** Toggleable indicator details panel explaining exact value ranges for each color scale.
+* **Quantile Percentile Styling & Scale Legend:** Dynamically bins country values by percentile for high visual contrast, accompanied by a collapsible scale legend.
 
-### 3. Integrated Global & Region-Specific News
-* **AI-Geocoded Major Global News:** On startup, major news headlines are aggregated via **NewsAPI** (`newsapi.org`). A backend process passes the articles to **Google Gemini AI** to extract the primary city mentioned, geocodes it via forward lookup, and plots custom image pins on the map.
-* **Region-Specific News Feed:** Clicking on any country on the map performs a reverse-geocoding lookup to identify the country name and pulls a list of localized news stories.
-* **Category Filters:** Filter news articles directly from the sidebar by category (e.g., Business, Technology, Science).
+### 4. Persistent 3-Tab Country Intelligence Dossier
+* **Zero-Friction Inspection:** Selecting any country opens a resizable right-side dossier (`SlideOverPanel.jsx`) featuring a flag, ISO badge, sector coordinates, and three persistent tabs:
+  * **Intel & News:** Localized NewsAPI articles with category filters alongside embedded YouTube regional broadcast feeds (`VideoNewsList.jsx`).
+  * **Macro Telemetry:** One-click 6-pill indicator switcher (`GDP`, `Population`, `FDI`, `Inflation`, `Unemployment`, `Literacy`) paired with KPI summary cards (**Latest**, **Peak**, **Period Shift**) and interactive `recharts` visualizations.
+  * **Country Profile:** Sovereign overview card with flag, capital, region/subregion, population, landmass, currency, and satellite reconnaissance link.
 
-### 4. Interactive Analytical Charts
-* **Socio-Economic History:** Selecting any country opens a slide-over panel displaying interactive historical trend lines using `recharts` for the active indicator.
-* **Performance Caching:** Backend caches World Bank global datasets in-memory to provide instant transition speeds when selecting different heatmap layers.
-
-### 5. Video News Integration
-* **Regional Video Feeds:** Selecting a region allows the user to switch from text articles to localized video news reports.
-* **YouTube Data API Caching:** Queries the YouTube search API and caches video metadata for 4 hours to manage API quota limits.
-* **Resilient Fallback Mode:** In the absence of an API key or on rate limit triggers, the backend returns beautiful dynamically populated mock video feeds so the user experience is never broken.
-
-### 6. Conflict Tracker Map
-* **GDELT Live Event Feed:** Displays current global security events, protests, and armed conflicts by querying the GDELT Project GKG GeoJSON stream.
-* **Real-time Categorized Pins:** Map markers pulse color-coded rings based on severity: Red for Armed Conflicts, Orange for Civil Unrest, and Yellow for Geopolitical Tensions.
-* **Responsive Sub-Views & Bottom Sheets:** The Conflict Panel features full desktop resizability and dynamic mobile bottom-sheet adjustments, complete with click-to-fly map autofocus zoom transitions.
-* **Hybrid Environment Caching:** Uses Vercel KV (Upstash Redis) in production serverless environments with a 15-minute TTL to ensure extremely fast (sub-10ms) responses. Falls back to local background sync and file caching during offline/local development.
+### 5. Live Conflict Monitor & Bottom Telemetry Ticker
+* **Preloaded GDELT Hotspots:** Security incidents are fetched on startup (with built-in client fallback hotspots if offline) and rendered as color-coded pulsing radar markers: Red (`ARMED_CONFLICT`), Orange (`CIVIL_UNREST`), and Yellow (`GEOPOLITICAL_TENSION`).
+* **Tactical News Beacons:** AI-geocoded global top headlines (`NewsAPI` + `Google Gemini AI`) render as glowing diamond beacons with glassmorphic dispatch popups.
+* **Bottom Live Telemetry Bar (`TelemetryBar.jsx`):** Displays active hotspot and beacon counters, a clickable breaking intelligence ticker that flies (`flyTo`) the map directly to events, and live cursor `LAT / LNG / ZOOM` readouts.
+* **Hybrid Environment Caching:** Uses Vercel KV (Upstash Redis) in production serverless environments with a 15-minute TTL, falling back to local background sync and `conflicts_cache.json` during local development.
 
 ---
 
@@ -81,8 +77,8 @@ cerebral_earth/
 ├── news-app/                     # React client application
 │   ├── public/                   # Static icons, GeoJSON map borders
 │   ├── src/                      # Source code
-│   │   ├── components/           # UI components (Map, Header, SlideOverPanel, ConflictPanel, VideoNewsList, etc.)
-│   │   ├── contexts/             # ThemeContext (Dark/Light mode)
+│   │   ├── components/           # UI components (Map, Header, TelemetryBar, SlideOverPanel, ConflictPanel, VideoNewsList, etc.)
+│   │   ├── contexts/             # ThemeContext (Dark Tactical / Light mode)
 │   │   ├── hooks/                # Custom React hooks (useAppState, useRegionData)
 │   │   ├── index.css             # Main styling configuration
 │   │   └── index.jsx             # React entry mount
